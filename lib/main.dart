@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/core/routes.dart';
+import 'package:graduation_project/core/utils/routes.dart';
 
 void main() {
   runApp(const MyApp());
