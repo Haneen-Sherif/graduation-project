@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/another_option.dart';
-import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_sign_in_form.dart';
-import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_sign_in_text.dart';
+import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_sign_up_form.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/google_or_facebook.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/social_media.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/generated/assets.dart';
 
-class SignInViewBody extends StatelessWidget {
-  const SignInViewBody({super.key});
+class SignUpViewBody extends StatelessWidget {
+  const SignUpViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,47 +18,51 @@ class SignInViewBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(Assets.imagesDecoration),
-          CustomSignInText(width: width),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: width * 0.1),
             child: Column(
               children: [
+                Image.asset(Assets.imagesLogo_2),
                 const SizedBox(
-                  height: 48,
+                  height: 8,
+                ),
+                Image.asset(Assets.imagesLogo_1),
+                const SizedBox(
+                  height: 18,
                 ),
                 Center(
                   child: SizedBox(
                     width: width * 0.7,
-                    child: Image.asset(Assets.imagesSignIn),
+                    child: Image.asset(Assets.imagesSignUp),
                   ),
                 ),
                 const SizedBox(
-                  height: 48,
+                  height: 35,
                 ),
-                CustomSignInForm(width: width),
+                CustomSignUpForm(width: width),
                 const SizedBox(
-                  height: 8,
+                  height: 15,
                 ),
                 AnotherOption(
-                  text1: 'Don’t have an account ?',
-                  text2: ' Sign Up',
+                  text1: "Already Have an account ?",
+                  text2: "  Sign In",
                   onTap: () {
-                    context.push(AppRoutes.kSignUpView);
+                    context.push(AppRoutes.kSignInView);
                   },
-                ),
-                const SizedBox(
-                  height: 16,
                 ),
               ],
             ),
           ),
-          SocialMedia(width: width, text: 'Or Sign In with'),
           const SizedBox(
-            height: 32,
+            height: 17,
+          ),
+          SocialMedia(width: width, text: "Or Sign Up with"),
+          const SizedBox(
+            height: 36,
           ),
           const GoogleOrFaceBook(),
           const SizedBox(
-            height: 32,
+            height: 36,
           ),
         ],
       ),

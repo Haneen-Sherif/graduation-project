@@ -5,7 +5,9 @@ import 'package:graduation_project/core/utils/styles.dart';
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
-    required this.width, required this.text, required this.onPressed,
+    required this.width,
+    required this.text,
+    required this.onPressed,
   });
 
   final double width;
@@ -15,6 +17,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
+      padding: EdgeInsets.zero,
       onPressed: onPressed,
       child: Container(
         width: width,

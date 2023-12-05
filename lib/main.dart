@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 
 void main() {
@@ -14,8 +15,10 @@ class MyApp extends StatelessWidget {
       routerConfig: AppRoutes.router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        colorScheme: const ColorScheme.light().copyWith(
+          background: kSecondaryColor,
+        ),
         fontFamily: "Poppins",
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
     );

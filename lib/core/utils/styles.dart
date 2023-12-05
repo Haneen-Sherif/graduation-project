@@ -18,3 +18,5 @@ abstract class Styles {
     fontWeight: FontWeight.w600,
   );
 }
+
+
