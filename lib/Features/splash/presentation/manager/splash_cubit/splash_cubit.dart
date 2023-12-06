@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:graduation_project/core/utils/routes.dart';
 
 class SplashCubit extends Cubit<double> {
   SplashCubit() : super(0.0);
@@ -13,6 +11,6 @@ class SplashCubit extends Cubit<double> {
         const Duration(milliseconds: 200),
       );
     }
-    context.pushReplacement(AppRoutes.kSignInView);
+    // context.pushReplacement(AppRoutes.kSignInView);
   }
 }
