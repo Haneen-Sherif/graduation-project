@@ -10,4 +10,11 @@ class Assets {
   static const String imagesSignUp = 'assets/images/sign_up.png';
   static const String imagesFaceBook = 'assets/images/facebook.png';
   static const String imagesGoogle = 'assets/images/google.png';
+  static const String imagesAeromoniasis = 'assets/images/Aeromoniasis.png';
+  static const String imagesBacterialRedDisease = 'assets/images/Bacterial Red disease.png';
+  static const String imagesChart = 'assets/images/Chart.png';
+  static const String imagesDocBot = 'assets/images/doc_bot.png';
+  static const String imagesFishBG = 'assets/images/fish_bg.png';
+  static const String imagesDecoration_2 = 'assets/images/decoration_2.png';
+  static const String imagesFrancesco = 'assets/images/francesco.png';
 }

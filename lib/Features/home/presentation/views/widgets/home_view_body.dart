@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/Features/home/data/models/fish_model.dart';
+import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
+import 'package:graduation_project/Features/home/presentation/views/widgets/fish_info_list_view.dart';
+import 'package:graduation_project/Features/home/presentation/views/widgets/fish_list_view.dart';
+import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
+import 'package:graduation_project/Features/home/presentation/views/widgets/home_stack_widget.dart';
+import 'package:graduation_project/Features/home/presentation/views/widgets/report_widget.dart';
 import 'package:graduation_project/constants.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -6,9 +14,39 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => await _showExitConfirmationDialog(context),
-      child: const Column(),
+    final List<FishModel> fishList =
+        BlocProvider.of<HomeCubit>(context).fishList;
+    Size size = MediaQuery.of(context).size;
+    return PopScope(
+      onPopInvoked: (bool didPop) async {
+        await _showExitConfirmationDialog(context);
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            HomeStackWidget(size: size),
+            const SizedBox(
+              height: 42,
+            ),
+            SizedBox(
+              height: 200,
+              child: FishListView(fishList: fishList),
+            ),
+            FishInfoListView(
+              size: size,
+              fishList: fishList,
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            ReportWidget(size: size),
+            const SizedBox(
+              height: 12,
+            ),
+            HomeFooterWidget(size: size)
+          ],
+        ),
+      ),
     );
   }
 
