@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/views/sign_in_view.dart';
 import 'package:graduation_project/Features/auth/presentation/views/sign_up_view.dart';
+import 'package:graduation_project/Features/chat/presentation/views/chat_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/home_view.dart';
 import 'package:graduation_project/Features/splash/presentation/views/splash_view.dart';
 
@@ -13,7 +14,8 @@ abstract class AppRoutes {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const SplashView(),
+        // builder: (context, state) => const SplashView(),
+        builder: (context, state) => const ChatView(),
       ),
       GoRoute(
         path: kSignInView,

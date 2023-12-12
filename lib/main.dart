@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Features/chat/presentation/manager/providers/chat_provider.dart';
+import 'package:graduation_project/Features/chat/presentation/manager/providers/models_provider.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/routes.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,15 +14,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRoutes.router,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: const ColorScheme.light().copyWith(
-          background: kSecondaryColor,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ModelsProvider(),
         ),
-        fontFamily: "Poppins",
-        useMaterial3: true,
+        ChangeNotifierProvider(
+          create: (_) => ChatProvider(),
+        ),
+      ],
+      child: MaterialApp.router(
+        routerConfig: AppRoutes.router,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: const ColorScheme.light().copyWith(
+            background: kSecondaryColor,
+          ),
+          fontFamily: "Poppins",
+          useMaterial3: true,
+        ),
       ),
     );
   }
