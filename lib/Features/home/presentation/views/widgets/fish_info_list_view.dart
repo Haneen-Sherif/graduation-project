@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/home/data/models/fish_model.dart';
+import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
 class FishInfoListView extends StatelessWidget {
@@ -20,7 +22,12 @@ class FishInfoListView extends StatelessWidget {
       itemBuilder: (context, index) => Padding(
         padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            context.push(
+              AppRoutes.kDiseaseInfoView,
+              extra: index,
+            );
+          },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/home/data/models/fish_model.dart';
+import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
 class FishListView extends StatelessWidget {
@@ -18,23 +20,31 @@ class FishListView extends StatelessWidget {
       ),
       scrollDirection: Axis.horizontal,
       itemCount: fishList.length,
-      itemBuilder: (context, index) => Column(
-        children: [
-          Image.asset(fishList[index].image),
-          SizedBox(
-            width: 140,
-            child: Text(
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              fishList[index].title,
-              textAlign: TextAlign.center,
-              style: Styles.textStyle16.copyWith(
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.96,
+      itemBuilder: (context, index) => GestureDetector(
+        onTap: () {
+          context.push(
+            AppRoutes.kDiseaseInfoView,
+            extra: index,
+          );
+        },
+        child: Column(
+          children: [
+            Image.asset(fishList[index].image),
+            SizedBox(
+              width: 140,
+              child: Text(
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                fishList[index].title,
+                textAlign: TextAlign.center,
+                style: Styles.textStyle16.copyWith(
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.96,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

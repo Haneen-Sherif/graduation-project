@@ -31,7 +31,7 @@ class CustomSignUpForm extends StatelessWidget {
               }
               return null;
             },
-            emailController: nameController,
+            controller: nameController,
             width: width,
           ),
           const SizedBox(
@@ -48,7 +48,7 @@ class CustomSignUpForm extends StatelessWidget {
               }
               return null;
             },
-            emailController: emailController,
+            controller: emailController,
             width: width,
           ),
           const SizedBox(
@@ -65,7 +65,7 @@ class CustomSignUpForm extends StatelessWidget {
               }
               return null;
             },
-            emailController: passwordController,
+            controller: passwordController,
             width: width,
           ),
           const SizedBox(
@@ -85,7 +85,7 @@ class CustomSignUpForm extends StatelessWidget {
               }
               return null;
             },
-            emailController: confirmPasswordController,
+            controller: confirmPasswordController,
             width: width,
           ),
           const SizedBox(
@@ -109,5 +109,3 @@ class CustomSignUpForm extends StatelessWidget {
     );
   }
 }
-
-

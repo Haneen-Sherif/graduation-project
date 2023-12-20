@@ -33,6 +33,10 @@ abstract class Styles {
     fontSize: 25,
     fontWeight: FontWeight.w600,
   );
+  static TextStyle textStyle27 = const TextStyle(
+    fontSize: 27,
+    fontWeight: FontWeight.w700,
+  );
   static TextStyle textStyle30 = const TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.w700,

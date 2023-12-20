@@ -6,7 +6,7 @@ import 'package:graduation_project/core/utils/styles.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
-    required this.emailController,
+    required this.controller,
     required this.width,
     required this.validator,
     required this.text,
@@ -15,7 +15,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.textInputAction,
   });
 
-  final TextEditingController emailController;
+  final TextEditingController controller;
   final double width;
   final String? Function(String?)? validator;
   final bool obscureText;
@@ -28,7 +28,7 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       keyboardType: keyboardType,
       textInputAction: textInputAction,
-      controller: emailController,
+      controller: controller,
       cursorColor: kPrimaryColor,
       validator: validator,
       obscureText: obscureText,

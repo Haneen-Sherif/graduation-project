@@ -30,7 +30,7 @@ class CustomSignInForm extends StatelessWidget {
               }
               return null;
             },
-            emailController: emailController,
+            controller: emailController,
             width: width,
           ),
           const SizedBox(
@@ -47,7 +47,7 @@ class CustomSignInForm extends StatelessWidget {
               }
               return null;
             },
-            emailController: passwordController,
+            controller: passwordController,
             width: width,
           ),
           const SizedBox(
