@@ -19,4 +19,10 @@ class Assets {
   static const String imagesDecoration_2 = 'assets/images/decoration_2.png';
   static const String imagesFrancesco = 'assets/images/francesco.png';
   static const String iconsSend = 'assets/icons/send.png';
+  static const String imagesD1 = 'assets/images/D1.png';
+  static const String imagesD4 = 'assets/images/D4.png';
+  static const String imagesD5 = 'assets/images/D5.png';
+  static const String imagesD6 = 'assets/images/D6.png';
+  static const String imagesD7 = 'assets/images/D7.png';
+  static const String imagesD8 = 'assets/images/D8.png';
 }

@@ -4,6 +4,8 @@ import 'package:graduation_project/Features/auth/presentation/views/sign_in_view
 import 'package:graduation_project/Features/auth/presentation/views/sign_up_view.dart';
 import 'package:graduation_project/Features/chat/presentation/views/chat_view.dart';
 import 'package:graduation_project/Features/disease_info/presentation/views/disease_info_view.dart';
+import 'package:graduation_project/Features/experts/presentation/viiews/experts_profile_view.dart';
+import 'package:graduation_project/Features/experts/presentation/viiews/experts_view.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/add_equipments_view.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/edit_equipments_view.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/farm_equipments_view.dart';
@@ -17,12 +19,14 @@ abstract class AppRoutes {
   static String kDiseaseInfoView = '/diseaseInfoView/:index';
   static String kAddEquipmentView = '/addEquipmentView';
   static String kEditEquipmentView = '/editEquipmentView/:index';
+  static String kExpertsProfileView = '/expertsProfileView/:index';
   static final router = GoRouter(
     routes: [
       GoRoute(
         path: '/',
         // builder: (context, state) => const SplashView(),
-        builder: (context, state) => const FarmEquipmentsView(),
+        // builder: (context, state) => const FarmEquipmentsView(),
+        builder: (context, state) => const ExpertsView(),
         // builder: (context, state) => const ChatView(),
       ),
       GoRoute(
@@ -166,6 +170,27 @@ abstract class AppRoutes {
               const curve = Curves.easeInOutCirc;
               var tween =
                   Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: kExpertsProfileView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            transitionDuration: const Duration(seconds: 1),
+            child: ExpertsProfileView(index: int.parse(state.extra.toString())),
+            transitionsBuilder: (context, animation, animationTwo, child) {
+              const begin = Offset(1.0, 0.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOutCirc;
+              var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
               var offsetAnimation = animation.drive(tween);
               return SlideTransition(
                 position: offsetAnimation,
