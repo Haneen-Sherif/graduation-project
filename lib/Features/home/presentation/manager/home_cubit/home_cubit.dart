@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/home/data/models/fish_model.dart';
 import 'package:graduation_project/generated/assets.dart';
 import 'package:meta/meta.dart';
@@ -7,6 +8,8 @@ part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
+
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   final List<FishModel> fishList = [
     FishModel(

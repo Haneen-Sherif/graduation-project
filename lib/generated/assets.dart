@@ -25,4 +25,6 @@ class Assets {
   static const String imagesD6 = 'assets/images/D6.png';
   static const String imagesD7 = 'assets/images/D7.png';
   static const String imagesD8 = 'assets/images/D8.png';
+  static const String iconsBack = 'assets/icons/ic-left.png';
+  static const String imagesAppBarBG = 'assets/images/app_bar_bg.png';
 }

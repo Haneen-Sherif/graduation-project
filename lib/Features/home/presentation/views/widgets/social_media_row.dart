@@ -5,7 +5,12 @@ import 'package:graduation_project/core/utils/Widgets/custom_social_icon.dart';
 class SocialMediaRow extends StatelessWidget {
   const SocialMediaRow({
     super.key,
+    required this.borderColor,
+    required this.iconColor,
   });
+
+  final Color borderColor;
+  final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -13,21 +18,21 @@ class SocialMediaRow extends StatelessWidget {
       children: [
         CustomSocialIcon(
           onPressed: () {},
-          borderColor: Colors.white.withOpacity(0.25),
+          borderColor: borderColor,
           icon: FontAwesomeIcons.facebookF,
-          iconColor: Colors.white,
+          iconColor: iconColor,
         ),
         CustomSocialIcon(
           onPressed: () {},
-          borderColor: Colors.white.withOpacity(0.25),
+          borderColor: borderColor,
           icon: FontAwesomeIcons.linkedinIn,
-          iconColor: Colors.white,
+          iconColor: iconColor,
         ),
         CustomSocialIcon(
           onPressed: () {},
-          borderColor: Colors.white.withOpacity(0.25),
+          borderColor: borderColor,
           icon: FontAwesomeIcons.twitter,
-          iconColor: Colors.white,
+          iconColor: iconColor,
         ),
       ],
     );

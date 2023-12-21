@@ -16,9 +16,10 @@ class CustomSocialIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onPressed,
-      icon: Container(
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 3),
         width: 24,
         height: 24,
         decoration: ShapeDecoration(

@@ -20,14 +20,14 @@ abstract class AppRoutes {
   static String kAddEquipmentView = '/addEquipmentView';
   static String kEditEquipmentView = '/editEquipmentView/:index';
   static String kExpertsProfileView = '/expertsProfileView/:index';
+  static String kFarmEquipmentsView = '/farmEquipmentView';
+  static String kChatView = '/chatView';
   static final router = GoRouter(
     routes: [
       GoRoute(
         path: '/',
-        // builder: (context, state) => const SplashView(),
-        // builder: (context, state) => const FarmEquipmentsView(),
-        builder: (context, state) => const ExpertsView(),
-        // builder: (context, state) => const ChatView(),
+        builder: (context, state) => const SplashView(),
+        // builder: (context, state) => const ExpertsView(),
       ),
       GoRoute(
         path: kSignInView,
@@ -190,11 +190,77 @@ abstract class AppRoutes {
               const end = Offset.zero;
               const curve = Curves.easeInOutCirc;
               var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
               var offsetAnimation = animation.drive(tween);
               return SlideTransition(
                 position: offsetAnimation,
                 child: child,
+              );
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: kFarmEquipmentsView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            transitionDuration: const Duration(seconds: 1),
+            child: const FarmEquipmentsView(),
+            transitionsBuilder: (context, animation, animationTwo, child) {
+              const begin = Offset(0.0, 1.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOutCirc;
+              var slideTween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(slideTween);
+
+              var fadeAnimation =
+                  Tween<double>(begin: 0.0, end: 1.0).animate(animation);
+              var scaleAnimation =
+                  Tween<double>(begin: 0.5, end: 1.0).animate(animation);
+
+              return FadeTransition(
+                opacity: fadeAnimation,
+                child: ScaleTransition(
+                  scale: scaleAnimation,
+                  child: SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: kChatView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            transitionDuration: const Duration(seconds: 1),
+            child: const ChatView(),
+            transitionsBuilder: (context, animation, animationTwo, child) {
+              const begin = Offset(0.0, 1.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOutCirc;
+              var slideTween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(slideTween);
+
+              var fadeAnimation =
+                  Tween<double>(begin: 0.0, end: 1.0).animate(animation);
+              var scaleAnimation =
+                  Tween<double>(begin: 0.5, end: 1.0).animate(animation);
+
+              return FadeTransition(
+                opacity: fadeAnimation,
+                child: ScaleTransition(
+                  scale: scaleAnimation,
+                  child: SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  ),
+                ),
               );
             },
           );

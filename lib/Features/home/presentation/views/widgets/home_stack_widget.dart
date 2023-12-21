@@ -7,9 +7,11 @@ class HomeStackWidget extends StatelessWidget {
   const HomeStackWidget({
     super.key,
     required this.size,
+    required this.scaffoldKey,
   });
 
   final Size size;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,9 @@ class HomeStackWidget extends StatelessWidget {
                 height: 40,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  scaffoldKey.currentState!.openDrawer();
+                },
                 icon: const Icon(
                   Icons.menu,
                   size: 40,

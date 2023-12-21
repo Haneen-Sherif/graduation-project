@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/chat_provider.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/models_provider.dart';
+import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:provider/provider.dart';
@@ -23,15 +25,18 @@ class MyApp extends StatelessWidget {
           create: (_) => ChatProvider(),
         ),
       ],
-      child: MaterialApp.router(
-        routerConfig: AppRoutes.router,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: const ColorScheme.light().copyWith(
-            background: kSecondaryColor,
+      child: BlocProvider(
+        create: (context) => HomeCubit(),
+        child: MaterialApp.router(
+          routerConfig: AppRoutes.router,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            colorScheme: const ColorScheme.light().copyWith(
+              background: kSecondaryColor,
+            ),
+            fontFamily: "Poppins",
+            useMaterial3: true,
           ),
-          fontFamily: "Poppins",
-          useMaterial3: true,
         ),
       ),
     );

@@ -39,7 +39,10 @@ class HomeFooterWidget extends StatelessWidget {
                           fontFamily: 'Roboto',
                         ),
                       ),
-                      const SocialMediaRow()
+                      SocialMediaRow(
+                        borderColor: Colors.white.withOpacity(0.25),
+                        iconColor: Colors.white,
+                      )
                     ],
                   ),
                   ClipOval(

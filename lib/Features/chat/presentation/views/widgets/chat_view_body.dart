@@ -5,15 +5,17 @@ import 'package:graduation_project/Features/chat/presentation/manager/providers/
 import 'package:graduation_project/Features/chat/presentation/manager/providers/models_provider.dart';
 import 'package:graduation_project/Features/chat/presentation/views/widgets/chat_widget.dart';
 import 'package:graduation_project/Features/chat/presentation/views/widgets/text_widget.dart';
+import 'package:graduation_project/Features/chat/services/services.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
 import 'package:provider/provider.dart';
 
 class ChatViewBody extends StatefulWidget {
-  const ChatViewBody({super.key});
+  const ChatViewBody({super.key,});
 
   @override
   State<ChatViewBody> createState() => _ChatViewBodyState();
+
 }
 
 class _ChatViewBodyState extends State<ChatViewBody> {
@@ -49,6 +51,38 @@ class _ChatViewBodyState extends State<ChatViewBody> {
         children: [
           Column(
             children: [
+              Container(
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
+                        leading: IconButton(onPressed: () {
+
+                        }, icon: Image.asset(Assets.iconsBack)),
+                        title: Text(
+                            'Chat',
+                            style: Styles.textStyle20
+                        ),
+                        trailing: IconButton(
+                          onPressed: () async {
+                            await Services.showModalSheet(context: context);
+                          },
+                          icon: const Icon(
+                            Icons.more_vert_rounded,
+                            color: Color(
+                              0xff1E68D7,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+
+
+
+                  ],
+                ),
+              ),
               Row(
                 children: [
                   Padding(

@@ -10,7 +10,12 @@ import 'package:graduation_project/Features/home/presentation/views/widgets/repo
 import 'package:graduation_project/constants.dart';
 
 class HomeViewBody extends StatelessWidget {
-  const HomeViewBody({super.key});
+  const HomeViewBody({
+    super.key,
+    required this.scaffoldKey,
+  });
+
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class HomeViewBody extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            HomeStackWidget(size: size),
+            HomeStackWidget(size: size, scaffoldKey: scaffoldKey),
             const SizedBox(
               height: 42,
             ),
