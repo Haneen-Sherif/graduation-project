@@ -26,8 +26,8 @@ abstract class AppRoutes {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const SplashView(),
-        // builder: (context, state) => const ExpertsView(),
+        // builder: (context, state) => const SplashView(),
+        builder: (context, state) => const ExpertsView(),
       ),
       GoRoute(
         path: kSignInView,

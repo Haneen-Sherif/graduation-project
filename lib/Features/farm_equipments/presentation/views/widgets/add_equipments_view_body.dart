@@ -18,26 +18,36 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Column(
-        children: [
-          const CustomTitle(title: "Add Equipments"),
-          SizedBox(
+    return CustomScrollView(
+      slivers: [
+        const SliverToBoxAdapter(
+          child: Align(
+              alignment: Alignment.center,
+              child: CustomTitle(title: "Add Equipments")),
+        ),
+        SliverToBoxAdapter(
+          child: SizedBox(
             height: size.height * 0.1,
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: AddEquipmentsForm(
-                formKey: formKey,
-                size: size,
-                addEquipmentController: addEquipmentController,
-                countController: countController,
-              ),
-            ),
+        ),
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: AddEquipmentsForm(
+            formKey: formKey,
+            size: size,
+            addEquipmentController: addEquipmentController,
+            countController: countController,
           ),
-          HomeFooterWidget(size: size),
-        ],
-      ),
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 8,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: HomeFooterWidget(size: size),
+        )
+      ],
     );
   }
 }

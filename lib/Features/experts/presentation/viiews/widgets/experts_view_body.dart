@@ -17,41 +17,39 @@ class ExpertsViewBody extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final List<ExpertsModel> expertsList =
         BlocProvider.of<ExpertsCubit>(context).expertsList;
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const CustomTitle(title: "Experts Contacts"),
-            const SizedBox(
-              height: 60,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const CustomTitle(title: "Experts Contacts"),
+          const SizedBox(
+            height: 60,
+          ),
+          GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: expertsList.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 0.9,
+              crossAxisSpacing: 44,
+              crossAxisCount: 2,
             ),
-            GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: expertsList.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 0.9,
-                crossAxisSpacing: 44,
-                crossAxisCount: 2,
-              ),
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
-                  child: GestureDetector(
-                    onTap: () {
-                      context.push(AppRoutes.kExpertsProfileView, extra: index);
-                    },
-                    child: ExpertsGridViewItem(
-                      expertsList: expertsList,
-                      index: index,
-                    ),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                child: GestureDetector(
+                  onTap: () {
+                    context.push(AppRoutes.kExpertsProfileView, extra: index);
+                  },
+                  child: ExpertsGridViewItem(
+                    expertsList: expertsList,
+                    index: index,
                   ),
-                );
-              },
-            ),
-            HomeFooterWidget(size: size)
-          ],
-        ),
+                ),
+              );
+            },
+          ),
+          HomeFooterWidget(size: size)
+        ],
       ),
     );
   }
