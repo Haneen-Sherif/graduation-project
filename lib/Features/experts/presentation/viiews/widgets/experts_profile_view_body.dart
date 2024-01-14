@@ -19,24 +19,22 @@ class ExpertsProfileViewBody extends StatelessWidget {
         BlocProvider.of<ExpertsCubit>(context).expertsList;
 
     final Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-              child: CustomExpertsInfoBody(
-                expertsList: expertsList,
-                index: index,
-                size: size,
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            child: CustomExpertsInfoBody(
+              expertsList: expertsList,
+              index: index,
+              size: size,
             ),
-            const SizedBox(
-              height: 12,
-            ),
-            HomeFooterWidget(size: size)
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          HomeFooterWidget(size: size)
+        ],
       ),
     );
   }

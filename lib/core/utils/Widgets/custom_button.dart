@@ -7,11 +7,12 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.width,
     required this.text,
-    required this.onPressed,
+    required this.onPressed, this.color,
   });
 
   final double width;
   final String text;
+  final Color? color;
   final void Function() onPressed;
 
   @override
@@ -23,7 +24,7 @@ class CustomButton extends StatelessWidget {
         width: width,
         height: 48,
         decoration: ShapeDecoration(
-          color: kPrimaryColor,
+          color:color?? kPrimaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -35,7 +36,7 @@ class CustomButton extends StatelessWidget {
               text,
               textAlign: TextAlign.center,
               style: Styles.textStyle18.copyWith(
-                color: const Color(0xFFFFF9F9),
+                color:  Color(0xFFFFF9F9),
                 letterSpacing: 1.08,
               ),
             ),

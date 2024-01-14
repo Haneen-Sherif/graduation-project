@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
+import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
 
@@ -74,7 +76,9 @@ class HomeStackWidget extends StatelessWidget {
           child: CustomButton(
             width: size.width * 0.65,
             text: "Detect",
-            onPressed: () {},
+            onPressed: () {
+              context.push(AppRoutes.kDetectView);
+            },
           ),
         )
       ],

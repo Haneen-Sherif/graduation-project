@@ -27,4 +27,8 @@ class Assets {
   static const String imagesD8 = 'assets/images/D8.png';
   static const String iconsBack = 'assets/icons/ic-left.png';
   static const String imagesAppBarBG = 'assets/images/app_bar_bg.png';
+  static const String imagesCheckmark = 'assets/images/Checkmark.png';
+  static const String imagesGallery = 'assets/images/gallery.png';
+  static const String imagesUpload = 'assets/images/upload.png';
+  static const String imagesResultImage = 'assets/images/result_image.png';
 }
