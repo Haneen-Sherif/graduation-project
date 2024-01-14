@@ -26,12 +26,12 @@ abstract class AppRoutes {
   static String kChatView = '/chatView';
   static String kDetectView = '/detectView';
   static String kShowResultView = '/showResultView';
+  static String kExpertsView = '/expertsView';
   static final router = GoRouter(
     routes: [
       GoRoute(
         path: '/',
         builder: (context, state) => const SplashView(),
-        // builder: (context, state) => const ExpertsView(),
       ),
       GoRoute(
         path: kSignInView,
@@ -277,15 +277,27 @@ abstract class AppRoutes {
             transitionDuration: const Duration(seconds: 1),
             child: const DetectView(),
             transitionsBuilder: (context, animation, animationTwo, child) {
-              const begin = Offset(1.0, 0.0);
+              const begin = Offset(0.0, 1.0);
               const end = Offset.zero;
               const curve = Curves.easeInOutCirc;
-              var tween =
+              var slideTween =
               Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-              var offsetAnimation = animation.drive(tween);
-              return SlideTransition(
-                position: offsetAnimation,
-                child: child,
+              var offsetAnimation = animation.drive(slideTween);
+
+              var fadeAnimation =
+              Tween<double>(begin: 0.0, end: 1.0).animate(animation);
+              var scaleAnimation =
+              Tween<double>(begin: 0.5, end: 1.0).animate(animation);
+
+              return FadeTransition(
+                opacity: fadeAnimation,
+                child: ScaleTransition(
+                  scale: scaleAnimation,
+                  child: SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  ),
+                ),
               );
             },
           );
@@ -296,7 +308,40 @@ abstract class AppRoutes {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             transitionDuration: const Duration(seconds: 1),
-            child: ShowResultView(),
+            child: const ShowResultView(),
+            transitionsBuilder: (context, animation, animationTwo, child) {
+              const begin = Offset(0.0, 1.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOutCirc;
+              var slideTween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(slideTween);
+
+              var fadeAnimation =
+              Tween<double>(begin: 0.0, end: 1.0).animate(animation);
+              var scaleAnimation =
+              Tween<double>(begin: 0.5, end: 1.0).animate(animation);
+
+              return FadeTransition(
+                opacity: fadeAnimation,
+                child: ScaleTransition(
+                  scale: scaleAnimation,
+                  child: SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+      GoRoute(
+        path: kExpertsView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            transitionDuration: const Duration(seconds: 1),
+            child: const ExpertsView(),
             transitionsBuilder: (context, animation, animationTwo, child) {
               const begin = Offset(0.0, 1.0);
               const end = Offset.zero;

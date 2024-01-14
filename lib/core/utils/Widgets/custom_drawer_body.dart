@@ -14,7 +14,9 @@ class CustomDrawerBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomDrawerItem(
-          onTap: () {},
+          onTap: () {
+            context.push(AppRoutes.kDetectView);
+          },
           title: 'Disease Detection',
         ),
         const SizedBox(
@@ -30,29 +32,10 @@ class CustomDrawerBody extends StatelessWidget {
           height: 30,
         ),
         CustomDrawerItem(
-          onTap: () {},
-          title: 'Disease Reports',
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        CustomDrawerItem(
-          onTap: () {},
-          title: 'Fish Information',
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        CustomDrawerItem(
-          onTap: () {},
-          title: 'Awarness',
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        CustomDrawerItem(
-          onTap: () {},
-          title: 'EMP Existence',
+          onTap: () {
+            context.push(AppRoutes.kExpertsView);
+          },
+          title: 'Experts',
         ),
         const SizedBox(
           height: 30,

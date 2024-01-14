@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/detection/data/models/disease_result_model.dart';
 import 'package:graduation_project/Features/detection/presentation/views/widgets/disease_result.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
+import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
 
@@ -55,7 +57,9 @@ class ShowResultViewBody extends StatelessWidget {
           CustomButton(
             width: size.width * 0.8,
             text: "Contact Doctor",
-            onPressed: () {},
+            onPressed: () {
+              context.push(AppRoutes.kExpertsView);
+            },
           ),
           const SizedBox(
             height: 60,

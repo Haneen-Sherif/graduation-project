@@ -11,9 +11,9 @@ import 'package:graduation_project/constants.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({
-    super.key,
+    Key? key,
     required this.scaffoldKey,
-  });
+  }) : super(key: key);
 
   final GlobalKey<ScaffoldState> scaffoldKey;
 
@@ -22,9 +22,9 @@ class HomeViewBody extends StatelessWidget {
     final List<FishModel> fishList =
         BlocProvider.of<HomeCubit>(context).fishList;
     Size size = MediaQuery.of(context).size;
-    return PopScope(
-      onPopInvoked: (bool didPop) async {
-        await _showExitConfirmationDialog(context);
+    return WillPopScope(
+      onWillPop: () async {
+        return await _showExitConfirmationDialog(context);
       },
       child: SingleChildScrollView(
         child: Column(
@@ -57,25 +57,25 @@ class HomeViewBody extends StatelessWidget {
 
   Future<bool> _showExitConfirmationDialog(BuildContext context) async {
     return await showDialog<bool>(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text(
-                'Exit App',
-                style: TextStyle(color: kSecondaryColor),
-              ),
-              content: const Text(
-                'Do you want to close the app?',
-                style: TextStyle(color: kSecondaryColor),
-              ),
-              backgroundColor: kPrimaryColor,
-              actions: <Widget>[
-                _buildDialogButton(context, 'No', false),
-                _buildDialogButton(context, 'Yes', true),
-              ],
-            );
-          },
-        ) ??
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Exit App',
+            style: TextStyle(color: kSecondaryColor),
+          ),
+          content: const Text(
+            'Do you want to close the app?',
+            style: TextStyle(color: kSecondaryColor),
+          ),
+          backgroundColor: kPrimaryColor,
+          actions: <Widget>[
+            _buildDialogButton(context, 'No', false),
+            _buildDialogButton(context, 'Yes', true),
+          ],
+        );
+      },
+    ) ??
         false;
   }
 
