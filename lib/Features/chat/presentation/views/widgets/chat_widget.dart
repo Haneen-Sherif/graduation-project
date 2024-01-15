@@ -22,7 +22,7 @@ class ChatWidget extends StatelessWidget {
     final formattedTime = DateFormat.jm().format(timestamp);
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+      padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
         crossAxisAlignment:
             chatIndex == 0 ? CrossAxisAlignment.end : CrossAxisAlignment.start,

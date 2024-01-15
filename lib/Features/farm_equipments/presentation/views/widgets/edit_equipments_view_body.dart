@@ -14,18 +14,33 @@ class EditEquipmentsViewBody extends StatefulWidget {
 
 class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController editEquipmentController = TextEditingController();
-  TextEditingController countController = TextEditingController();
+  late TextEditingController editEquipmentController;
+
+  late TextEditingController countController;
+
+  @override
+  void initState() {
+    editEquipmentController = TextEditingController();
+    countController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    editEquipmentController.dispose();
+    countController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: Align(
               alignment: Alignment.center,
-              child: const CustomTitle(title: "Edit Equipments")),
+              child: CustomTitle(title: "Edit Equipments")),
         ),
         SliverToBoxAdapter(
           child: SizedBox(
@@ -42,7 +57,7 @@ class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
             countController: countController,
           ),
         ),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: SizedBox(
             height: 8,
           ),

@@ -27,18 +27,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.15,
-                vertical: size.height * 0.1,
+              padding: const EdgeInsets.symmetric(
+                vertical: 56,
               ),
               child: Text(
                 'Welcome',
                 style: Styles.textStyle35,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
-              child: const CustomDrawerBody(),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              child: CustomDrawerBody(),
             ),
             CustomButton(
               width: size.width * 0.7,
@@ -49,7 +48,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               height: 70,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
+              padding: const EdgeInsets.symmetric(horizontal: 34),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

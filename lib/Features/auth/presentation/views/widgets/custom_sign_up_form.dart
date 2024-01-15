@@ -4,18 +4,43 @@ import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 
-class CustomSignUpForm extends StatelessWidget {
+class CustomSignUpForm extends StatefulWidget {
   const CustomSignUpForm({super.key, required this.width});
 
   final double width;
 
   @override
+  State<CustomSignUpForm> createState() => _CustomSignUpFormState();
+}
+
+class _CustomSignUpFormState extends State<CustomSignUpForm> {
+  late TextEditingController passwordController;
+  late TextEditingController emailController;
+  late TextEditingController nameController;
+  late TextEditingController confirmPasswordController;
+
+  @override
+  void initState() {
+    passwordController = TextEditingController();
+    emailController = TextEditingController();
+    nameController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    emailController.dispose();
+    nameController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
-    TextEditingController confirmPasswordController = TextEditingController();
+
     return Form(
       key: formKey,
       child: Column(
@@ -32,7 +57,7 @@ class CustomSignUpForm extends StatelessWidget {
               return null;
             },
             controller: nameController,
-            width: width,
+            width: widget.width,
           ),
           const SizedBox(
             height: 16,
@@ -49,7 +74,7 @@ class CustomSignUpForm extends StatelessWidget {
               return null;
             },
             controller: emailController,
-            width: width,
+            width: widget.width,
           ),
           const SizedBox(
             height: 16,
@@ -66,7 +91,7 @@ class CustomSignUpForm extends StatelessWidget {
               return null;
             },
             controller: passwordController,
-            width: width,
+            width: widget.width,
           ),
           const SizedBox(
             height: 16,
@@ -86,7 +111,7 @@ class CustomSignUpForm extends StatelessWidget {
               return null;
             },
             controller: confirmPasswordController,
-            width: width,
+            width: widget.width,
           ),
           const SizedBox(
             height: 5,
@@ -95,7 +120,7 @@ class CustomSignUpForm extends StatelessWidget {
             height: 17,
           ),
           CustomButton(
-            width: width,
+            width: widget.width,
             text: "Sign Up",
             onPressed: () {
               if (formKey.currentState!.validate()) {

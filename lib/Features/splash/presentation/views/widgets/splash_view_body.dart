@@ -32,7 +32,7 @@ class _SplashViewBody extends StatelessWidget {
             builder: (context, opacity) {
               return AnimatedOpacity(
                 opacity: opacity,
-                duration: const Duration(milliseconds: 2000),
+                duration: const Duration(milliseconds: 500),
                 child: Image.asset(Assets.imagesDecoration),
               );
             },
@@ -43,7 +43,7 @@ class _SplashViewBody extends StatelessWidget {
                 builder: (context, opacity) {
                   return AnimatedOpacity(
                     opacity: opacity,
-                    duration: const Duration(milliseconds: 2000),
+                    duration: const Duration(milliseconds: 500),
                     child: Image.asset(Assets.imagesLogo_1),
                   );
                 },
@@ -55,7 +55,7 @@ class _SplashViewBody extends StatelessWidget {
                 builder: (context, opacity) {
                   return AnimatedOpacity(
                     opacity: opacity,
-                    duration: const Duration(milliseconds: 2000),
+                    duration: const Duration(milliseconds: 500),
                     child: Center(
                       child: SizedBox(
                         width: width * 0.7,
@@ -72,7 +72,7 @@ class _SplashViewBody extends StatelessWidget {
                 builder: (context, opacity) {
                   return AnimatedOpacity(
                     opacity: opacity,
-                    duration: const Duration(milliseconds: 2000),
+                    duration: const Duration(milliseconds: 500),
                     child: CustomSplashText(width: width),
                   );
                 },
@@ -84,7 +84,7 @@ class _SplashViewBody extends StatelessWidget {
                 builder: (context, opacity) {
                   return AnimatedOpacity(
                     opacity: opacity,
-                    duration: const Duration(milliseconds: 2000),
+                    duration: const Duration(milliseconds: 500),
                     child: CustomButton(
                       onPressed: () {
                         context.pushReplacement(

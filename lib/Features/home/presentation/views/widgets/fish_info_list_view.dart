@@ -7,11 +7,9 @@ import 'package:graduation_project/core/utils/styles.dart';
 class FishInfoListView extends StatelessWidget {
   const FishInfoListView({
     super.key,
-    required this.size,
     required this.fishList,
   });
 
-  final Size size;
   final List<FishModel> fishList;
 
   @override
@@ -20,7 +18,7 @@ class FishInfoListView extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: GestureDetector(
           onTap: () {
             context.push(

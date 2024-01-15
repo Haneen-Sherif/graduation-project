@@ -5,16 +5,38 @@ import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 
-class CustomSignInForm extends StatelessWidget {
+class CustomSignInForm extends StatefulWidget {
   const CustomSignInForm({super.key, required this.width});
 
   final double width;
 
   @override
+  State<CustomSignInForm> createState() => _CustomSignInFormState();
+}
+
+class _CustomSignInFormState extends State<CustomSignInForm> {
+  late TextEditingController passwordController;
+
+  late TextEditingController emailController;
+
+  @override
+  void initState() {
+    passwordController = TextEditingController();
+    emailController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    TextEditingController passwordController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
+
     return Form(
       key: formKey,
       child: Column(
@@ -31,7 +53,7 @@ class CustomSignInForm extends StatelessWidget {
               return null;
             },
             controller: emailController,
-            width: width,
+            width: widget.width,
           ),
           const SizedBox(
             height: 16,
@@ -48,7 +70,7 @@ class CustomSignInForm extends StatelessWidget {
               return null;
             },
             controller: passwordController,
-            width: width,
+            width: widget.width,
           ),
           const SizedBox(
             height: 5,
@@ -60,7 +82,7 @@ class CustomSignInForm extends StatelessWidget {
             height: 62,
           ),
           CustomButton(
-            width: width,
+            width: widget.width,
             text: "Sign In",
             onPressed: () {
               if (formKey.currentState!.validate()) {

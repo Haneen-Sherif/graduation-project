@@ -11,11 +11,12 @@ import 'package:graduation_project/generated/assets.dart';
 import 'package:provider/provider.dart';
 
 class ChatViewBody extends StatefulWidget {
-  const ChatViewBody({super.key,});
+  const ChatViewBody({
+    super.key,
+  });
 
   @override
   State<ChatViewBody> createState() => _ChatViewBodyState();
-
 }
 
 class _ChatViewBodyState extends State<ChatViewBody> {
@@ -45,7 +46,6 @@ class _ChatViewBodyState extends State<ChatViewBody> {
   Widget build(BuildContext context) {
     final modelsProvider = Provider.of<ModelsProvider>(context);
     final chatProvider = Provider.of<ChatProvider>(context);
-    final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Column(
         children: [
@@ -57,13 +57,10 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                   children: [
                     Expanded(
                       child: ListTile(
-                        leading: IconButton(onPressed: () {
-
-                        }, icon: Image.asset(Assets.iconsBack)),
-                        title: Text(
-                            'Chat',
-                            style: Styles.textStyle20
-                        ),
+                        leading: IconButton(
+                            onPressed: () {},
+                            icon: Image.asset(Assets.iconsBack)),
+                        title: Text('Chat', style: Styles.textStyle20),
                         trailing: IconButton(
                           onPressed: () async {
                             await Services.showModalSheet(context: context);
@@ -77,43 +74,41 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                         ),
                       ),
                     )
-
-
-
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: size.width * 0.05,
-                      top: size.height * 0.01,
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  top: 25,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(Assets.imagesDocBot),
+                    const SizedBox(
+                      width: 4,
                     ),
-                    child: Image.asset(Assets.imagesDocBot),
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Doc Bot",
-                        style: Styles.textStyle16.copyWith(
-                          fontFamily: "Roboto",
-                          fontWeight: FontWeight.w500,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Doc Bot",
+                          style: Styles.textStyle16.copyWith(
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "online",
-                        style: Styles.textStyle12.copyWith(
-                          fontFamily: "Roboto",
-                        ),
-                      )
-                    ],
-                  )
-                ],
+                        Text(
+                          "online",
+                          style: Styles.textStyle12.copyWith(
+                            fontFamily: "Roboto",
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ],
           ),

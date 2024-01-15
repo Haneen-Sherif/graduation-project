@@ -9,12 +9,10 @@ class CustomExpertsInfoBody extends StatelessWidget {
     super.key,
     required this.expertsList,
     required this.index,
-    required this.size,
   });
 
   final List<ExpertsModel> expertsList;
   final int index;
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +101,7 @@ class CustomExpertsInfoBody extends StatelessWidget {
           height: 9,
         ),
         Padding(
-          padding: EdgeInsets.only(left: size.width * 0.02),
+          padding: const EdgeInsets.only(left: 10),
           child: Text(
             expertsList[index].professionalInformation,
             style: Styles.textStyle15,

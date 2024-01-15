@@ -12,8 +12,22 @@ class AddEquipmentsViewBody extends StatefulWidget {
 
 class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController addEquipmentController = TextEditingController();
-  TextEditingController countController = TextEditingController();
+  late TextEditingController addEquipmentController;
+  late TextEditingController countController;
+
+  @override
+  void initState() {
+    addEquipmentController = TextEditingController();
+    countController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    addEquipmentController.dispose();
+    countController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

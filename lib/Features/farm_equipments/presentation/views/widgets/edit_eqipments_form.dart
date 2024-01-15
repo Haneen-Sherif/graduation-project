@@ -25,7 +25,7 @@ class EditEquipmentsForm extends StatelessWidget {
     return Form(
       key: formKey,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+        padding: const EdgeInsets.symmetric(horizontal: 46),
         child: Column(
           children: [
             CustomTextFormField(

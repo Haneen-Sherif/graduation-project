@@ -21,7 +21,7 @@ class SignInViewBody extends StatelessWidget {
           Image.asset(Assets.imagesDecoration),
           CustomSignInText(width: width),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+            padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Column(
               children: [
                 const SizedBox(

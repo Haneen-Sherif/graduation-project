@@ -44,9 +44,8 @@ class FarmEquipmentsViewBody extends StatelessWidget {
                 itemCount: equipmentsList.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+                    padding: const EdgeInsets.symmetric(horizontal: 46),
                     child: CustomFarmEquipmentItem(
-                      size: size,
                       text: equipmentsList[index].name,
                       delete: () {},
                       edit: () {

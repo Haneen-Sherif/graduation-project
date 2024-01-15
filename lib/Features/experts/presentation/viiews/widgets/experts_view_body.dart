@@ -7,7 +7,6 @@ import 'package:graduation_project/Features/experts/presentation/viiews/widgets/
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 import 'package:graduation_project/core/utils/routes.dart';
-import 'package:graduation_project/generated/assets.dart';
 
 class ExpertsViewBody extends StatelessWidget {
   const ExpertsViewBody({super.key});
@@ -35,7 +34,7 @@ class ExpertsViewBody extends StatelessWidget {
             ),
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+                padding: const EdgeInsets.symmetric(horizontal: 18),
                 child: GestureDetector(
                   onTap: () {
                     context.push(AppRoutes.kExpertsProfileView, extra: index);

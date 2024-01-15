@@ -38,7 +38,6 @@ class HomeViewBody extends StatelessWidget {
               child: FishListView(fishList: fishList),
             ),
             FishInfoListView(
-              size: size,
               fishList: fishList,
             ),
             const SizedBox(
@@ -57,25 +56,25 @@ class HomeViewBody extends StatelessWidget {
 
   Future<bool> _showExitConfirmationDialog(BuildContext context) async {
     return await showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Exit App',
-            style: TextStyle(color: kSecondaryColor),
-          ),
-          content: const Text(
-            'Do you want to close the app?',
-            style: TextStyle(color: kSecondaryColor),
-          ),
-          backgroundColor: kPrimaryColor,
-          actions: <Widget>[
-            _buildDialogButton(context, 'No', false),
-            _buildDialogButton(context, 'Yes', true),
-          ],
-        );
-      },
-    ) ??
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text(
+                'Exit App',
+                style: TextStyle(color: kSecondaryColor),
+              ),
+              content: const Text(
+                'Do you want to close the app?',
+                style: TextStyle(color: kSecondaryColor),
+              ),
+              backgroundColor: kPrimaryColor,
+              actions: <Widget>[
+                _buildDialogButton(context, 'No', false),
+                _buildDialogButton(context, 'Yes', true),
+              ],
+            );
+          },
+        ) ??
         false;
   }
 

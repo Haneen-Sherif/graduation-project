@@ -11,6 +11,5 @@ class SplashCubit extends Cubit<double> {
         const Duration(milliseconds: 200),
       );
     }
-    // context.pushReplacement(AppRoutes.kSignInView);
   }
 }

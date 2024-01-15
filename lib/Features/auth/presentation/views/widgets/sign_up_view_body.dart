@@ -19,7 +19,7 @@ class SignUpViewBody extends StatelessWidget {
         children: [
           Image.asset(Assets.imagesDecoration),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+            padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Column(
               children: [
                 Image.asset(Assets.imagesLogo_2),

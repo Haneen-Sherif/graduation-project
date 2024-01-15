@@ -23,11 +23,10 @@ class ExpertsProfileViewBody extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+            padding: const EdgeInsets.symmetric(horizontal: 26),
             child: CustomExpertsInfoBody(
               expertsList: expertsList,
               index: index,
-              size: size,
             ),
           ),
           const SizedBox(
