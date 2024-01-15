@@ -52,13 +52,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    Assets.imagesLogo_1,
-                    width: size.width * 0.4,
+                  Expanded(
+                    flex: 2,
+                    child: Image.asset(
+                      Assets.imagesLogo_1,
+                      width: size.width * 0.4,
+                    ),
                   ),
-                  SocialMediaRow(
-                    iconColor: kPrimaryColor,
-                    borderColor: kPrimaryColor.withOpacity(0.25),
+                  const Expanded(
+                    child: SizedBox(),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: SocialMediaRow(
+                      iconColor: kPrimaryColor,
+                      borderColor: kPrimaryColor.withOpacity(0.25),
+                    ),
                   ),
                 ],
               ),

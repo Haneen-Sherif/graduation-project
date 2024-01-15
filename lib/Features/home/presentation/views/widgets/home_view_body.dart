@@ -26,30 +26,45 @@ class HomeViewBody extends StatelessWidget {
       onWillPop: () async {
         return await _showExitConfirmationDialog(context);
       },
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            HomeStackWidget(size: size, scaffoldKey: scaffoldKey),
-            const SizedBox(
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: HomeStackWidget(size: size, scaffoldKey: scaffoldKey),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
               height: 42,
             ),
-            SizedBox(
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
               height: 200,
               child: FishListView(fishList: fishList),
             ),
-            FishInfoListView(
+          ),
+          SliverToBoxAdapter(
+            child: FishInfoListView(
               fishList: fishList,
             ),
-            const SizedBox(
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
               height: 12,
             ),
-            ReportWidget(size: size),
-            const SizedBox(
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: ReportWidget(size: size),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
               height: 12,
             ),
-            HomeFooterWidget(size: size)
-          ],
-        ),
+          ),
+          SliverToBoxAdapter(
+            child: HomeFooterWidget(size: size),
+          )
+        ],
       ),
     );
   }
