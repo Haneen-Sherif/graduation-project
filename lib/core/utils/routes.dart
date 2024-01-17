@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:graduation_project/Features/auth/presentation/views/check_email_view.dart';
+import 'package:graduation_project/Features/auth/presentation/views/forgot_password_view.dart';
+import 'package:graduation_project/Features/auth/presentation/views/password_changed_view.dart';
+import 'package:graduation_project/Features/auth/presentation/views/reset_password_view.dart';
 import 'package:graduation_project/Features/auth/presentation/views/sign_in_view.dart';
 import 'package:graduation_project/Features/auth/presentation/views/sign_up_view.dart';
 import 'package:graduation_project/Features/chat/presentation/views/chat_view.dart';
@@ -27,6 +31,10 @@ abstract class AppRoutes {
   static String kDetectView = '/detectView';
   static String kShowResultView = '/showResultView';
   static String kExpertsView = '/expertsView';
+  static String kForgotPasswordView = '/forgotPasswordView';
+  static String kCheckEmailView = '/checkEmailView';
+  static String kResetPasswordView = '/resetPasswordView';
+  static String kPasswordChangedView = '/passwordChangedView';
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -49,6 +57,46 @@ abstract class AppRoutes {
           return const CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
             child: SignUpView(),
+            transitionsBuilder: _buildCustomTransition2,
+          );
+        },
+      ),
+      GoRoute(
+        path: kForgotPasswordView,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: ForgotPasswordView(),
+            transitionsBuilder: _buildCustomTransition2,
+          );
+        },
+      ),
+      GoRoute(
+        path: kCheckEmailView,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: CheckEmailView(),
+            transitionsBuilder: _buildCustomTransition2,
+          );
+        },
+      ),
+      GoRoute(
+        path: kResetPasswordView,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: ResetPasswordView(),
+            transitionsBuilder: _buildCustomTransition2,
+          );
+        },
+      ),
+      GoRoute(
+        path: kPasswordChangedView,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: PasswordChangedView(),
             transitionsBuilder: _buildCustomTransition2,
           );
         },

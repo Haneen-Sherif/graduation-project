@@ -12,7 +12,9 @@ class CustomTextFormField extends StatefulWidget {
     required this.text,
     required this.obscureText,
     required this.keyboardType,
-    required this.textInputAction, this.hintText,
+    required this.textInputAction,
+    this.hintText,
+    this.fillColor, this.borderColor, this.hintTextColor, this.onChanged, this.suffixIcon,
   });
 
   final TextEditingController controller;
@@ -23,6 +25,11 @@ class CustomTextFormField extends StatefulWidget {
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final String? hintText;
+  final Color? fillColor;
+  final Color? borderColor;
+  final Color? hintTextColor;
+  final void Function(String)? onChanged;
+  final Widget? suffixIcon;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -32,6 +39,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: widget.onChanged,
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       controller: widget.controller,
@@ -40,21 +48,23 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       obscureText: widget.obscureText,
       cursorHeight: 20.0,
       decoration: InputDecoration(
+        suffixIcon: widget.suffixIcon,
         errorMaxLines: 2,
         hintText: widget.hintText,
         contentPadding: EdgeInsets.symmetric(horizontal: widget.width * 0.05),
         labelText: widget.text,
         labelStyle: Styles.textStyle15.copyWith(
-          color: Colors.black.withOpacity(0.78),
+          color: widget.hintTextColor ?? Colors.black.withOpacity(0.78),
           letterSpacing: 0.90,
         ),
-        fillColor: Colors.white,
+        fillColor: widget.fillColor ?? Colors.white,
         filled: true,
-        border: buildOutlineInputBorder(Colors.white),
+        border: buildOutlineInputBorder(widget.borderColor ?? Colors.white),
         errorBorder: buildOutlineInputBorder(Colors.red),
         focusedErrorBorder: buildOutlineInputBorder(Colors.red),
         focusedBorder: buildOutlineInputBorder(kPrimaryColor),
-        enabledBorder: buildOutlineInputBorder(Colors.white),
+        enabledBorder:
+            buildOutlineInputBorder(widget.borderColor ?? Colors.white),
       ),
     );
   }

@@ -77,7 +77,9 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
             height: 5,
           ),
           CustomForgetPassword(
-            onTap: () {},
+            onTap: () {
+              context.push(AppRoutes.kForgotPasswordView);
+            },
           ),
           const SizedBox(
             height: 62,
