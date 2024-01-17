@@ -35,17 +35,22 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
     return CustomScrollView(
       slivers: [
         const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 57,
+          ),
+        ),
+        const SliverToBoxAdapter(
           child: Align(
               alignment: Alignment.center,
               child: CustomTitle(title: "Add Equipments")),
         ),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: SizedBox(
-            height: size.height * 0.1,
+            height: 71,
           ),
         ),
-        SliverFillRemaining(
-          hasScrollBody: false,
+        SliverToBoxAdapter(
+          // hasScrollBody: false,
           child: AddEquipmentsForm(
             formKey: formKey,
             size: size,
@@ -55,10 +60,11 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
         ),
         const SliverToBoxAdapter(
           child: SizedBox(
-            height: 8,
+            height: 16,
           ),
         ),
-        SliverToBoxAdapter(
+        SliverFillRemaining(
+          hasScrollBody: false,
           child: HomeFooterWidget(size: size),
         )
       ],

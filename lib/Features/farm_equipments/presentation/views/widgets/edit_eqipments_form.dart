@@ -37,9 +37,10 @@ class EditEquipmentsForm extends StatelessWidget {
                 }
                 return null;
               },
-              text: BlocProvider.of<EquipmentsCubit>(context)
+              hintText: BlocProvider.of<EquipmentsCubit>(context)
                   .equipmentsList[index]
                   .name,
+              text: "Equipment name",
               obscureText: false,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.next,
@@ -61,8 +62,8 @@ class EditEquipmentsForm extends StatelessWidget {
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,
             ),
-            SizedBox(
-              height: size.height * 0.1,
+            const SizedBox(
+              height: 32,
             ),
             CustomButton(
               width: size.width * 0.4,

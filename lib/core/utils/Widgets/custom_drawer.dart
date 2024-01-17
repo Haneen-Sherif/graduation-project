@@ -39,10 +39,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
               padding: EdgeInsets.symmetric(horizontal: 32),
               child: CustomDrawerBody(),
             ),
-            CustomButton(
-              width: size.width * 0.7,
-              text: "Log Out",
-              onPressed: () {},
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+              child: CustomButton(
+                width: size.width,
+                text: "Log Out",
+                onPressed: () {},
+              ),
             ),
             const SizedBox(
               height: 70,
@@ -56,7 +59,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     flex: 2,
                     child: Image.asset(
                       Assets.imagesLogo_1,
-                      width: size.width * 0.4,
+                      // fit: BoxFit.fill,
+                      // width: size.width * 0.4,
                     ),
                   ),
                   const Expanded(

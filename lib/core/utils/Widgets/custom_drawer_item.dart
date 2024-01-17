@@ -15,12 +15,15 @@ class CustomDrawerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Text(
-        title,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 1,
-        style: Styles.textStyle25.copyWith(
-          fontWeight: FontWeight.w500,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          title,
+          // overflow: TextOverflow.ellipsis,
+          // maxLines: 1,
+          style: Styles.textStyle25.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );

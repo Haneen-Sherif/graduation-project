@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/chat_provider.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/models_provider.dart';
 import 'package:graduation_project/Features/chat/presentation/views/widgets/chat_widget.dart';
@@ -58,7 +59,9 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                     Expanded(
                       child: ListTile(
                         leading: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.pop();
+                            },
                             icon: Image.asset(Assets.iconsBack)),
                         title: Text('Chat', style: Styles.textStyle20),
                         trailing: IconButton(

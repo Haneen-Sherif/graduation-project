@@ -3,7 +3,7 @@ import 'package:graduation_project/Features/auth/presentation/views/widgets/cust
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
     super.key,
     required this.controller,
@@ -12,7 +12,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.text,
     required this.obscureText,
     required this.keyboardType,
-    required this.textInputAction,
+    required this.textInputAction, this.hintText,
   });
 
   final TextEditingController controller;
@@ -22,20 +22,28 @@ class CustomTextFormField extends StatelessWidget {
   final String text;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
+  final String? hintText;
 
+  @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: keyboardType,
-      textInputAction: textInputAction,
-      controller: controller,
+      keyboardType: widget.keyboardType,
+      textInputAction: widget.textInputAction,
+      controller: widget.controller,
       cursorColor: kPrimaryColor,
-      validator: validator,
-      obscureText: obscureText,
+      validator: widget.validator,
+      obscureText: widget.obscureText,
       cursorHeight: 20.0,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: width * 0.05),
-        labelText: text,
+        errorMaxLines: 2,
+        hintText: widget.hintText,
+        contentPadding: EdgeInsets.symmetric(horizontal: widget.width * 0.05),
+        labelText: widget.text,
         labelStyle: Styles.textStyle15.copyWith(
           color: Colors.black.withOpacity(0.78),
           letterSpacing: 0.90,

@@ -38,6 +38,7 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return Form(
+      autovalidateMode: AutovalidateMode.always,
       key: formKey,
       child: Column(
         children: [

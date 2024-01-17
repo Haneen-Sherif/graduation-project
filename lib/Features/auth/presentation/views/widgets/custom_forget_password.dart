@@ -18,7 +18,7 @@ class CustomForgetPassword extends StatelessWidget {
         InkWell(
           onTap: onTap,
           child: Text(
-            'Forget Password ?',
+            'Forgot Password ?',
             style: Styles.textStyle14.copyWith(
               color: kPrimaryColor,
               fontWeight: FontWeight.w600,

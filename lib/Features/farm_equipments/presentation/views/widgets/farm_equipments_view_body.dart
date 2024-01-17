@@ -24,16 +24,12 @@ class FarmEquipmentsViewBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(
+                height: 57,
+              ),
               const CustomTitle(title: "Farm Equipments"),
               const SizedBox(
-                height: 20,
-              ),
-              const Icon(
-                Icons.delete,
-                size: 96,
-              ),
-              const SizedBox(
-                height: 12,
+                height: 71,
               ),
               ListView.separated(
                 shrinkWrap: true,
@@ -59,7 +55,7 @@ class FarmEquipmentsViewBody extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 84,
+                height: 32,
               ),
               CustomButton(
                 width: size.width * 0.4,
@@ -69,7 +65,7 @@ class FarmEquipmentsViewBody extends StatelessWidget {
                 },
               ),
               const SizedBox(
-                height: 84,
+                height: 16,
               ),
               HomeFooterWidget(size: size)
             ],

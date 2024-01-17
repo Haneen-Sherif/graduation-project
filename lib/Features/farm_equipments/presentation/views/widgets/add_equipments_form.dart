@@ -55,8 +55,8 @@ class AddEquipmentsForm extends StatelessWidget {
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,
             ),
-            SizedBox(
-              height: size.height * 0.1,
+            const SizedBox(
+              height: 32,
             ),
             CustomButton(
               width: size.width * 0.4,

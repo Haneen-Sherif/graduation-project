@@ -42,6 +42,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return Form(
+      autovalidateMode: AutovalidateMode.always,
       key: formKey,
       child: Column(
         children: [
@@ -125,7 +126,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
             onPressed: () {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
-                context.pushReplacement(AppRoutes.kHomeView);
+                context.pushReplacement(AppRoutes.kSignInView);
               }
             },
           ),

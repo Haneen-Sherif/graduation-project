@@ -13,9 +13,58 @@ class HomeFooterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            fit: BoxFit.fill, image: AssetImage(Assets.imagesDecoration_2)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: Column(
+          children: [
+            Image.asset(
+              Assets.imagesLogo_1,
+              width: size.width * 0.5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      '©FishShield \nAll Rights Reserved. ',
+                      textAlign: TextAlign.center,
+                      style: Styles.textStyle10.copyWith(
+                        color: Colors.white,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    SocialMediaRow(
+                      borderColor: Colors.white.withOpacity(0.25),
+                      iconColor: Colors.white,
+                    )
+                  ],
+                ),
+                ClipOval(
+                  child: Image.asset(
+                    Assets.imagesFrancesco,
+                    width: 80,
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
     return Stack(
       children: [
-        Image.asset(Assets.imagesDecoration_2),
+        Image.asset(
+          Assets.imagesDecoration_2,
+        ),
         Positioned(
           top: size.height * 0.01,
           left: 0,
