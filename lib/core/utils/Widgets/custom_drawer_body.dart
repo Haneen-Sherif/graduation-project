@@ -15,6 +15,15 @@ class CustomDrawerBody extends StatelessWidget {
       children: [
         CustomDrawerItem(
           onTap: () {
+            context.push(AppRoutes.kHomeView);
+          },
+          title: 'Home',
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        CustomDrawerItem(
+          onTap: () {
             context.push(AppRoutes.kDetectView);
           },
           title: 'Disease Detection',

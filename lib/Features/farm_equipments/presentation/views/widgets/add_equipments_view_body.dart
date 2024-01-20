@@ -58,14 +58,18 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
             countController: countController,
           ),
         ),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 16,
-          ),
-        ),
         SliverFillRemaining(
           hasScrollBody: false,
-          child: HomeFooterWidget(size: size),
+          child: Column(
+            children: [
+              const Expanded(
+                child: SizedBox(
+                  height: 16,
+                ),
+              ),
+              HomeFooterWidget(size: size),
+            ],
+          ),
         )
       ],
     );

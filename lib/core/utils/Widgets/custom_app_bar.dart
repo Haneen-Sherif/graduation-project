@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/generated/assets.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -21,11 +22,8 @@ class CustomAppBar extends StatelessWidget {
           fit: BoxFit.fill,
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.asset(Assets.imagesLogo_1),
-          IconButton(
+      child: ListTile(
+        leading: IconButton(
             onPressed: () {
               anotherKey.currentState!.openDrawer();
             },
@@ -33,9 +31,10 @@ class CustomAppBar extends StatelessWidget {
               Icons.menu,
               size: 40,
             ),
-          )
-        ],
+          ),
+        title: Image.asset(Assets.imagesLogo_1),
       ),
     );
   }
+
 }

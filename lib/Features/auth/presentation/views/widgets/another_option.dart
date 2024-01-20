@@ -18,24 +18,26 @@ class AnotherOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text.rich(
-        TextSpan(
-          text: text1,
-          style: Styles.textStyle14.copyWith(
-            color: Colors.black.withOpacity(0.78),
-            letterSpacing: 0.84,
+      child: FittedBox(
+        child: Text.rich(
+          TextSpan(
+            text: text1,
+            style: Styles.textStyle14.copyWith(
+              color: Colors.black.withOpacity(0.78),
+              letterSpacing: 0.84,
+            ),
+            children: <InlineSpan>[
+              TextSpan(
+                recognizer: TapGestureRecognizer()..onTap = onTap,
+                text: text2,
+                style: Styles.textStyle14.copyWith(
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.84,
+                ),
+              )
+            ],
           ),
-          children: <InlineSpan>[
-            TextSpan(
-              recognizer: TapGestureRecognizer()..onTap = onTap,
-              text: text2,
-              style: Styles.textStyle14.copyWith(
-                color: kPrimaryColor,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.84,
-              ),
-            )
-          ],
         ),
       ),
     );

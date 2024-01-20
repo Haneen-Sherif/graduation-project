@@ -24,49 +24,58 @@ class ShowResultViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.sizeOf(context);
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 16,
-          ),
-          Text('Result', style: Styles.textStyle27),
-          const SizedBox(
-            height: 16,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: diseaseResultLest.length,
-              itemBuilder: (context, index) {
-                return DiseaseResult(
-                  diseaseName: diseaseResultLest[index].diseaseName,
-                  diseaseType: diseaseResultLest[index].diseaseType,
-                  diseaseImage: diseaseResultLest[index].diseaseImage,
-                  recommendationAction:
-                      diseaseResultLest[index].recommendationAction,
-                );
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(children: [
+            const SizedBox(
+              height: 16,
+            ),
+            Text('Result', style: Styles.textStyle27),
+            const SizedBox(
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: diseaseResultLest.length,
+                itemBuilder: (context, index) {
+                  return DiseaseResult(
+                    diseaseName: diseaseResultLest[index].diseaseName,
+                    diseaseType: diseaseResultLest[index].diseaseType,
+                    diseaseImage: diseaseResultLest[index].diseaseImage,
+                    recommendationAction:
+                        diseaseResultLest[index].recommendationAction,
+                  );
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 60,
+            ),
+            CustomButton(
+              width: size.width * 0.8,
+              text: "Contact Doctor",
+              onPressed: () {
+                context.push(AppRoutes.kExpertsView);
               },
             ),
-          ),
-          const SizedBox(
-            height: 60,
-          ),
-          CustomButton(
-            width: size.width * 0.8,
-            text: "Contact Doctor",
-            onPressed: () {
-              context.push(AppRoutes.kExpertsView);
-            },
-          ),
-          const SizedBox(
-            height: 60,
-          ),
-          HomeFooterWidget(size: size)
-        ],
-      ),
+          ]),
+        ),
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Column(children: [
+            const Expanded(
+              child: SizedBox(
+                height: 60,
+              ),
+            ),
+            HomeFooterWidget(size: size)
+          ]),
+        )
+      ],
     );
   }
 }

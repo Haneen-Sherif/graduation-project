@@ -14,6 +14,8 @@ class CustomSignUpForm extends StatefulWidget {
 }
 
 class _CustomSignUpFormState extends State<CustomSignUpForm> {
+  bool passwordVisible = true;
+  bool confirmPasswordVisible = true;
   late TextEditingController passwordController;
   late TextEditingController emailController;
   late TextEditingController nameController;
@@ -81,9 +83,23 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
             height: 16,
           ),
           CustomTextFormField(
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  passwordVisible = !passwordVisible;
+                });
+              },
+              icon: passwordVisible
+                  ? Icon(
+                      Icons.visibility_outlined,
+                      color: Colors.black.withOpacity(0.6),
+                    )
+                  : Icon(Icons.visibility_off_outlined,
+                      color: Colors.black.withOpacity(0.6)),
+            ),
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.next,
-            obscureText: true,
+            obscureText: passwordVisible,
             text: "Password",
             validator: (value) {
               if (value!.isEmpty) {
@@ -98,13 +114,27 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
             height: 16,
           ),
           CustomTextFormField(
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  confirmPasswordVisible = !confirmPasswordVisible;
+                });
+              },
+              icon: confirmPasswordVisible
+                  ? Icon(
+                      Icons.visibility_outlined,
+                      color: Colors.black.withOpacity(0.6),
+                    )
+                  : Icon(Icons.visibility_off_outlined,
+                      color: Colors.black.withOpacity(0.6)),
+            ),
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
-            obscureText: true,
+            obscureText: confirmPasswordVisible,
             text: "Confirm Password",
             validator: (value) {
               if (value!.isEmpty) {
-                return 'Re-password must not be empty';
+                return 'Confirm password must not be empty';
               }
               if (passwordController.text != confirmPasswordController.text) {
                 return "Please make sure your passwords match";

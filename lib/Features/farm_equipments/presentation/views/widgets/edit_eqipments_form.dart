@@ -40,7 +40,6 @@ class EditEquipmentsForm extends StatelessWidget {
               hintText: BlocProvider.of<EquipmentsCubit>(context)
                   .equipmentsList[index]
                   .name,
-              text: "Equipment name",
               obscureText: false,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.next,
@@ -57,7 +56,9 @@ class EditEquipmentsForm extends StatelessWidget {
                 }
                 return null;
               },
-              text: "Count",
+              hintText: BlocProvider.of<EquipmentsCubit>(context)
+                  .equipmentsList[index]
+                  .count.toString(),
               obscureText: false,
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,

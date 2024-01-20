@@ -52,7 +52,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   newPasswordVisible = !newPasswordVisible;
                 });
               },
-              icon: !newPasswordVisible
+              icon: newPasswordVisible
                   ? Icon(
                       Icons.visibility_outlined,
                       color: Colors.black.withOpacity(0.6),
@@ -97,7 +97,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   confirmNewPasswordVisible = !confirmNewPasswordVisible;
                 });
               },
-              icon: !confirmNewPasswordVisible
+              icon: confirmNewPasswordVisible
                   ? Icon(
                       Icons.visibility_outlined,
                       color: Colors.black.withOpacity(0.6),

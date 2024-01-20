@@ -10,19 +10,19 @@ class EquipmentsCubit extends Cubit<EquipmentsState> {
   final List<EquipmentsModel> equipmentsList = [
     const EquipmentsModel(
       name: "Equi1",
-      count: 1,
+      count: 4,
     ),
     const EquipmentsModel(
       name: "Equi2",
-      count: 1,
+      count: 5,
     ),
     const EquipmentsModel(
       name: "Equi3",
-      count: 1,
+      count: 8,
     ),
     const EquipmentsModel(
       name: "Equi4",
-      count: 1,
+      count: 0,
     ),
   ];
 }

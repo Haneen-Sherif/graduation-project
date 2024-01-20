@@ -53,7 +53,6 @@ class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
           ),
         ),
         SliverToBoxAdapter(
-          // hasScrollBody: false,
           child: EditEquipmentsForm(
             index: widget.index,
             formKey: formKey,
@@ -62,14 +61,16 @@ class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
             countController: countController,
           ),
         ),
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 16,
-          ),
-        ),
         SliverFillRemaining(
           hasScrollBody: false,
-          child: HomeFooterWidget(size: size),
+          child: Column(children: [
+            const Expanded(
+              child: SizedBox(
+                height: 16,
+              ),
+            ),
+            HomeFooterWidget(size: size)
+          ]),
         ),
       ],
     );

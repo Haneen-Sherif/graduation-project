@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/chat_provider.dart';
@@ -8,7 +9,12 @@ import 'package:graduation_project/core/utils/routes.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      builder: (context) => const MyApp(),
+      enabled: true,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +34,8 @@ class MyApp extends StatelessWidget {
       child: BlocProvider(
         create: (context) => HomeCubit(),
         child: MaterialApp.router(
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
           routerConfig: AppRoutes.router,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(

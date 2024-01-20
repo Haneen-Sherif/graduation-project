@@ -9,19 +9,18 @@ class CustomTextFormField extends StatefulWidget {
     required this.controller,
     required this.width,
     required this.validator,
-    required this.text,
     required this.obscureText,
     required this.keyboardType,
     required this.textInputAction,
     this.hintText,
-    this.fillColor, this.borderColor, this.hintTextColor, this.onChanged, this.suffixIcon,
+    this.fillColor, this.borderColor, this.hintTextColor, this.onChanged, this.suffixIcon, this.text,
   });
 
   final TextEditingController controller;
   final double width;
   final String? Function(String?)? validator;
   final bool obscureText;
-  final String text;
+  final String? text;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final String? hintText;

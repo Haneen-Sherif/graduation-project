@@ -20,56 +20,67 @@ class FarmEquipmentsViewBody extends StatelessWidget {
     return SafeArea(
       child: Align(
         alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 57,
-              ),
-              const CustomTitle(title: "Farm Equipments"),
-              const SizedBox(
-                height: 71,
-              ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 16,
+        child: CustomScrollView(
+          slivers: [
+            const SliverToBoxAdapter(
+              child: Column(children: [
+                SizedBox(
+                  height: 57,
                 ),
-                itemCount: equipmentsList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 46),
-                    child: CustomFarmEquipmentItem(
-                      text: equipmentsList[index].name,
-                      delete: () {},
-                      edit: () {
-                        context.push(
-                          AppRoutes.kEditEquipmentView,
-                          extra: index,
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              CustomButton(
-                width: size.width * 0.4,
-                text: "Add",
-                onPressed: () {
-                  context.push(AppRoutes.kAddEquipmentView);
-                },
-              ),
-              const SizedBox(
+                CustomTitle(title: "Farm Equipments"),
+                SizedBox(
+                  height: 71,
+                ),
+              ]),
+            ),
+            SliverList.separated(
+              separatorBuilder: (context, index) => const SizedBox(
                 height: 16,
               ),
-              HomeFooterWidget(size: size)
-            ],
-          ),
+              itemCount: equipmentsList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 46),
+                  child: CustomFarmEquipmentItem(
+                    count: equipmentsList[index].count.toString(),
+                    text: equipmentsList[index].name,
+                    delete: () {},
+                    edit: () {
+                      context.push(
+                        AppRoutes.kEditEquipmentView,
+                        extra: index,
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+            SliverToBoxAdapter(
+              child: Column(children: [
+                const SizedBox(
+                  height: 32,
+                ),
+                CustomButton(
+                  width: size.width * 0.4,
+                  text: "Add",
+                  onPressed: () {
+                    context.push(AppRoutes.kAddEquipmentView);
+                  },
+                ),
+              ]),
+            ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(children: [
+                const Expanded(
+                  child: SizedBox(
+                    height: 16,
+                  ),
+                ),
+                HomeFooterWidget(size: size)
+              ]),
+            )
+          ],
         ),
       ),
     );

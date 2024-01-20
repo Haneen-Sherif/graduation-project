@@ -32,12 +32,15 @@ class CustomButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: Styles.textStyle18.copyWith(
-                color:  Color(0xFFFFF9F9),
-                letterSpacing: 1.08,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: Styles.textStyle18.copyWith(
+                  color:  const Color(0xFFFFF9F9),
+                  letterSpacing: 1.08,
+                ),
               ),
             ),
           ],

@@ -7,6 +7,7 @@ import 'package:graduation_project/Features/chat/presentation/manager/providers/
 import 'package:graduation_project/Features/chat/presentation/views/widgets/chat_widget.dart';
 import 'package:graduation_project/Features/chat/presentation/views/widgets/text_widget.dart';
 import 'package:graduation_project/Features/chat/services/services.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
 import 'package:provider/provider.dart';
@@ -130,7 +131,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
           ),
           if (_isTyping) ...[
             const SpinKitThreeBounce(
-              color: Colors.white,
+              color: kPrimaryColor,
               size: 18,
             ),
           ],

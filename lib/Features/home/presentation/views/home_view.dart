@@ -12,13 +12,14 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: BlocProvider.of<HomeCubit>(context).scaffoldKey,
+      key: scaffoldKey,
       drawer: const CustomDrawer(),
       body: HomeViewBody(
-        scaffoldKey: BlocProvider.of<HomeCubit>(context).scaffoldKey,
+        scaffoldKey: scaffoldKey,
       ),
     );
   }

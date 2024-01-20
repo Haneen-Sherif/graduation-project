@@ -15,6 +15,7 @@ class CustomSignInForm extends StatefulWidget {
 }
 
 class _CustomSignInFormState extends State<CustomSignInForm> {
+  bool passwordVisible = true;
   late TextEditingController passwordController;
 
   late TextEditingController emailController;
@@ -60,9 +61,23 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
             height: 16,
           ),
           CustomTextFormField(
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  passwordVisible = !passwordVisible;
+                });
+              },
+              icon: passwordVisible
+                  ? Icon(
+                Icons.visibility_outlined,
+                color: Colors.black.withOpacity(0.6),
+              )
+                  : Icon(Icons.visibility_off_outlined,
+                  color: Colors.black.withOpacity(0.6)),
+            ),
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
-            obscureText: true,
+            obscureText: passwordVisible,
             text: "Password",
             validator: (value) {
               if (value!.isEmpty) {

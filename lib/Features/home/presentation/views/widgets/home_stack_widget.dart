@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
@@ -23,36 +24,53 @@ class HomeStackWidget extends StatelessWidget {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                fit: BoxFit.fill, image: AssetImage(Assets.imagesFishBG)),
+              fit: BoxFit.fill,
+              image: AssetImage(Assets.imagesFishBG),
+            ),
           ),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset(
-                    Assets.imagesLogo_1,
-                    height: 40,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      scaffoldKey.currentState!.openDrawer();
-                    },
-                    icon: const Icon(
-                      Icons.menu,
-                      size: 40,
-                    ),
-                  )
-                ],
+              ListTile(leading: IconButton(
+                onPressed: () {
+                  scaffoldKey.currentState!.openDrawer();
+                },
+                icon: const Icon(
+                  Icons.menu,
+                  size: 40,
+                ),
               ),
+              title: Image.asset(
+                Assets.imagesLogo_1,
+                height: 40,
+              ) ,
+              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Image.asset(
+              //       Assets.imagesLogo_1,
+              //       height: 40,
+              //     ),
+              //     IconButton(
+              //       onPressed: () {
+              //         scaffoldKey.currentState!.openDrawer();
+              //       },
+              //       icon: const Icon(
+              //         Icons.menu,
+              //         size: 40,
+              //       ),
+              //     )
+              //   ],
+              // ),
               const SizedBox(
                 height: 50,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 40),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    AutoSizeText(
                       'Early detection, lifelong wellness.',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -61,7 +79,7 @@ class HomeStackWidget extends StatelessWidget {
                     const SizedBox(
                       height: 2,
                     ),
-                    Text(
+                    AutoSizeText(
                       'Dive into our Fish Disease App.',
                       maxLines: 1,
                       style: Styles.textStyle18.copyWith(
@@ -88,72 +106,6 @@ class HomeStackWidget extends StatelessWidget {
           ),
         ),
       ),
-    );
-    return Stack(
-      children: [
-        Image.asset(Assets.imagesFishBG),
-        Positioned(
-          top: size.height * 0.05,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset(
-                Assets.imagesLogo_1,
-                height: 40,
-              ),
-              IconButton(
-                onPressed: () {
-                  scaffoldKey.currentState!.openDrawer();
-                },
-                icon: const Icon(
-                  Icons.menu,
-                  size: 40,
-                ),
-              )
-            ],
-          ),
-        ),
-        Positioned(
-          top: size.height * 0.25,
-          width: size.width * 0.9,
-          child: Padding(
-            padding: EdgeInsets.only(left: size.width * 0.05),
-            child: Text(
-              'Early detection, lifelong wellness.',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: Styles.textStyle30,
-            ),
-          ),
-        ),
-        Positioned(
-          top: size.height * 0.42,
-          width: size.width * 0.9,
-          child: Padding(
-            padding: EdgeInsets.only(left: size.width * 0.05),
-            child: Text(
-              'Dive into our Fish Disease App.',
-              maxLines: 1,
-              style: Styles.textStyle18.copyWith(
-                color: const Color(0xFF030303),
-                fontWeight: FontWeight.w400,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: size.height * 0.55,
-          left: size.width * 0.18,
-          child: CustomButton(
-            width: size.width * 0.65,
-            text: "Detect",
-            onPressed: () {
-              context.push(AppRoutes.kDetectView);
-            },
-          ),
-        )
-      ],
     );
   }
 }

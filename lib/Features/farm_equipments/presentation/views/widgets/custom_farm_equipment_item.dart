@@ -6,10 +6,11 @@ class CustomFarmEquipmentItem extends StatelessWidget {
     super.key,
     required this.text,
     required this.delete,
-    required this.edit,
+    required this.edit, required this.count,
   });
 
   final String text;
+  final String count;
   final void Function() delete;
   final void Function() edit;
 
@@ -27,13 +28,36 @@ class CustomFarmEquipmentItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: Styles.textStyle16.copyWith(
-              letterSpacing: 0.96,
+        Row(
+          children: [
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: Styles.textStyle16.copyWith(
+                letterSpacing: 0.96,
+              ),
             ),
-          ),
+            const SizedBox(
+              width: 16,
+            ),
+            Container(
+              width: 19,
+              height: 19,
+              decoration: const ShapeDecoration(
+                color: Colors.white,
+                shape: OvalBorder(side: BorderSide(width: 1)),
+              ),
+              child: Center(
+                child: Text(
+                  count,
+                  style: Styles.textStyle12.copyWith(
+                    letterSpacing: 0.72,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
           Row(
             children: [
               GestureDetector(

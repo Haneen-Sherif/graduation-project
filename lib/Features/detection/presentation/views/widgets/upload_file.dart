@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
-import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
 import 'package:mobkit_dashed_border/mobkit_dashed_border.dart';
 
@@ -31,33 +30,11 @@ class UploadFile extends StatelessWidget {
             Assets.imagesUpload,
           ),
           const SizedBox(
-            height: 22,
-          ),
-          Text(
-            'Drag and Drop File Here',
-            style: Styles.textStyle16.copyWith(
-              color: const Color(0xFF8E90BC),
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0.96,
-            ),
-          ),
-          const SizedBox(
-            height: 11,
-          ),
-          Text(
-            'OR',
-            style: Styles.textStyle20.copyWith(
-              color: const Color(0xFF333333),
-              fontWeight: FontWeight.w700,
-              letterSpacing: 1.20,
-            ),
-          ),
-          const SizedBox(
-            height: 12,
+            height: 61,
           ),
           CustomButton(
             width: size.width * 0.6,
-            text: "Browse File",
+            text: "Import Image",
             onPressed: () {},
           )
         ],
