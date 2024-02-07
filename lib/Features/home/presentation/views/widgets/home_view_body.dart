@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 import 'package:graduation_project/Features/home/data/models/fish_model.dart';
 import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
-import 'package:graduation_project/Features/home/presentation/views/widgets/fish_info_list_view.dart';
+import 'package:graduation_project/Features/home/presentation/views/widgets/experts_list_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/fish_list_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_stack_widget.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/report_widget.dart';
 import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/core/utils/styles.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({
@@ -21,6 +23,8 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<FishModel> fishList =
         BlocProvider.of<HomeCubit>(context).fishList;
+    final List<ExpertsModel> expertsList =
+        BlocProvider.of<HomeCubit>(context).expertsList;
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
@@ -33,23 +37,77 @@ class HomeViewBody extends StatelessWidget {
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
-              height: 42,
+              height: 18,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Text("Fish Diseases",
+                textAlign: TextAlign.center, style: Styles.textStyle27),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 74,
             ),
           ),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: 200,
-              child: FishListView(fishList: fishList),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: FishInfoListView(
-              fishList: fishList,
+              height: 94,
+              width: 74,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    height: 79,
+                    color: const Color(0xff8488CD),
+                  ),
+                  Positioned(
+                      top: -40,
+                      left: 0,
+                      right: 0,
+                      child: SizedBox(
+                          height: 94, child: FishListView(fishList: fishList))),
+                ],
+              ),
             ),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
-              height: 12,
+              height: 24,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Text("Experts",
+                textAlign: TextAlign.center, style: Styles.textStyle27),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 95,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 120,
+              width: 79,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    height: 79,
+                    color: const Color(0xff8488CD),
+                  ),
+                  Positioned(
+                    top: -70,
+                    left: 0,
+                    right: 0,
+                    child: SizedBox(
+                      height: 122,
+                      child: ExpertsListView(
+                        expertsList: expertsList,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           SliverFillRemaining(

@@ -40,10 +40,12 @@ class FarmEquipmentsViewBody extends StatelessWidget {
               itemCount: equipmentsList.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 46),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: CustomFarmEquipmentItem(
+                    image: equipmentsList[index].image,
                     count: equipmentsList[index].count.toString(),
-                    text: equipmentsList[index].name,
+                    title: equipmentsList[index].name,
+                    subTitle: equipmentsList[index].description,
                     delete: () {},
                     edit: () {
                       context.push(
@@ -61,8 +63,8 @@ class FarmEquipmentsViewBody extends StatelessWidget {
                   height: 32,
                 ),
                 CustomButton(
-                  width: size.width * 0.4,
-                  text: "Add",
+                  width: size.width * 0.6,
+                  text: "Add Equipment",
                   onPressed: () {
                     context.push(AppRoutes.kAddEquipmentView);
                   },

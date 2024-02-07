@@ -30,43 +30,26 @@ class HomeStackWidget extends StatelessWidget {
           ),
           child: Column(
             children: [
-              ListTile(leading: IconButton(
-                onPressed: () {
-                  scaffoldKey.currentState!.openDrawer();
-                },
-                icon: const Icon(
-                  Icons.menu,
-                  size: 40,
+              ListTile(
+                leading: IconButton(
+                  onPressed: () {
+                    scaffoldKey.currentState!.openDrawer();
+                  },
+                  icon: const Icon(
+                    Icons.menu,
+                    size: 40,
+                  ),
+                ),
+                title: Image.asset(
+                  Assets.imagesLogo_1,
+                  height: 40,
                 ),
               ),
-              title: Image.asset(
-                Assets.imagesLogo_1,
-                height: 40,
-              ) ,
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Image.asset(
-              //       Assets.imagesLogo_1,
-              //       height: 40,
-              //     ),
-              //     IconButton(
-              //       onPressed: () {
-              //         scaffoldKey.currentState!.openDrawer();
-              //       },
-              //       icon: const Icon(
-              //         Icons.menu,
-              //         size: 40,
-              //       ),
-              //     )
-              //   ],
-              // ),
               const SizedBox(
                 height: 50,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 40),
+                padding: const EdgeInsets.only(left: 40, right: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -81,7 +64,7 @@ class HomeStackWidget extends StatelessWidget {
                     ),
                     AutoSizeText(
                       'Dive into our Fish Disease App.',
-                      maxLines: 1,
+                      maxLines: 2,
                       style: Styles.textStyle18.copyWith(
                         color: const Color(0xFF030303),
                         fontWeight: FontWeight.w400,

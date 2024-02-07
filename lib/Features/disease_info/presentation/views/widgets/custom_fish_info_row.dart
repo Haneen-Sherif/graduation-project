@@ -23,7 +23,6 @@ class CustomFishInfoRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          flex: 2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -31,22 +30,18 @@ class CustomFishInfoRow extends StatelessWidget {
               const SizedBox(
                 height: 4,
               ),
-              Text(
-                subTitle,
-                style: Styles.textStyle12.copyWith(
-                  letterSpacing: 0.72,
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Text(
+                  subTitle,
+                  style: Styles.textStyle12.copyWith(
+                    letterSpacing: 0.72,
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(
-          width: 13,
-        ),
-        Expanded(
-          flex: 1,
-          child: Image.asset(diseaseInfoList[index].image),
-        )
       ],
     );
   }

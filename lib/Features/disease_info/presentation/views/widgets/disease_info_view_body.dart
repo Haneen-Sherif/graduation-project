@@ -27,9 +27,13 @@ class DiseaseInfoViewBody extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const CustomTitle(title: "Fish Information"),
+                  const CustomTitle(title: " Fish Diseases"),
                   const SizedBox(
-                    height: 4,
+                    height: 26,
+                  ),
+                  Image.asset(diseaseInfoList[index].image),
+                  const SizedBox(
+                    height: 24,
                   ),
                   CustomFishInfoRow(
                     title: diseaseInfoList[index].title,

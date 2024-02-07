@@ -69,11 +69,11 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
               },
               icon: passwordVisible
                   ? Icon(
-                Icons.visibility_outlined,
-                color: Colors.black.withOpacity(0.6),
-              )
+                      Icons.visibility_outlined,
+                      color: Colors.black.withOpacity(0.6),
+                    )
                   : Icon(Icons.visibility_off_outlined,
-                  color: Colors.black.withOpacity(0.6)),
+                      color: Colors.black.withOpacity(0.6)),
             ),
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
@@ -105,7 +105,7 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
             onPressed: () {
               if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
-                context.pushReplacement(AppRoutes.kHomeView);
+                context.push(AppRoutes.kHomeView);
               }
             },
           ),

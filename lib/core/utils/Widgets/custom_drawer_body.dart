@@ -15,7 +15,10 @@ class CustomDrawerBody extends StatelessWidget {
       children: [
         CustomDrawerItem(
           onTap: () {
-            context.push(AppRoutes.kHomeView);
+            while (context.canPop()) {
+              context.pop();
+            }
+            context.pushReplacement(AppRoutes.kHomeView);
           },
           title: 'Home',
         ),
@@ -37,15 +40,15 @@ class CustomDrawerBody extends StatelessWidget {
           },
           title: 'Farm Equipments',
         ),
-        const SizedBox(
-          height: 30,
-        ),
-        CustomDrawerItem(
-          onTap: () {
-            context.push(AppRoutes.kExpertsView);
-          },
-          title: 'Experts',
-        ),
+        // const SizedBox(
+        //   height: 30,
+        // ),
+        // CustomDrawerItem(
+        //   onTap: () {
+        //     context.push(AppRoutes.kExpertsView);
+        //   },
+        //   title: 'Experts',
+        // ),
         const SizedBox(
           height: 30,
         ),

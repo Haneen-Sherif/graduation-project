@@ -56,10 +56,10 @@ class ShowResultViewBody extends StatelessWidget {
               height: 60,
             ),
             CustomButton(
-              width: size.width * 0.8,
-              text: "Contact Doctor",
+              width: size.width * 0.4,
+              text: "Chat",
               onPressed: () {
-                context.push(AppRoutes.kExpertsView);
+                context.push(AppRoutes.kChatView);
               },
             ),
           ]),

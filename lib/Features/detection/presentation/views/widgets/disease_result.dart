@@ -20,60 +20,116 @@ class DiseaseResult extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+        Center(child: Image.asset(diseaseImage)),
+        SizedBox(
+          height: 37,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  Text.rich(
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text.rich(
+                TextSpan(
+                  children: [
                     TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Disease Name: ',
-                          style: Styles.textStyle16.copyWith(
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.96,
-                          ),
-                        ),
-                        TextSpan(
-                          text: diseaseName,
-                          style: Styles.textStyle16.copyWith(
-                            letterSpacing: 0.96,
-                          ),
-                        ),
-                      ],
+                      text: 'Disease Name: ',
+                      style: Styles.textStyle16.copyWith(
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0.96,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 31,
-                  ),
-                  Text.rich(
                     TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Disease Type : ',
-                          style: Styles.textStyle16.copyWith(
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0.96,
-                          ),
-                        ),
-                        TextSpan(
-                          text: diseaseType,
-                          style: Styles.textStyle16.copyWith(
-                            letterSpacing: 0.96,
-                          ),
-                        ),
-                      ],
+                      text: diseaseName,
+                      style: Styles.textStyle16.copyWith(
+                        letterSpacing: 0.96,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-            Expanded(child: Image.asset(diseaseImage))
+            const SizedBox(
+              height: 31,
+            ),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Disease Type : ',
+                      style: Styles.textStyle16.copyWith(
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0.96,
+                      ),
+                    ),
+                    TextSpan(
+                      text: diseaseType,
+                      style: Styles.textStyle16.copyWith(
+                        letterSpacing: 0.96,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
+        // Row(
+        //   crossAxisAlignment: CrossAxisAlignment.end,
+        //   children: [
+        //     Expanded(
+        //       flex: 2,
+        //       child: Column(
+        //         children: [
+        //           Text.rich(
+        //             TextSpan(
+        //               children: [
+        //                 TextSpan(
+        //                   text: 'Disease Name: ',
+        //                   style: Styles.textStyle16.copyWith(
+        //                     fontWeight: FontWeight.w500,
+        //                     letterSpacing: 0.96,
+        //                   ),
+        //                 ),
+        //                 TextSpan(
+        //                   text: diseaseName,
+        //                   style: Styles.textStyle16.copyWith(
+        //                     letterSpacing: 0.96,
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //           const SizedBox(
+        //             height: 31,
+        //           ),
+        //           Text.rich(
+        //             TextSpan(
+        //               children: [
+        //                 TextSpan(
+        //                   text: 'Disease Type : ',
+        //                   style: Styles.textStyle16.copyWith(
+        //                     fontWeight: FontWeight.w500,
+        //                     letterSpacing: 0.96,
+        //                   ),
+        //                 ),
+        //                 TextSpan(
+        //                   text: diseaseType,
+        //                   style: Styles.textStyle16.copyWith(
+        //                     letterSpacing: 0.96,
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     Expanded(child: Image.asset(diseaseImage))
+        //   ],
+        // ),
         const SizedBox(
           height: 56,
         ),

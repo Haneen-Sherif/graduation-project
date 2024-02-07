@@ -13,7 +13,13 @@ class CustomTextFormField extends StatefulWidget {
     required this.keyboardType,
     required this.textInputAction,
     this.hintText,
-    this.fillColor, this.borderColor, this.hintTextColor, this.onChanged, this.suffixIcon, this.text,
+    this.fillColor,
+    this.borderColor,
+    this.hintTextColor,
+    this.onChanged,
+    this.suffixIcon,
+    this.text,
+    this.onSaved,
   });
 
   final TextEditingController controller;
@@ -29,6 +35,7 @@ class CustomTextFormField extends StatefulWidget {
   final Color? hintTextColor;
   final void Function(String)? onChanged;
   final Widget? suffixIcon;
+  final void Function(String?)? onSaved;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -46,6 +53,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       validator: widget.validator,
       obscureText: widget.obscureText,
       cursorHeight: 20.0,
+      onSaved: widget.onSaved,
       decoration: InputDecoration(
         suffixIcon: widget.suffixIcon,
         errorMaxLines: 2,

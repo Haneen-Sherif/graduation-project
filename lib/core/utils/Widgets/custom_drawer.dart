@@ -46,8 +46,27 @@ class _CustomDrawerState extends State<CustomDrawer> {
               child: CustomButton(
                 width: size.width,
                 text: "Log Out",
-                onPressed: () {
-                  context.push(AppRoutes.kSignInView);
+                onPressed: () async {
+                  await showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text(
+                          'Exit App',
+                          style: TextStyle(color: kSecondaryColor),
+                        ),
+                        content: const Text(
+                          'Do you want to close the app?',
+                          style: TextStyle(color: kSecondaryColor),
+                        ),
+                        backgroundColor: kPrimaryColor,
+                        actions: <Widget>[
+                          _buildDialogButton(context, 'No', false),
+                          _buildDialogButton(context, 'Yes', true),
+                        ],
+                      );
+                    },
+                  );
                 },
               ),
             ),
@@ -87,6 +106,25 @@ class _CustomDrawerState extends State<CustomDrawer> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildDialogButton(BuildContext context, String text, bool value) {
+    return TextButton(
+      onPressed: () {
+        if (value) {
+          while (context.canPop()) {
+            context.pop();
+          }
+          context.pushReplacement(AppRoutes.kSignInView);
+        } else {
+          Navigator.pop(context);
+        }
+      },
+      child: Text(
+        text,
+        style: const TextStyle(color: kSecondaryColor),
       ),
     );
   }

@@ -16,7 +16,7 @@ class FishListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       separatorBuilder: (context, index) => const SizedBox(
-        width: 25,
+        width: 8,
       ),
       scrollDirection: Axis.horizontal,
       itemCount: fishList.length,
@@ -27,23 +27,45 @@ class FishListView extends StatelessWidget {
             extra: index,
           );
         },
-        child: Column(
-          children: [
-            Image.asset(fishList[index].image),
-            SizedBox(
-              width: 140,
-              child: Text(
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                fishList[index].title,
-                textAlign: TextAlign.center,
-                style: Styles.textStyle16.copyWith(
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0.96,
+        child: SizedBox(
+          width: 74,
+          child: Container(
+            margin: EdgeInsets.zero,
+            padding: const EdgeInsets.only(bottom: 2, right: 1, left: 1),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  offset: const Offset(0, 4),
+                  blurRadius: 4,
+                  spreadRadius: 0,
                 ),
+              ],
+            ),
+            child: Card(
+              margin: EdgeInsets.zero,
+              elevation: 0,
+              child: Column(
+                children: [
+                  Image.asset(fishList[index].image,
+                      height: 67, width: 74, fit: BoxFit.fill),
+                  SizedBox(
+                    width: 140,
+                    child: Text(
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      fishList[index].title,
+                      textAlign: TextAlign.center,
+                      style: Styles.textStyle7.copyWith(
+                        letterSpacing: 0.96,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
