@@ -16,6 +16,7 @@ import 'package:graduation_project/Features/farm_equipments/presentation/views/a
 import 'package:graduation_project/Features/farm_equipments/presentation/views/edit_equipments_view.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/farm_equipments_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/home_view.dart';
+import 'package:graduation_project/Features/our_team/presentation/views/our_team_view.dart';
 import 'package:graduation_project/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRoutes {
@@ -35,6 +36,7 @@ abstract class AppRoutes {
   static String kCheckEmailView = '/checkEmailView';
   static String kResetPasswordView = '/resetPasswordView';
   static String kPasswordChangedView = '/passwordChangedView';
+  static String kOurTeamView = '/ourTeamView';
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -167,6 +169,16 @@ abstract class AppRoutes {
           return const CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
             child: ChatView(),
+            transitionsBuilder: _buildCustomTransition1,
+          );
+        },
+      ),
+      GoRoute(
+        path: kOurTeamView,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: OurTeamView(),
             transitionsBuilder: _buildCustomTransition1,
           );
         },

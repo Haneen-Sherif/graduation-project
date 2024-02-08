@@ -29,9 +29,28 @@ class FarmEquipmentsViewBody extends StatelessWidget {
                 ),
                 CustomTitle(title: "Farm Equipments"),
                 SizedBox(
-                  height: 71,
+                  height: 74,
                 ),
               ]),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      CustomButton(
+                        width: size.width * 0.6,
+                        text: "Add Equipment",
+                        onPressed: () {
+                          context.push(AppRoutes.kAddEquipmentView);
+                        },
+                      ),
+                      const SizedBox(
+                        height: 11,
+                      ),
+                    ]),
+              ),
             ),
             SliverList.separated(
               separatorBuilder: (context, index) => const SizedBox(
@@ -56,20 +75,6 @@ class FarmEquipmentsViewBody extends StatelessWidget {
                   ),
                 );
               },
-            ),
-            SliverToBoxAdapter(
-              child: Column(children: [
-                const SizedBox(
-                  height: 32,
-                ),
-                CustomButton(
-                  width: size.width * 0.6,
-                  text: "Add Equipment",
-                  onPressed: () {
-                    context.push(AppRoutes.kAddEquipmentView);
-                  },
-                ),
-              ]),
             ),
             SliverFillRemaining(
               hasScrollBody: false,

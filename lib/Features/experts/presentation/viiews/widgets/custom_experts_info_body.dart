@@ -19,6 +19,9 @@ class CustomExpertsInfoBody extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(
+          height: 16,
+        ),
         const Align(
           alignment: Alignment.center,
           child: CustomTitle(title: "Experts Contacts"),

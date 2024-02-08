@@ -103,6 +103,7 @@ class CustomFarmEquipmentItem extends StatelessWidget {
                   onTap: edit,
                   child: const Icon(
                     Icons.edit,
+                    color: Colors.white,
                     size: 12,
                   ),
                 ),
@@ -113,6 +114,7 @@ class CustomFarmEquipmentItem extends StatelessWidget {
                   onTap: delete,
                   child: const Icon(
                     Icons.delete,
+                    color: Colors.white,
                     size: 12,
                   ),
                 ),

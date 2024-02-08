@@ -53,7 +53,9 @@ class CustomDrawerBody extends StatelessWidget {
           height: 30,
         ),
         CustomDrawerItem(
-          onTap: () {},
+          onTap: () {
+            context.push(AppRoutes.kOurTeamView);
+          },
           title: 'About',
         ),
         const SizedBox(

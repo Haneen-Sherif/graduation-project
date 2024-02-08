@@ -12,7 +12,7 @@ void main() {
   runApp(
     DevicePreview(
       builder: (context) => const MyApp(),
-      enabled: false,
+      enabled: true,
     ),
   );
 }
