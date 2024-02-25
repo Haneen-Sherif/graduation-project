@@ -8,7 +8,7 @@ class CustomTextFormField extends StatefulWidget {
     super.key,
     required this.controller,
     required this.width,
-    required this.validator,
+     this.validator,
     required this.obscureText,
     required this.keyboardType,
     required this.textInputAction,

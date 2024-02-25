@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,7 @@ import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart';
 
 class CustomSignUpForm extends StatefulWidget {
   const CustomSignUpForm({super.key, required this.width});
@@ -31,6 +33,30 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
   late TextEditingController dateController;
   late TextEditingController professionalInfoController;
   String? userType;
+
+  void signUp(name, email, phone, password, confirmPass, address) async {
+    try {
+      Response response = await post(
+          Uri.parse("https://10.0.2.2:8000/api/Accounts/farmOwner"),
+          body: {
+            'email': email,
+            'userName': name,
+            'password': password,
+            'confirmPass': confirmPass,
+            'phoneNumber': phone,
+            'farmAddress': address,
+          });
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body.toString());
+        print(data);
+        print("success");
+      } else {
+        print("failure");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   void initState() {
@@ -189,12 +215,12 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                 keyboardType: TextInputType.datetime,
                 obscureText: false,
                 text: "MM/DD/YYYY",
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'date must not be empty';
-                  }
-                  return null;
-                },
+                // validator: (value) {
+                //   if (value!.isEmpty) {
+                //     return 'date must not be empty';
+                //   }
+                //   return null;
+                // },
                 controller: dateController,
                 width: widget.width,
                 onSaved: (value) => _dateOfBirth = value.toString(),
@@ -346,10 +372,23 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
             width: widget.width,
             text: "Sign Up",
             onPressed: () {
-              if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
-                context.pushReplacement(AppRoutes.kSignInView);
+              try{
+                signUp(
+                  nameController.text,
+                  emailController.text,
+                  phoneNumberController.text,
+                  passwordController.text,
+                  confirmPasswordController.text,
+                  professionalInfoController.text,
+                );
+              }catch(e){
+                print(e);
               }
+              // if (formKey.currentState!.validate()) {
+              //   formKey.currentState!.save();
+              //
+              //   // context.pushReplacement(AppRoutes.kSignInView);
+              // }
             },
           ),
         ],
