@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Features/disease_info/presentation/views/widgets/custom_fish_info_row.dart';
+import 'package:graduation_project/Features/disease_info/presentation/views/widgets/disease_info_order.dart';
 import 'package:graduation_project/Features/home/data/models/fish_model.dart';
 import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
@@ -44,65 +45,142 @@ class DiseaseInfoViewBody extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
-                  CustomFishInfoRow(
-                    title: "Causative Agents:",
-                    subTitle: diseaseInfoList[index].causativeAgents,
-                    diseaseInfoList: diseaseInfoList,
-                    index: index,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DiseaseInfoOrder(number: "1"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: CustomFishInfoRow(
+                          title: "Causative Agents:",
+                          subTitle: diseaseInfoList[index].causativeAgents,
+                          diseaseInfoList: diseaseInfoList,
+                          index: index,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 12,
                   ),
-                  CustomFishInfoRow(
-                    title: "Transmission:",
-                    subTitle: diseaseInfoList[index].transmission,
-                    diseaseInfoList: diseaseInfoList,
-                    index: index,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DiseaseInfoOrder(number: "2"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: CustomFishInfoRow(
+                          title: "Transmission:",
+                          subTitle: diseaseInfoList[index].transmission,
+                          diseaseInfoList: diseaseInfoList,
+                          index: index,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 12,
                   ),
-                  CustomFishInfoRow(
-                    title: "Clinical Signs:",
-                    subTitle: diseaseInfoList[index].clinicalSigns,
-                    diseaseInfoList: diseaseInfoList,
-                    index: index,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DiseaseInfoOrder(number: "3"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: CustomFishInfoRow(
+                          title: "Clinical Signs:",
+                          subTitle: diseaseInfoList[index].clinicalSigns,
+                          diseaseInfoList: diseaseInfoList,
+                          index: index,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 12,
                   ),
-                  CustomFishInfoRow(
-                    title: "Diagnosis:",
-                    subTitle: diseaseInfoList[index].diagnosis,
-                    diseaseInfoList: diseaseInfoList,
-                    index: index,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DiseaseInfoOrder(number: "4"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: CustomFishInfoRow(
+                          title: "Diagnosis:",
+                          subTitle: diseaseInfoList[index].diagnosis,
+                          diseaseInfoList: diseaseInfoList,
+                          index: index,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 12,
                   ),
-                  CustomFishInfoRow(
-                    title: "Treatment:",
-                    subTitle: diseaseInfoList[index].treatment,
-                    diseaseInfoList: diseaseInfoList,
-                    index: index,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DiseaseInfoOrder(number: "5"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: CustomFishInfoRow(
+                          title: "Treatment:",
+                          subTitle: diseaseInfoList[index].treatment,
+                          diseaseInfoList: diseaseInfoList,
+                          index: index,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 12,
                   ),
-                  CustomFishInfoRow(
-                    title: "Prevention and Control:",
-                    subTitle: diseaseInfoList[index].preventionAndControl,
-                    diseaseInfoList: diseaseInfoList,
-                    index: index,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DiseaseInfoOrder(number: "6"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: CustomFishInfoRow(
+                          title: "Prevention and Control:",
+                          subTitle: diseaseInfoList[index].preventionAndControl,
+                          diseaseInfoList: diseaseInfoList,
+                          index: index,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 12,
                   ),
-                  CustomFishInfoRow(
-                    title: "Impact on Aquaculture:",
-                    subTitle: diseaseInfoList[index].impactOnAquaculture,
-                    diseaseInfoList: diseaseInfoList,
-                    index: index,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DiseaseInfoOrder(number: "7"),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: CustomFishInfoRow(
+                          title: "Impact on Aquaculture:",
+                          subTitle: diseaseInfoList[index].impactOnAquaculture,
+                          diseaseInfoList: diseaseInfoList,
+                          index: index,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -114,3 +192,5 @@ class DiseaseInfoViewBody extends StatelessWidget {
     );
   }
 }
+
+

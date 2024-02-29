@@ -6,8 +6,12 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SignUpViewBody(),
+    return  Scaffold(
+      body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: SignUpViewBody()),
     );
   }
 }

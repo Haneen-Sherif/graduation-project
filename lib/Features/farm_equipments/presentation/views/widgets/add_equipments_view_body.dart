@@ -14,11 +14,13 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController addEquipmentController;
   late TextEditingController countController;
+  late TextEditingController descriptionController;
 
   @override
   void initState() {
     addEquipmentController = TextEditingController();
     countController = TextEditingController();
+    descriptionController = TextEditingController();
     super.initState();
   }
 
@@ -26,6 +28,7 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
   void dispose() {
     addEquipmentController.dispose();
     countController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -41,8 +44,9 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
         ),
         const SliverToBoxAdapter(
           child: Align(
-              alignment: Alignment.center,
-              child: CustomTitle(title: "Add Equipments")),
+            alignment: Alignment.center,
+            child: CustomTitle(title: "Add Equipments"),
+          ),
         ),
         const SliverToBoxAdapter(
           child: SizedBox(
@@ -52,6 +56,7 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
         SliverToBoxAdapter(
           // hasScrollBody: false,
           child: AddEquipmentsForm(
+            descriptionController: descriptionController,
             formKey: formKey,
             size: size,
             addEquipmentController: addEquipmentController,

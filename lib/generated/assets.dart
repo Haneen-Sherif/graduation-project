@@ -36,4 +36,5 @@ class Assets {
   static const String imagesEqui1 = 'assets/images/equi1.png';
   static const String imagesEqui2 = 'assets/images/equi2.png';
   static const String imagesTeamMember1 = 'assets/images/team_member_1.png';
+  static const String imagesEquiImage = 'assets/images/equi_image.png';
 }

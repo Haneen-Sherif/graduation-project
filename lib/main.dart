@@ -7,12 +7,23 @@ import 'package:graduation_project/Features/home/presentation/manager/home_cubit
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
+
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext? context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback =
+//           (X509Certificate cert, String host, int port) => true;
+//   }
+// }
 
 void main() {
+  // HttpOverrides.global = MyHttpOverrides();
   runApp(
     DevicePreview(
       builder: (context) => const MyApp(),
-      enabled: true,
+      enabled: false,
     ),
   );
 }

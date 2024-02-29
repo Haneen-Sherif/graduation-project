@@ -25,87 +25,184 @@ class _CustomDrawerState extends State<CustomDrawer> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Drawer(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 56,
-              ),
-              child: Text(
-                'Welcome',
-                style: Styles.textStyle35,
-              ),
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 56,
+                  ),
+                  child: Text(
+                    'Welcome',
+                    style: Styles.textStyle35,
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 32),
+                  child: CustomDrawerBody(),
+                ),
+
+              ],
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32),
-              child: CustomDrawerBody(),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.2),
-              child: CustomButton(
-                width: size.width,
-                text: "Log Out",
-                onPressed: () async {
-                  await showDialog<bool>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text(
-                          'Exit App',
-                          style: TextStyle(color: kSecondaryColor),
-                        ),
-                        content: const Text(
-                          'Do you want to close the app?',
-                          style: TextStyle(color: kSecondaryColor),
-                        ),
-                        backgroundColor: kPrimaryColor,
-                        actions: <Widget>[
-                          _buildDialogButton(context, 'No', false),
-                          _buildDialogButton(context, 'Yes', true),
-                        ],
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              children: [
+                Expanded(
+                  child: const SizedBox(
+                    height: 40,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.2),
+                  child: CustomButton(
+                    width: size.width,
+                    text: "Log Out",
+                    onPressed: () async {
+                      await showDialog<bool>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text(
+                              'Exit App',
+                              style: TextStyle(color: kSecondaryColor),
+                            ),
+                            content: const Text(
+                              'Do you want to close the app?',
+                              style: TextStyle(color: kSecondaryColor),
+                            ),
+                            backgroundColor: kPrimaryColor,
+                            actions: <Widget>[
+                              _buildDialogButton(context, 'No', false),
+                              _buildDialogButton(context, 'Yes', true),
+                            ],
+                          );
+                        },
                       );
                     },
-                  );
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 70,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 34, left: 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: FittedBox(
-                      child: Image.asset(
-                        Assets.imagesLogo_1,
+                  ),
+                ),
+                const SizedBox(
+                  height: 70,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 34, left: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: FittedBox(
+                          child: Image.asset(
+                            Assets.imagesLogo_1,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const Expanded(
-                    child: SizedBox(),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: FittedBox(
-                      child: SocialMediaRow(
-                        iconColor: kPrimaryColor,
-                        borderColor: kPrimaryColor.withOpacity(0.25),
+                      const Expanded(
+                        child: SizedBox(),
                       ),
-                    ),
+                      Expanded(
+                        flex: 3,
+                        child: FittedBox(
+                          child: SocialMediaRow(
+                            iconColor: kPrimaryColor,
+                            borderColor: kPrimaryColor.withOpacity(0.25),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 40,
+                )
+              ],
             ),
-            const SizedBox(
-              height: 40,
-            )
-          ],
-        ),
+          )
+        ],
+        // child: Column(
+        //   children: [
+        //     Padding(
+        //       padding: const EdgeInsets.symmetric(
+        //         vertical: 56,
+        //       ),
+        //       child: Text(
+        //         'Welcome',
+        //         style: Styles.textStyle35,
+        //       ),
+        //     ),
+        //     const Padding(
+        //       padding: EdgeInsets.symmetric(horizontal: 32),
+        //       child: CustomDrawerBody(),
+        //     ),
+        //     Padding(
+        //       padding: EdgeInsets.symmetric(horizontal: size.width * 0.2),
+        //       child: CustomButton(
+        //         width: size.width,
+        //         text: "Log Out",
+        //         onPressed: () async {
+        //           await showDialog<bool>(
+        //             context: context,
+        //             builder: (BuildContext context) {
+        //               return AlertDialog(
+        //                 title: const Text(
+        //                   'Exit App',
+        //                   style: TextStyle(color: kSecondaryColor),
+        //                 ),
+        //                 content: const Text(
+        //                   'Do you want to close the app?',
+        //                   style: TextStyle(color: kSecondaryColor),
+        //                 ),
+        //                 backgroundColor: kPrimaryColor,
+        //                 actions: <Widget>[
+        //                   _buildDialogButton(context, 'No', false),
+        //                   _buildDialogButton(context, 'Yes', true),
+        //                 ],
+        //               );
+        //             },
+        //           );
+        //         },
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       height: 70,
+        //     ),
+        //     Padding(
+        //       padding: const EdgeInsets.only(right: 34, left: 4),
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //         children: [
+        //           Expanded(
+        //             flex: 4,
+        //             child: FittedBox(
+        //               child: Image.asset(
+        //                 Assets.imagesLogo_1,
+        //               ),
+        //             ),
+        //           ),
+        //           const Expanded(
+        //             child: SizedBox(),
+        //           ),
+        //           Expanded(
+        //             flex: 3,
+        //             child: FittedBox(
+        //               child: SocialMediaRow(
+        //                 iconColor: kPrimaryColor,
+        //                 borderColor: kPrimaryColor.withOpacity(0.25),
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       height: 40,
+        //     )
+        //   ],
+        // ),
       ),
     );
   }

@@ -67,9 +67,7 @@ class CustomDrawerBody extends StatelessWidget {
           },
           title: 'Q&A , Chat',
         ),
-        const SizedBox(
-          height: 40,
-        ),
+
       ],
     );
   }

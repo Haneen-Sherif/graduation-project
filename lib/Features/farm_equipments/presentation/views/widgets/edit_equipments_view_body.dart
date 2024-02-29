@@ -15,13 +15,14 @@ class EditEquipmentsViewBody extends StatefulWidget {
 class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late TextEditingController editEquipmentController;
-
   late TextEditingController countController;
+  late TextEditingController descriptionController;
 
   @override
   void initState() {
     editEquipmentController = TextEditingController();
     countController = TextEditingController();
+    descriptionController = TextEditingController();
     super.initState();
   }
 
@@ -29,6 +30,7 @@ class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
   void dispose() {
     editEquipmentController.dispose();
     countController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -44,8 +46,9 @@ class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
         ),
         const SliverToBoxAdapter(
           child: Align(
-              alignment: Alignment.center,
-              child: CustomTitle(title: "Edit Equipments")),
+            alignment: Alignment.center,
+            child: CustomTitle(title: "Edit Equipments"),
+          ),
         ),
         const SliverToBoxAdapter(
           child: SizedBox(
@@ -54,6 +57,7 @@ class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
         ),
         SliverToBoxAdapter(
           child: EditEquipmentsForm(
+            descriptionController: descriptionController,
             index: widget.index,
             formKey: formKey,
             size: size,
