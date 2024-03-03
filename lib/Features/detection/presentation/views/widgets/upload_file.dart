@@ -26,6 +26,9 @@ class _UploadFileState extends State<UploadFile> {
   final picker = ImagePicker();
   File? img;
 
+  var resJson;
+  String? diseaseName;
+  int? diseasePer;
   var url = "https://detect-disease-api.onrender.com/detectApi";
 
   Future pickImage() async {
@@ -37,23 +40,37 @@ class _UploadFileState extends State<UploadFile> {
 
   upload() async {
     final request = http.MultipartRequest("POST", Uri.parse(url));
-    final header = {"Content_type": "multipart/form-data; boundary=<calculated when request is sent>"};
+    final header = {
+      "Content_type":
+          "multipart/form-data; boundary=<calculated when request is sent>"
+    };
     request.files.add(http.MultipartFile(
         "image", img!.readAsBytes().asStream(), img!.lengthSync(),
         filename: img!.path.split('/').last));
     request.headers.addAll(header);
     final myRequest = await request.send();
     http.Response res = await http.Response.fromStream(myRequest);
-    if(myRequest.statusCode == 200){
-      final resJson = jsonDecode(res.body);
+    if (myRequest.statusCode == 200) {
+      resJson = jsonDecode(res.body);
+      diseaseName = resJson['Detection'];
+      diseasePer = resJson["Value"];
       print("response here: $resJson");
-    }else{
+      print(diseaseName);
+      print(diseasePer);
+      print(img!.path.split('/').last);
+      context.push(
+        AppRoutes.kShowResultView,
+        extra: {
+          'name': diseaseName,
+          'per': diseasePer.toString(),
+          'img' : img!.path
+        },
+      );
+    } else {
       print("error: ${myRequest.statusCode}");
     }
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -91,7 +108,8 @@ class _UploadFileState extends State<UploadFile> {
         const SizedBox(
           height: 40,
         ),
-        Container(
+
+        img == null? SizedBox() :  Container(
           margin: const EdgeInsets.symmetric(horizontal: 38),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
@@ -99,18 +117,20 @@ class _UploadFileState extends State<UploadFile> {
             color: kPrimaryColor.withOpacity(0.16),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(Assets.imagesGallery),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  height: 1,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff5A5D95),
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                ),
-              ),
+              Text(img!.path.split('/').last),
+              // Image.asset(Assets.imagesGallery),
+              // Expanded(
+              //   child: Container(
+              //     margin: const EdgeInsets.symmetric(horizontal: 16),
+              //     height: 1,
+              //     decoration: BoxDecoration(
+              //       color: const Color(0xff5A5D95),
+              //       borderRadius: BorderRadius.circular(3),
+              //     ),
+              //   ),
+              // ),
               Image.asset(Assets.imagesCheckmark)
             ],
           ),
@@ -123,7 +143,6 @@ class _UploadFileState extends State<UploadFile> {
           width: size.width * 0.6,
           text: "Show Result",
           onPressed: () {
-
             // img == null ? null : context.push(AppRoutes.kShowResultView);
             img == null ? null : upload();
           },

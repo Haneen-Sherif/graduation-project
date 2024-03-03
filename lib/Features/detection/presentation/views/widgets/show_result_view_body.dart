@@ -9,7 +9,11 @@ import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
 
 class ShowResultViewBody extends StatelessWidget {
-  const ShowResultViewBody({super.key});
+  const ShowResultViewBody({super.key, required this.name, required this.per, required this.img});
+
+  final String name;
+  final String img;
+  final int per;
 
   static const List<DiseaseResultModel> diseaseResultLest = [
     DiseaseResultModel(
@@ -43,9 +47,10 @@ class ShowResultViewBody extends StatelessWidget {
                 itemCount: diseaseResultLest.length,
                 itemBuilder: (context, index) {
                   return DiseaseResult(
-                    diseaseName: diseaseResultLest[index].diseaseName,
+                    diseaseName: name,
+                    diseasePer: per~/100,
                     diseaseType: diseaseResultLest[index].diseaseType,
-                    diseaseImage: diseaseResultLest[index].diseaseImage,
+                    diseaseImage: img,
                     recommendationAction:
                         diseaseResultLest[index].recommendationAction,
                   );

@@ -4,7 +4,11 @@ import 'package:graduation_project/core/utils/Widgets/custom_app_bar.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_drawer.dart';
 
 class ShowResultView extends StatefulWidget {
-  const ShowResultView({super.key});
+  const ShowResultView({super.key, required this.name, required this.per, required this.img, });
+
+  final String name;
+  final String img;
+  final int per;
 
   @override
   State<ShowResultView> createState() => _ShowResultViewState();
@@ -25,7 +29,7 @@ class _ShowResultViewState extends State<ShowResultView> {
             anotherKey: showResultKey,
           ),
         ),
-        body: const ShowResultViewBody(),
+        body:  ShowResultViewBody(name: widget.name, per: widget.per,img: widget.img),
       ),
     );
   }

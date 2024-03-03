@@ -30,7 +30,7 @@ abstract class AppRoutes {
   static String kFarmEquipmentsView = '/farmEquipmentView';
   static String kChatView = '/chatView';
   static String kDetectView = '/detectView';
-  static String kShowResultView = '/showResultView';
+  static String kShowResultView = '/showResultView/:name/:per/:img';
   static String kExpertsView = '/expertsView';
   static String kForgotPasswordView = '/forgotPasswordView';
   static String kCheckEmailView = '/checkEmailView';
@@ -196,9 +196,18 @@ abstract class AppRoutes {
       GoRoute(
         path: kShowResultView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
+          final Map<String, dynamic> extras =
+              state.extra as Map<String, dynamic>;
+          final String name = extras['name'].toString();
+          final int per = int.parse(extras['per'].toString());
+          final String img = extras['img'].toString();
+          return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
-            child: ShowResultView(),
+            child: ShowResultView(
+              name: name,
+              per: per,
+              img: img,
+            ),
             transitionsBuilder: _buildCustomTransition1,
           );
         },
