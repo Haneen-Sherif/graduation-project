@@ -6,9 +6,8 @@ import 'package:graduation_project/core/utils/styles.dart';
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
     super.key,
-    required this.controller,
     required this.width,
-     this.validator,
+    this.validator,
     required this.obscureText,
     required this.keyboardType,
     required this.textInputAction,
@@ -20,9 +19,10 @@ class CustomTextFormField extends StatefulWidget {
     this.suffixIcon,
     this.text,
     this.onSaved,
+    this.controller,
   });
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final double width;
   final String? Function(String?)? validator;
   final bool obscureText;

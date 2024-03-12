@@ -4,7 +4,9 @@ import 'package:graduation_project/Features/home/presentation/views/widgets/home
 import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 
 class AddEquipmentsViewBody extends StatefulWidget {
-  const AddEquipmentsViewBody({super.key});
+  const AddEquipmentsViewBody({super.key, required this.id});
+
+  final String id;
 
   @override
   State<AddEquipmentsViewBody> createState() => _AddEquipmentsViewBodyState();
@@ -12,13 +14,13 @@ class AddEquipmentsViewBody extends StatefulWidget {
 
 class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late TextEditingController addEquipmentController;
+  late TextEditingController nameController;
   late TextEditingController countController;
   late TextEditingController descriptionController;
 
   @override
   void initState() {
-    addEquipmentController = TextEditingController();
+    nameController = TextEditingController();
     countController = TextEditingController();
     descriptionController = TextEditingController();
     super.initState();
@@ -26,7 +28,7 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
 
   @override
   void dispose() {
-    addEquipmentController.dispose();
+    nameController.dispose();
     countController.dispose();
     descriptionController.dispose();
     super.dispose();
@@ -56,10 +58,11 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
         SliverToBoxAdapter(
           // hasScrollBody: false,
           child: AddEquipmentsForm(
+            id: widget.id,
             descriptionController: descriptionController,
             formKey: formKey,
             size: size,
-            addEquipmentController: addEquipmentController,
+            nameController: nameController,
             countController: countController,
           ),
         ),

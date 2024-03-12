@@ -23,3 +23,47 @@ class FishModel {
     required this.impactOnAquaculture,
   });
 }
+
+class DiseasesModel {
+  int? id;
+  String? photoPath;
+  String? name;
+  String? type;
+  String? description;
+  List<dynamic>? recommandationActions;
+  List<dynamic>? causativeAgents;
+  List<dynamic>? clinicalSigns;
+  List<dynamic>? diagnosis;
+  List<dynamic>? treatment;
+  List<dynamic>? preventionAndControlls;
+  List<dynamic>? impactOnAquacultures;
+
+  DiseasesModel({
+    this.id,
+    this.photoPath,
+    this.name,
+    this.type,
+    this.description,
+    this.recommandationActions,
+    this.causativeAgents,
+    this.clinicalSigns,
+    this.diagnosis,
+    this.treatment,
+    this.preventionAndControlls,
+    this.impactOnAquacultures,
+  });
+
+  DiseasesModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    photoPath = json['photoPath'];
+    name = json['name'];
+    type = json['type'];
+    description = json['description'];
+  }
+
+  static List<DiseasesModel> diseasesFromSnapShot(List diseasesSnapShot) {
+    return diseasesSnapShot.map((data) {
+      return DiseasesModel.fromJson(data);
+    }).toList();
+  }
+}

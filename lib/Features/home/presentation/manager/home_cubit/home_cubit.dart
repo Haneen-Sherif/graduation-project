@@ -1,14 +1,87 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 import 'package:graduation_project/Features/home/data/models/fish_model.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/generated/assets.dart';
 import 'package:meta/meta.dart';
+import 'package:http/http.dart' as http;
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
+
+  List<DiseasesModel> diseases = [];
+  Future<DiseasesModel> getDisease(int id) async {
+    emit(HomeLoading());
+
+    try {
+      final response = await http.get(
+        Uri.parse("$baseUrlApi/api/Disease/$id"),
+      );
+
+      if (response.statusCode == 200) {
+        print("Disease loaded successfully");
+        final jsonData = json.decode(response.body);
+        final disease = DiseasesModel.fromJson(jsonData);
+        print(disease);
+
+        emit(HomeSuccess());
+        return disease;
+      } else if (response.statusCode >= 400 && response.statusCode < 500) {
+        final errorData = jsonDecode(response.body);
+        print("Client Error: ${errorData['message']}");
+        emit(HomeFailure(message: errorData['message']));
+        throw Exception("Failed to load disease");
+      } else if (response.statusCode >= 500) {
+        print("Server Error: Something went wrong on the server");
+        emit(HomeFailure(message: "Server Error"));
+        throw Exception("Failed to load disease");
+      } else {
+        print("Unexpected Error: ${response.statusCode}");
+        emit(HomeFailure(message: "Unexpected Error"));
+        throw Exception("Failed to load disease");
+      }
+    } catch (e) {
+      print("Network Error: $e");
+      emit(HomeFailure(message: "Network Error"));
+      throw Exception("Network Error: $e");
+    }
+  }
+
+  Future<void> getAllDisease() async {
+    emit(HomeLoading());
+
+    try {
+      final response = await http.get(
+        Uri.parse("$baseUrlApi/api/Disease"),
+      );
+
+      if (response.statusCode == 200) {
+        print("Disease loaded successfully");
+        final jsonData = json.decode(response.body);
+        diseases = DiseasesModel.diseasesFromSnapShot(jsonData);
+        print("%%%%%%%%%%%%%%$diseases");
+        emit(HomeSuccess());
+      } else if (response.statusCode >= 400 && response.statusCode < 500) {
+        final errorData = jsonDecode(response.body);
+        print("Client Error: ${errorData['message']}");
+        emit(HomeFailure(message: errorData['message']));
+      } else if (response.statusCode >= 500) {
+        print("Server Error: Something went wrong on the server");
+        emit(HomeFailure(message: "Server Error"));
+      } else {
+        print("Unexpected Error: ${response.statusCode}");
+        emit(HomeFailure(message: "Unexpected Error"));
+      }
+    } catch (e) {
+      print("Network Error: $e");
+      emit(HomeFailure(message: "Network Error"));
+    }
+  }
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   final List<ExpertsModel> expertsList = [
@@ -18,7 +91,7 @@ class HomeCubit extends Cubit<HomeState> {
       mobile: "+12027953213",
       email: "john926@gmail.com",
       professionalInformation:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
       image: Assets.imagesD1,
       name: "John",
     ),
@@ -28,7 +101,7 @@ class HomeCubit extends Cubit<HomeState> {
       mobile: "+12027953213",
       email: "john926@gmail.com",
       professionalInformation:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
       image: Assets.imagesD4,
       name: "Smith",
     ),
@@ -38,7 +111,7 @@ class HomeCubit extends Cubit<HomeState> {
       mobile: "+12027953213",
       email: "john926@gmail.com",
       professionalInformation:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
       image: Assets.imagesD5,
       name: "Sam",
     ),
@@ -48,7 +121,7 @@ class HomeCubit extends Cubit<HomeState> {
       mobile: "+12027953213",
       email: "john926@gmail.com",
       professionalInformation:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
       image: Assets.imagesD6,
       name: "David",
     ),
@@ -58,7 +131,7 @@ class HomeCubit extends Cubit<HomeState> {
       mobile: "+12027953213",
       email: "john926@gmail.com",
       professionalInformation:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
       image: Assets.imagesD7,
       name: "John",
     ),
@@ -68,7 +141,7 @@ class HomeCubit extends Cubit<HomeState> {
       mobile: "+12027953213",
       email: "john926@gmail.com",
       professionalInformation:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor nisl sit amet nisi fermentum, at bibendum mauris pulvinar. Quisque nec nisl a elit convallis tempus. Duis facilisis, dolor id volutpat ultrices, quam justo interdum neque, vel tempus libero ligula vel libero. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc vel nisi non mi tincidunt luctus nec nec ligula. Morbi ac efficitur justo, ut consectetur justo. Proin vel lacinia lacus. Sed vel justo hendrerit, aliquam justo et, facilisis lacus. Curabitur at justo vitae felis feugiat fringilla. Vivamus tempus tincidunt ex, non hendrerit lacus mattis ac. Sed euismod, eros in posuere facilisis, ex velit efficitur quam, vitae ullamcorper dolor mi in nisl. Quisque vel neque orci. Vivamus id pharetra libero, nec elementum sapien. Curabitur sed euismod ligula.",
       image: Assets.imagesD8,
       name: "John",
     ),

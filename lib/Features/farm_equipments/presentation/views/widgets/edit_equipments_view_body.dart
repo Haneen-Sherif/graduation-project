@@ -4,9 +4,11 @@ import 'package:graduation_project/Features/home/presentation/views/widgets/home
 import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 
 class EditEquipmentsViewBody extends StatefulWidget {
-  const EditEquipmentsViewBody({super.key, required this.index});
+  const EditEquipmentsViewBody(
+      {super.key, required this.id, required this.equipmentId});
 
-  final int index;
+  final String id;
+  final int equipmentId;
 
   @override
   State<EditEquipmentsViewBody> createState() => _EditEquipmentsViewBodyState();
@@ -57,8 +59,9 @@ class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
         ),
         SliverToBoxAdapter(
           child: EditEquipmentsForm(
+            equipmentId: widget.equipmentId,
             descriptionController: descriptionController,
-            index: widget.index,
+            id: widget.id,
             formKey: formKey,
             size: size,
             editEquipmentController: editEquipmentController,

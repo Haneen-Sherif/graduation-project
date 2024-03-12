@@ -21,8 +21,8 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<FishModel> fishList =
-        BlocProvider.of<HomeCubit>(context).fishList;
+    // final List<FishModel> fishList =
+    //     BlocProvider.of<HomeCubit>(context).fishList;
     final List<ExpertsModel> expertsList =
         BlocProvider.of<HomeCubit>(context).expertsList;
     Size size = MediaQuery.of(context).size;
@@ -64,8 +64,7 @@ class HomeViewBody extends StatelessWidget {
                       top: -40,
                       left: 0,
                       right: 0,
-                      child: SizedBox(
-                          height: 94, child: FishListView(fishList: fishList))),
+                      child: SizedBox(height: 94, child: FishListView())),
                 ],
               ),
             ),

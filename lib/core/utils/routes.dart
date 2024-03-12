@@ -24,10 +24,10 @@ abstract class AppRoutes {
   static String kSignUpView = '/signUpView';
   static String kHomeView = '/homeView';
   static String kDiseaseInfoView = '/diseaseInfoView/:index';
-  static String kAddEquipmentView = '/addEquipmentView';
-  static String kEditEquipmentView = '/editEquipmentView/:index';
+  static String kAddEquipmentView = '/addEquipmentView/:id';
+  static String kEditEquipmentView = '/editEquipmentView/:id/:equipmentId';
   static String kExpertsProfileView = '/expertsProfileView/:index';
-  static String kFarmEquipmentsView = '/farmEquipmentView';
+  static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
   static String kDetectView = '/detectView';
   static String kShowResultView = '/showResultView/:name/:per/:img';
@@ -126,9 +126,9 @@ abstract class AppRoutes {
       GoRoute(
         path: kAddEquipmentView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
+          return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
-            child: AddEquipmentsView(),
+            child: AddEquipmentsView(id: state.extra.toString()),
             transitionsBuilder: _buildCustomTransition2,
           );
         },
@@ -136,9 +136,16 @@ abstract class AppRoutes {
       GoRoute(
         path: kEditEquipmentView,
         pageBuilder: (context, state) {
+          final Map<String, dynamic> extras =
+              state.extra as Map<String, dynamic>;
+          final String id = extras['id'].toString();
+          final int equipmentId = int.parse(extras['equipmentId'].toString());
           return CustomTransitionPage(
-            transitionDuration: const Duration(seconds: 1),
-            child: EditEquipmentsView(index: int.parse(state.extra.toString())),
+            transitionDuration: Duration(seconds: 1),
+            child: EditEquipmentsView(
+              id: id,
+              equipmentId: equipmentId,
+            ),
             transitionsBuilder: _buildCustomTransition2,
           );
         },
@@ -156,9 +163,9 @@ abstract class AppRoutes {
       GoRoute(
         path: kFarmEquipmentsView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
+          return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
-            child: FarmEquipmentsView(),
+            child: FarmEquipmentsView(id: state.extra.toString()),
             transitionsBuilder: _buildCustomTransition1,
           );
         },

@@ -1,7 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
@@ -9,7 +10,6 @@ import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
 
 class CustomSignUpForm extends StatefulWidget {
   const CustomSignUpForm({super.key, required this.width});
@@ -25,6 +25,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
   XFile? image;
   bool passwordVisible = true;
   bool confirmPasswordVisible = true;
+  bool isLoading = false;
   late TextEditingController passwordController;
   late TextEditingController emailController;
   late TextEditingController nameController;
@@ -32,51 +33,8 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
   late TextEditingController phoneNumberController;
   late TextEditingController dateController;
   late TextEditingController professionalInfoController;
+  late TextEditingController addressController;
   String? userType;
-
-  // Future signUp(name, email, phone, password, confirmPass, address) async {
-  //   try {
-  //     print("1");
-  //     http.Response response = await http.post(
-  //         Uri.parse("http://10.0.2.2:8000/api/Accounts/farmOwner"),
-  //         headers: {
-  //           "Content_type":
-  //               "multipart/form-data; boundary=<calculated when request is sent>"
-  //         },
-  //         body: {
-  //           'email': email,
-  //           'userName': name,
-  //           'password': password,
-  //           'confirmPass': confirmPass,
-  //           'phoneNumber': phone,
-  //           'farmAddress': address,
-  //         });
-  //     // Response response = await post(
-  //     //     Uri.parse("https://10.0.2.2:8000/api/Accounts/farmOwner"),
-  //     //     headers: {
-  //     //       "Content_type":
-  //     //           "multipart/form-data; boundary=<calculated when request is sent>"
-  //     //     },
-  //     //     body: {
-  //     //       'email': email,
-  //     //       'userName': name,
-  //     //       'password': password,
-  //     //       'confirmPass': confirmPass,
-  //     //       'phoneNumber': phone,
-  //     //       'farmAddress': address,
-  //     //     });
-  //     print("2");
-  //     if (response.statusCode == 201) {
-  //       var data = jsonDecode(response.body.toString());
-  //       print(data);
-  //       print("success");
-  //     } else {
-  //       print("failure");
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   @override
   void initState() {
@@ -87,8 +45,10 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
     phoneNumberController = TextEditingController();
     dateController = TextEditingController();
     professionalInfoController = TextEditingController();
+    addressController = TextEditingController();
 
     userType = "farm_owner";
+
     super.initState();
   }
 
@@ -101,22 +61,50 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
     phoneNumberController.dispose();
     dateController.dispose();
     professionalInfoController.dispose();
+    addressController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final bool emailValid = true;
+    final bool digitRegex = true;
+    final bool upperRegex = true;
+    final bool nonAlphanumericRegex = true;
     String _dateOfBirth;
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoading) {
+          setState(() {
+            isLoading = true;
+          });
+        } else {
+          setState(() {
+            isLoading = false;
+          });
+        }
+        if (state is AuthSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+          context.pushReplacement(AppRoutes.kSignInView);
+        } else if (state is AuthFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        }
       },
       child: Form(
         autovalidateMode: AutovalidateMode.always,
         key: formKey,
         child: Column(
           children: [
+            if (isLoading) CircularProgressIndicator(),
             CustomTextFormField(
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.text,
@@ -142,7 +130,12 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Email address must not be empty';
+                } else if (emailValid ==
+                    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+\.?[a-zA-Z]*")
+                        .hasMatch(value)) {
+                  return 'Email is invalid';
                 }
+
                 return null;
               },
               controller: emailController,
@@ -163,6 +156,23 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                 return null;
               },
               controller: phoneNumberController,
+              width: widget.width,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            CustomTextFormField(
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.text,
+              obscureText: false,
+              text: "Address",
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Address must not be empty';
+                }
+                return null;
+              },
+              controller: addressController,
               width: widget.width,
             ),
             const SizedBox(
@@ -190,6 +200,15 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Password must not be empty';
+                } else if (value.length < 6) {
+                  return 'Password must be at least 6 characters.';
+                } else if (upperRegex != RegExp(r'.*[A-Z].*').hasMatch(value)) {
+                  return "Password must have at least one uppercase ('A'-'Z').";
+                } else if (digitRegex != RegExp(r'.*[0-9].*').hasMatch(value)) {
+                  return "Password must have at least one digit ('0'-'9').";
+                } else if (nonAlphanumericRegex !=
+                    RegExp(r'.*[^a-zA-Z0-9].*').hasMatch(value)) {
+                  return "Password must have at least one special character.";
                 }
                 return null;
               },
@@ -254,7 +273,8 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                               },
                               controller: dateController,
                               width: widget.width,
-                              onSaved: (value) => _dateOfBirth = value.toString(),
+                              onSaved: (value) =>
+                                  _dateOfBirth = value.toString(),
                             ),
                           ),
                         ),
@@ -319,7 +339,8 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                       decoration: ShapeDecoration(
                                         color: kPrimaryColor,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                       ),
                                       child: Row(
@@ -331,7 +352,8 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                             child: Text(
                                               "Upload Image",
                                               textAlign: TextAlign.center,
-                                              style: Styles.textStyle10.copyWith(
+                                              style:
+                                                  Styles.textStyle10.copyWith(
                                                 color: const Color(0xFFFFF9F9),
                                                 letterSpacing: 1.08,
                                               ),
@@ -350,112 +372,6 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                     )
                   : SizedBox(),
             ),
-            // userType == "expert" ? GestureDetector(
-            //   onTap: () => _selectDate(context),
-            //   child: AbsorbPointer(
-            //     child: CustomTextFormField(
-            //       textInputAction: TextInputAction.next,
-            //       keyboardType: TextInputType.datetime,
-            //       obscureText: false,
-            //       text: "MM/DD/YYYY",
-            //       validator: (value) {
-            //         if (value!.isEmpty) {
-            //           return 'date must not be empty';
-            //         }
-            //         return null;
-            //       },
-            //       controller: dateController,
-            //       width: widget.width,
-            //       onSaved: (value) => _dateOfBirth = value.toString(),
-            //     ),
-            //   ),
-            // ): SizedBox(),
-            // const SizedBox(
-            //   height: 16,
-            // ),
-            // userType == "expert" ? CustomTextFormField(
-            //   textInputAction: TextInputAction.next,
-            //   keyboardType: TextInputType.text,
-            //   obscureText: false,
-            //   text: "Professional Information",
-            //   validator: (value) {
-            //     if (value!.isEmpty) {
-            //       return 'Professional information must not be empty';
-            //     }
-            //     return null;
-            //   },
-            //   controller: professionalInfoController,
-            //   width: widget.width,
-            // ) : SizedBox(),
-            // const SizedBox(
-            //   height: 16,
-            // ),
-            // userType == "expert" ? Container(
-            //   height: 45,
-            //   decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(12), color: Colors.white),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Expanded(
-            //         child: Padding(
-            //           padding: const EdgeInsets.only(left: 16),
-            //           child: FittedBox(
-            //             fit: BoxFit.scaleDown,
-            //             child: Text(
-            //               "Personal Photo",
-            //               style: Styles.textStyle15
-            //                   .copyWith(color: const Color(0xff383838)),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //       const SizedBox(
-            //         width: 4,
-            //       ),
-            //       Expanded(
-            //         child: Padding(
-            //           padding: const EdgeInsets.only(right: 8),
-            //           child: MaterialButton(
-            //             padding: EdgeInsets.zero,
-            //             onPressed: () async {
-            //               image =
-            //                   await picker.pickImage(source: ImageSource.gallery);
-            //               setState(() {
-            //                 image = image;
-            //               });
-            //             },
-            //             child: Container(
-            //               height: 25,
-            //               decoration: ShapeDecoration(
-            //                 color: kPrimaryColor,
-            //                 shape: RoundedRectangleBorder(
-            //                   borderRadius: BorderRadius.circular(10),
-            //                 ),
-            //               ),
-            //               child: Row(
-            //                 mainAxisAlignment: MainAxisAlignment.center,
-            //                 children: [
-            //                   FittedBox(
-            //                     fit: BoxFit.scaleDown,
-            //                     child: Text(
-            //                       "Upload Image",
-            //                       textAlign: TextAlign.center,
-            //                       style: Styles.textStyle10.copyWith(
-            //                         color: const Color(0xFFFFF9F9),
-            //                         letterSpacing: 1.08,
-            //                       ),
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //       )
-            //     ],
-            //   ),
-            // ) : SizedBox(),
             const SizedBox(
               height: 16,
             ),
@@ -515,19 +431,17 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
               width: widget.width,
               text: "Sign Up",
               onPressed: () {
-                // signUp(
-                //   nameController.text,
-                //   emailController.text,
-                //   phoneNumberController.text,
-                //   passwordController.text,
-                //   confirmPasswordController.text,
-                //   professionalInfoController.text,
-                // );
-
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
 
-                  context.pushReplacement(AppRoutes.kSignInView);
+                  BlocProvider.of<AuthCubit>(context).signUp(
+                    nameController.text,
+                    emailController.text,
+                    phoneNumberController.text,
+                    passwordController.text,
+                    confirmPasswordController.text,
+                    addressController.text,
+                  );
                 }
               },
             ),

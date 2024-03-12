@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/widgets/farm_equipments_view_body.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_app_bar.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_drawer.dart';
 
 class FarmEquipmentsView extends StatefulWidget {
-  const FarmEquipmentsView({super.key});
+  const FarmEquipmentsView({super.key, required this.id});
+
+  final String id;
 
   @override
   State<FarmEquipmentsView> createState() => _FarmEquipmentsViewState();
@@ -26,10 +26,7 @@ class _FarmEquipmentsViewState extends State<FarmEquipmentsView> {
             child: CustomAppBar(
               anotherKey: farmKey,
             )),
-        body: BlocProvider(
-          create: (context) => EquipmentsCubit(),
-          child: const FarmEquipmentsViewBody(),
-        ),
+        body: FarmEquipmentsViewBody(id: widget.id),
       ),
     );
   }

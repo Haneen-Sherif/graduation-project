@@ -4,7 +4,9 @@ import 'package:graduation_project/core/utils/Widgets/custom_app_bar.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_drawer.dart';
 
 class AddEquipmentsView extends StatefulWidget {
-  const AddEquipmentsView({super.key});
+  const AddEquipmentsView({super.key, required this.id});
+
+  final String id;
 
   @override
   State<AddEquipmentsView> createState() => _AddEquipmentsViewState();
@@ -24,7 +26,7 @@ class _AddEquipmentsViewState extends State<AddEquipmentsView> {
             child: CustomAppBar(
               anotherKey: addEquipmentKey,
             )),
-        body: const AddEquipmentsViewBody(),
+        body: AddEquipmentsViewBody(id: widget.id),
       ),
     );
   }

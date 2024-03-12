@@ -56,7 +56,7 @@ class CustomFarmEquipmentItem extends StatelessWidget {
                 const SizedBox(
                   width: 2,
                 ),
-                Image.asset(image),
+                Image.network(image),
               ],
             ),
           ),
@@ -123,123 +123,6 @@ class CustomFarmEquipmentItem extends StatelessWidget {
           )
         ],
       ),
-      // child: ListTile(
-      //   leading: Container(
-      //     width: 12,
-      //     height: 12,
-      //     decoration: const ShapeDecoration(
-      //       color: Colors.white,
-      //       shape: OvalBorder(side: BorderSide(width: 1, color: Colors.white)),
-      //     ),
-      //     child: Center(
-      //       child: Text(
-      //         count,
-      //         style: Styles.textStyle6.copyWith(
-      //           letterSpacing: 0.6,
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      //   title: FittedBox(
-      //     fit: BoxFit.scaleDown,
-      //     child: Text(
-      //       title,
-      //       maxLines: 2,
-      //       overflow: TextOverflow.ellipsis,
-      //       style: Styles.textStyle10.copyWith(
-      //         color: Colors.white,
-      //         fontWeight: FontWeight.w500,
-      //         letterSpacing: 0.96,
-      //       ),
-      //     ),
-      //   ),
-      //   subtitle: FittedBox(
-      //     fit: BoxFit.scaleDown,
-      //     child: Text(
-      //       subTitle,
-      //       maxLines: 3,
-      //       overflow: TextOverflow.ellipsis,
-      //       style: Styles.textStyle7.copyWith(
-      //         color: Colors.white,
-      //         fontWeight: FontWeight.w400,
-      //         letterSpacing: 0.96,
-      //       ),
-      //     ),
-      //   ),
-      //   trailing: Row(
-      //     children: [
-      //       GestureDetector(
-      //         onTap: edit,
-      //         child: const Icon(
-      //           Icons.edit,
-      //         ),
-      //       ),
-      //       const SizedBox(
-      //         width: 17,
-      //       ),
-      //       GestureDetector(
-      //         onTap: delete,
-      //         child: const Icon(
-      //           Icons.delete,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      // child: Row(
-      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //   children: [
-      //   Row(
-      //     children: [
-      //       Text(
-      //         text,
-      //         textAlign: TextAlign.center,
-      //         style: Styles.textStyle16.copyWith(
-      //           letterSpacing: 0.96,
-      //         ),
-      //       ),
-      //       const SizedBox(
-      //         width: 16,
-      //       ),
-      //       Container(
-      //         width: 19,
-      //         height: 19,
-      //         decoration: const ShapeDecoration(
-      //           color: Colors.white,
-      //           shape: OvalBorder(side: BorderSide(width: 1)),
-      //         ),
-      //         child: Center(
-      //           child: Text(
-      //             count,
-      //             style: Styles.textStyle12.copyWith(
-      //               letterSpacing: 0.72,
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      //     Row(
-      //       children: [
-      //         GestureDetector(
-      //           onTap: delete,
-      //           child: const Icon(
-      //             Icons.delete,
-      //           ),
-      //         ),
-      //         const SizedBox(
-      //           width: 17,
-      //         ),
-      //         GestureDetector(
-      //           onTap: edit,
-      //           child: const Icon(
-      //             Icons.edit,
-      //           ),
-      //         )
-      //       ],
-      //     )
-      //   ],
-      // ),
     );
   }
 }

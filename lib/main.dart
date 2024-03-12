@@ -1,25 +1,16 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/chat_provider.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/models_provider.dart';
+import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
 import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
-
-// class MyHttpOverrides extends HttpOverrides {
-//   @override
-//   HttpClient createHttpClient(SecurityContext? context) {
-//     return super.createHttpClient(context)
-//       ..badCertificateCallback =
-//           (X509Certificate cert, String host, int port) => true;
-//   }
-// }
 
 void main() {
-  // HttpOverrides.global = MyHttpOverrides();
   runApp(
     DevicePreview(
       builder: (context) => const MyApp(),
@@ -42,8 +33,14 @@ class MyApp extends StatelessWidget {
           create: (_) => ChatProvider(),
         ),
       ],
-      child: BlocProvider(
-        create: (context) => HomeCubit(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => HomeCubit(),
+          ),
+          BlocProvider(create: (context) => AuthCubit()),
+          BlocProvider(create: (context) => EquipmentsCubit()),
+        ],
         child: MaterialApp.router(
           locale: DevicePreview.locale(context),
           builder: DevicePreview.appBuilder,

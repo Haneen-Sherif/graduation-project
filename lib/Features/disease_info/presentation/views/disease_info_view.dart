@@ -31,7 +31,7 @@ class _DiseaseInfoViewState extends State<DiseaseInfoView> {
               anotherKey: infoKey,
             ),
           ),
-          body: DiseaseInfoViewBody(index: widget.index),
+          body: DiseaseInfoViewBody(id: widget.index),
         ),
       ),
     );

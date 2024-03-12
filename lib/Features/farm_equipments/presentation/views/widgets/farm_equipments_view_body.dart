@@ -1,22 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:graduation_project/Features/farm_equipments/data/models/equipments_model.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
-import 'package:graduation_project/Features/farm_equipments/presentation/views/widgets/custom_farm_equipment_item.dart';
+import 'package:graduation_project/Features/farm_equipments/presentation/views/widgets/equipment_list_View.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 
-class FarmEquipmentsViewBody extends StatelessWidget {
-  const FarmEquipmentsViewBody({super.key});
+class FarmEquipmentsViewBody extends StatefulWidget {
+  const FarmEquipmentsViewBody({super.key, required this.id});
+
+  final String id;
+
+  @override
+  State<FarmEquipmentsViewBody> createState() => _FarmEquipmentsViewBodyState();
+}
+
+class _FarmEquipmentsViewBodyState extends State<FarmEquipmentsViewBody> {
+  @override
+  void initState() {
+    print(widget.id);
+    print(
+        "listttttttttt${BlocProvider.of<EquipmentsCubit>(context).equipmentsList}");
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<EquipmentsModel> equipmentsList =
-        BlocProvider.of<EquipmentsCubit>(context).equipmentsList;
     final Size size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Align(
         alignment: Alignment.center,
@@ -43,7 +56,8 @@ class FarmEquipmentsViewBody extends StatelessWidget {
                         width: size.width * 0.6,
                         text: "Add Equipment",
                         onPressed: () {
-                          context.push(AppRoutes.kAddEquipmentView);
+                          context.push(AppRoutes.kAddEquipmentView,
+                              extra: widget.id);
                         },
                       ),
                       const SizedBox(
@@ -52,30 +66,14 @@ class FarmEquipmentsViewBody extends StatelessWidget {
                     ]),
               ),
             ),
-            SliverList.separated(
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 16,
-              ),
-              itemCount: equipmentsList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: CustomFarmEquipmentItem(
-                    image: equipmentsList[index].image,
-                    count: equipmentsList[index].count.toString(),
-                    title: equipmentsList[index].name,
-                    subTitle: equipmentsList[index].description,
-                    delete: () {},
-                    edit: () {
-                      context.push(
-                        AppRoutes.kEditEquipmentView,
-                        extra: index,
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+
+            SliverToBoxAdapter(
+                child: EquipmentListView(
+              id: widget.id,
+            )),
+            // }
+            //   },
+            // ),
             SliverFillRemaining(
               hasScrollBody: false,
               child: Column(children: [

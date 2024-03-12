@@ -6,7 +6,7 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
