@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/Features/disease_info/presentation/views/widgets/custom_fish_info_list.dart';
 import 'package:graduation_project/Features/disease_info/presentation/views/widgets/custom_fish_info_row.dart';
 import 'package:graduation_project/Features/disease_info/presentation/views/widgets/disease_info_order.dart';
 import 'package:graduation_project/Features/home/data/models/fish_model.dart';
@@ -62,11 +63,10 @@ class DiseaseInfoViewBody extends StatelessWidget {
                               width: 5,
                             ),
                             Expanded(
-                              child: CustomFishInfoRow(
+                              child: CustomFishInfoList(
                                 title: "Causative Agents:",
-                                subTitle: disease.description!,
-                                // diseaseInfoList: diseaseInfoList,
-                                // index: index,
+                                subTitle: disease.causativeAgents!,
+                                count: disease.causativeAgents!.length,
                               ),
                             ),
                           ],
@@ -82,9 +82,10 @@ class DiseaseInfoViewBody extends StatelessWidget {
                               width: 5,
                             ),
                             Expanded(
-                              child: CustomFishInfoRow(
-                                title: "Transmission:",
-                                subTitle: disease.description!,
+                              child: CustomFishInfoList(
+                                title: "Causative Agents:",
+                                subTitle: disease.causativeAgents!,
+                                count: disease.causativeAgents!.length,
                               ),
                             ),
                           ],
@@ -100,9 +101,10 @@ class DiseaseInfoViewBody extends StatelessWidget {
                               width: 5,
                             ),
                             Expanded(
-                              child: CustomFishInfoRow(
+                              child: CustomFishInfoList(
                                 title: "Clinical Signs:",
-                                subTitle: disease.description!,
+                                subTitle: disease.clinicalSigns!,
+                                count: disease.clinicalSigns!.length,
                               ),
                             ),
                           ],
@@ -118,9 +120,10 @@ class DiseaseInfoViewBody extends StatelessWidget {
                               width: 5,
                             ),
                             Expanded(
-                              child: CustomFishInfoRow(
+                              child: CustomFishInfoList(
                                 title: "Diagnosis:",
-                                subTitle: disease.description!,
+                                subTitle: disease.diagnosis!,
+                                count: disease.diagnosis!.length,
                               ),
                             ),
                           ],
@@ -136,9 +139,10 @@ class DiseaseInfoViewBody extends StatelessWidget {
                               width: 5,
                             ),
                             Expanded(
-                              child: CustomFishInfoRow(
+                              child: CustomFishInfoList(
                                 title: "Treatment:",
-                                subTitle: disease.description!,
+                                subTitle: disease.treatment!,
+                                count: disease.treatment!.length,
                               ),
                             ),
                           ],
@@ -154,9 +158,10 @@ class DiseaseInfoViewBody extends StatelessWidget {
                               width: 5,
                             ),
                             Expanded(
-                              child: CustomFishInfoRow(
+                              child: CustomFishInfoList(
                                 title: "Prevention and Control:",
-                                subTitle: disease.description!,
+                                subTitle: disease.preventionAndControlls!,
+                                count: disease.preventionAndControlls!.length,
                               ),
                             ),
                           ],
@@ -172,9 +177,10 @@ class DiseaseInfoViewBody extends StatelessWidget {
                               width: 5,
                             ),
                             Expanded(
-                              child: CustomFishInfoRow(
+                              child: CustomFishInfoList(
                                 title: "Impact on Aquaculture:",
-                                subTitle: disease.description!,
+                                subTitle: disease.impactOnAquacultures!,
+                                count: disease.impactOnAquacultures!.length,
                               ),
                             ),
                           ],

@@ -59,6 +59,13 @@ class DiseasesModel {
     name = json['name'];
     type = json['type'];
     description = json['description'];
+    recommandationActions = json['recommandationActions'].cast<String>();
+    causativeAgents = json['causativeAgents'].cast<String>();
+    clinicalSigns = json['clinicalSigns'].cast<String>();
+    diagnosis = json['diagnosis'].cast<String>();
+    treatment = json['treatment'].cast<String>();
+    preventionAndControlls = json['preventionAndControlls'].cast<String>();
+    impactOnAquacultures = json['impactOnAquacultures'].cast<String>();
   }
 
   static List<DiseasesModel> diseasesFromSnapShot(List diseasesSnapShot) {

@@ -11,7 +11,6 @@ import 'package:graduation_project/Features/detection/presentation/views/detect_
 import 'package:graduation_project/Features/detection/presentation/views/show_result_view.dart';
 import 'package:graduation_project/Features/disease_info/presentation/views/disease_info_view.dart';
 import 'package:graduation_project/Features/experts/presentation/viiews/experts_profile_view.dart';
-import 'package:graduation_project/Features/experts/presentation/viiews/experts_view.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/add_equipments_view.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/edit_equipments_view.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/farm_equipments_view.dart';
@@ -26,7 +25,7 @@ abstract class AppRoutes {
   static String kDiseaseInfoView = '/diseaseInfoView/:index';
   static String kAddEquipmentView = '/addEquipmentView/:id';
   static String kEditEquipmentView = '/editEquipmentView/:id/:equipmentId';
-  static String kExpertsProfileView = '/expertsProfileView/:index';
+  static String kExpertsProfileView = '/expertsProfileView/:id';
   static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
   static String kDetectView = '/detectView';
@@ -155,7 +154,7 @@ abstract class AppRoutes {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             transitionDuration: const Duration(seconds: 1),
-            child: ExpertsProfileView(index: int.parse(state.extra.toString())),
+            child: ExpertsProfileView(id: state.extra.toString()),
             transitionsBuilder: _buildCustomTransition2,
           );
         },
@@ -219,16 +218,16 @@ abstract class AppRoutes {
           );
         },
       ),
-      GoRoute(
-        path: kExpertsView,
-        pageBuilder: (context, state) {
-          return const CustomTransitionPage(
-            transitionDuration: Duration(seconds: 1),
-            child: ExpertsView(),
-            transitionsBuilder: _buildCustomTransition1,
-          );
-        },
-      ),
+      // GoRoute(
+      //   path: kExpertsView,
+      //   pageBuilder: (context, state) {
+      //     return const CustomTransitionPage(
+      //       transitionDuration: Duration(seconds: 1),
+      //       child: ExpertsView(),
+      //       transitionsBuilder: _buildCustomTransition1,
+      //     );
+      //   },
+      // ),
     ],
   );
 }

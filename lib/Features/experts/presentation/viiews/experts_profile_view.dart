@@ -6,9 +6,9 @@ import 'package:graduation_project/core/utils/Widgets/custom_app_bar.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_drawer.dart';
 
 class ExpertsProfileView extends StatefulWidget {
-  const ExpertsProfileView({super.key, required this.index});
+  const ExpertsProfileView({super.key, required this.id});
 
-  final int index;
+  final String id;
 
   @override
   State<ExpertsProfileView> createState() => _ExpertsProfileViewState();
@@ -29,10 +29,7 @@ class _ExpertsProfileViewState extends State<ExpertsProfileView> {
             anotherKey: expertsInfoKey,
           ),
         ),
-        body: BlocProvider(
-          create: (context) => ExpertsCubit(),
-          child: ExpertsProfileViewBody(index: widget.index),
-        ),
+        body: ExpertsProfileViewBody(id: widget.id),
       ),
     );
   }

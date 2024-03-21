@@ -22,7 +22,17 @@ class CustomSignUpForm extends StatefulWidget {
 
 class _CustomSignUpFormState extends State<CustomSignUpForm> {
   final ImagePicker picker = ImagePicker();
-  XFile? image;
+  File? img;
+  String? imgValidationError;
+
+  Future pickImage() async {
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      img = pickedFile != null ? File(pickedFile.path) : null;
+      imgValidationError = null;
+    });
+  }
+
   bool passwordVisible = true;
   bool confirmPasswordVisible = true;
   bool isLoading = false;
@@ -130,8 +140,8 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Email address must not be empty';
-                } else if (emailValid ==
-                    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+\.?[a-zA-Z]*")
+                } else if (emailValid !=
+                    RegExp(r"^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9]+\.)?[a-zA-Z0-9]+\.[a-zA-Z]+(?:\.com)?$")
                         .hasMatch(value)) {
                   return 'Email is invalid';
                 }
@@ -327,12 +337,13 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                   padding: const EdgeInsets.only(right: 8),
                                   child: MaterialButton(
                                     padding: EdgeInsets.zero,
-                                    onPressed: () async {
-                                      image = await picker.pickImage(
-                                          source: ImageSource.gallery);
-                                      setState(() {
-                                        image = image;
-                                      });
+                                    onPressed: () {
+                                      // image = await picker.pickImage(
+                                      //     source: ImageSource.gallery);
+                                      // setState(() {
+                                      //   image = image;
+                                      // });
+                                      pickImage();
                                     },
                                     child: Container(
                                       height: 25,
@@ -431,9 +442,9 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
               width: widget.width,
               text: "Sign Up",
               onPressed: () {
-                if (formKey.currentState!.validate()) {
+                if (formKey.currentState!.validate() &&
+                    userType == "farm_owner") {
                   formKey.currentState!.save();
-
                   BlocProvider.of<AuthCubit>(context).signUp(
                     nameController.text,
                     emailController.text,
@@ -441,6 +452,19 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                     passwordController.text,
                     confirmPasswordController.text,
                     addressController.text,
+                  );
+                } else if (formKey.currentState!.validate() &&
+                    userType == "expert") {
+                  BlocProvider.of<AuthCubit>(context).expertSignUp(
+                    nameController.text,
+                    emailController.text,
+                    phoneNumberController.text,
+                    passwordController.text,
+                    confirmPasswordController.text,
+                    addressController.text,
+                    dateController.text,
+                    img!,
+                    professionalInfoController.text,
                   );
                 }
               },
@@ -466,7 +490,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
       });
   }
 
-  ImageProvider getImage() {
-    return FileImage(File(image!.path));
-  }
+  // ImageProvider getImage() {
+  //   return FileImage(File(image!.path));
+  // }
 }

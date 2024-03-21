@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
-import 'package:graduation_project/Features/home/data/models/fish_model.dart';
-import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/experts_list_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/fish_list_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
@@ -23,8 +19,8 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     // final List<FishModel> fishList =
     //     BlocProvider.of<HomeCubit>(context).fishList;
-    final List<ExpertsModel> expertsList =
-        BlocProvider.of<HomeCubit>(context).expertsList;
+    // final List<ExpertsModel> expertsList =
+    //     BlocProvider.of<HomeCubit>(context).expertsList;
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
@@ -61,10 +57,14 @@ class HomeViewBody extends StatelessWidget {
                     color: const Color(0xff8488CD),
                   ),
                   Positioned(
-                      top: -40,
-                      left: 0,
-                      right: 0,
-                      child: SizedBox(height: 94, child: FishListView())),
+                    top: -40,
+                    left: 0,
+                    right: 0,
+                    child: SizedBox(
+                      height: 94,
+                      child: FishListView(),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -75,8 +75,11 @@ class HomeViewBody extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: Text("Experts",
-                textAlign: TextAlign.center, style: Styles.textStyle27),
+            child: Text(
+              "Experts",
+              textAlign: TextAlign.center,
+              style: Styles.textStyle27,
+            ),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
@@ -100,9 +103,7 @@ class HomeViewBody extends StatelessWidget {
                     right: 0,
                     child: SizedBox(
                       height: 122,
-                      child: ExpertsListView(
-                        expertsList: expertsList,
-                      ),
+                      child: ExpertsListView(),
                     ),
                   ),
                 ],

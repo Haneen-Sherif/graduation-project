@@ -56,8 +56,10 @@ class _FarmEquipmentsViewBodyState extends State<FarmEquipmentsViewBody> {
                         width: size.width * 0.6,
                         text: "Add Equipment",
                         onPressed: () {
-                          context.push(AppRoutes.kAddEquipmentView,
-                              extra: widget.id);
+                          context.push(
+                            AppRoutes.kAddEquipmentView,
+                            extra: widget.id,
+                          );
                         },
                       ),
                       const SizedBox(

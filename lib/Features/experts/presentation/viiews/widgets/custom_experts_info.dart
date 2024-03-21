@@ -5,12 +5,14 @@ import 'package:graduation_project/core/utils/styles.dart';
 class CustomExpertsInfo extends StatelessWidget {
   const CustomExpertsInfo({
     super.key,
-    required this.expertsList,
-    required this.index, required this.title, required this.subTitle,
+    // required this.expertsList,
+    required this.id,
+    required this.title,
+    required this.subTitle,
   });
 
-  final List<ExpertsModel> expertsList;
-  final int index;
+  // final List<ExpertsModel> expertsList;
+  final String id;
   final String title;
   final String subTitle;
 
@@ -25,10 +27,7 @@ class CustomExpertsInfo extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          TextSpan(
-              text: subTitle,
-              style: Styles.textStyle15
-          ),
+          TextSpan(text: subTitle, style: Styles.textStyle15),
         ],
       ),
     );
