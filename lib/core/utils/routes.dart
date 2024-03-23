@@ -7,6 +7,7 @@ import 'package:graduation_project/Features/auth/presentation/views/reset_passwo
 import 'package:graduation_project/Features/auth/presentation/views/sign_in_view.dart';
 import 'package:graduation_project/Features/auth/presentation/views/sign_up_view.dart';
 import 'package:graduation_project/Features/chat/presentation/views/chat_view.dart';
+import 'package:graduation_project/Features/chat/presentation/views/real_time_chat_view.dart';
 import 'package:graduation_project/Features/detection/presentation/views/detect_view.dart';
 import 'package:graduation_project/Features/detection/presentation/views/show_result_view.dart';
 import 'package:graduation_project/Features/disease_info/presentation/views/disease_info_view.dart';
@@ -28,6 +29,7 @@ abstract class AppRoutes {
   static String kExpertsProfileView = '/expertsProfileView/:id';
   static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
+  static String kRealTimeChatView = '/realTimeChatView/:id';
   static String kDetectView = '/detectView';
   static String kShowResultView = '/showResultView/:name/:per/:img';
   static String kExpertsView = '/expertsView';
@@ -175,6 +177,16 @@ abstract class AppRoutes {
           return const CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
             child: ChatView(),
+            transitionsBuilder: _buildCustomTransition1,
+          );
+        },
+      ),
+      GoRoute(
+        path: kRealTimeChatView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: RealTimeChatView(id: state.extra.toString()),
             transitionsBuilder: _buildCustomTransition1,
           );
         },

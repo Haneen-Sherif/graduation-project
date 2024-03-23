@@ -39,13 +39,14 @@ class _ForgotPasswordViewBodyState extends State<ForgotPasswordViewBody> {
             left: 20,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ForgotPasswordHeader(),
               const SizedBox(
                 height: 52,
               ),
               Text(
-                'Please check your email',
+                'Forgot password?',
                 style: Styles.textStyle30.copyWith(
                   letterSpacing: -0.30,
                 ),

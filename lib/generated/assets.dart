@@ -20,6 +20,9 @@ class Assets {
   static const String imagesFrancesco = 'assets/images/francesco.png';
   static const String iconsSend = 'assets/icons/send.png';
   static const String iconsStar = 'assets/icons/Star.png';
+  static const String iconsRight = 'assets/icons/right.png';
+  static const String iconsChat = 'assets/icons/chat.png';
+  static const String iconsUpload = 'assets/icons/upload.png';
   static const String iconsGroupStar = 'assets/icons/Group_star.png';
   static const String imagesD1 = 'assets/images/D1.png';
   static const String imagesD4 = 'assets/images/D4.png';

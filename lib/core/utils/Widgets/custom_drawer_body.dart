@@ -32,6 +32,9 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
           },
           title: 'Home',
         ),
+        Divider(
+          color: Color(0xffD7D5D5),
+        ),
         const SizedBox(
           height: 30,
         ),
@@ -40,6 +43,9 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
             context.push(AppRoutes.kDetectView);
           },
           title: 'Disease Detection',
+        ),
+        Divider(
+          color: Color(0xffD7D5D5),
         ),
         const SizedBox(
           height: 30,
@@ -88,6 +94,9 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
         //   },
         //   title: 'Experts',
         // ),
+        Divider(
+          color: Color(0xffD7D5D5),
+        ),
         const SizedBox(
           height: 30,
         ),
@@ -97,6 +106,19 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
           },
           title: 'About',
         ),
+        Divider(
+          color: Color(0xffD7D5D5),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        CustomDrawerItem(
+          onTap: () {},
+          title: 'Chat',
+        ),
+        Divider(
+          color: Color(0xffD7D5D5),
+        ),
         const SizedBox(
           height: 30,
         ),
@@ -104,7 +126,10 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
           onTap: () {
             context.push(AppRoutes.kChatView);
           },
-          title: 'Q&A , Chat',
+          title: 'Doc Bot',
+        ),
+        Divider(
+          color: Color(0xffD7D5D5),
         ),
       ],
     );

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_forgot_password_back_icon.dart';
 import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
 import 'package:graduation_project/Features/experts/presentation/viiews/widgets/custom_experts_info.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
+import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
+import 'package:graduation_project/generated/assets.dart';
 
 class CustomExpertsInfoBody extends StatelessWidget {
   const CustomExpertsInfoBody({
@@ -29,94 +34,185 @@ class CustomExpertsInfoBody extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 16,
-              ),
-              const Align(
-                alignment: Alignment.center,
-                child: CustomTitle(title: "Experts Contacts"),
-              ),
-              const SizedBox(
-                height: 56,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Container(
+                height: 153,
+                width: double.infinity,
+                color: Color(0xff57ACB5),
+                child: Stack(clipBehavior: Clip.none, children: [
+                  Positioned(
+                    bottom: -75,
+                    left: 0,
+                    right: 0,
+                    child: CircleAvatar(
+                      backgroundColor: Color(0xff57ACB5),
+                      radius: 90,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(153),
+                          child: Image.network(expert.personalPhoto!)),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 16, left: 21, right: 21),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomExpertsInfo(
-                          // expertsList: expertsList,
-                          id: id,
-                          title: 'Name : ',
-                          subTitle: expert.userName!,
+                        CustomForgotPasswordBackIcon(
+                          color: Colors.white,
                         ),
-                        const SizedBox(
-                          height: 14,
-                        ),
-                        // CustomExpertsInfo(
-                        //   // expertsList: expertsList,
-                        //   id: widget.id,
-                        //   title: 'Age : ',
-                        //   subTitle: expert.age.toString(),
-                        // ),
-                        const SizedBox(
-                          height: 14,
-                        ),
-                        CustomExpertsInfo(
-                          id: id,
-                          title: 'From : ',
-                          subTitle: expert.address!,
-                        ),
-                        const SizedBox(
-                          height: 14,
-                        ),
-                        CustomExpertsInfo(
-                          id: id,
-                          title: 'mobile : ',
-                          subTitle: expert.phoneNumber!,
-                        ),
-                        const SizedBox(
-                          height: 14,
-                        ),
-                        CustomExpertsInfo(
-                          id: id,
-                          title: 'Email : ',
-                          subTitle: expert.email!,
-                        ),
-                        const SizedBox(
-                          height: 22,
-                        )
+                        GestureDetector(
+                            onTap: () {
+                              context.push(
+                                AppRoutes.kRealTimeChatView,
+                                extra: expert.id,
+                              );
+                            },
+                            child: Image.asset(Assets.iconsChat))
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    width: 27,
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Image.network(expert.personalPhoto!),
-                  )
-                ],
-              ),
-              Text(
-                "Professional information :",
-                style: Styles.textStyle15.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
+                ]),
               ),
               const SizedBox(
-                height: 9,
+                height: 100,
               ),
+              // const Align(
+              //   alignment: Alignment.center,
+              //   child: CustomTitle(title: "Experts Contacts"),
+              // ),
+              // const SizedBox(
+              //   height: 56,
+              // ),
+
+              // CustomExpertsInfo(
+              //   // expertsList: expertsList,
+              //   id: widget.id,
+              //   title: 'Age : ',
+              //   subTitle: expert.age.toString(),
+              // ),
+              // const SizedBox(
+              //   height: 14,
+              // ),
               Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  expert.moreInfo!,
-                  style: Styles.textStyle15,
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomExpertsInfo(
+                      // expertsList: expertsList,
+                      id: id,
+                      title: 'Name : ',
+                      subTitle: expert.userName!,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    CustomExpertsInfo(
+                      id: id,
+                      title: 'From : ',
+                      subTitle: expert.address!,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    CustomExpertsInfo(
+                      id: id,
+                      title: 'Email : ',
+                      subTitle: expert.email!,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      "Professional information :",
+                      style: Styles.textStyle12.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff979799)),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(expert.moreInfo!,
+                          style: Styles.textStyle15
+                              .copyWith(color: Colors.black.withOpacity(0.78))),
+                    ),
+                  ],
                 ),
               ),
+
+              // CustomExpertsInfo(
+              //   id: id,
+              //   title: 'mobile : ',
+              //   subTitle: expert.phoneNumber!,
+              // ),
+              // const SizedBox(
+              //   height: 14,
+              // ),
+
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Expanded(
+              //       flex: 5,
+              //       child: Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           CustomExpertsInfo(
+              //             // expertsList: expertsList,
+              //             id: id,
+              //             title: 'Name : ',
+              //             subTitle: expert.userName!,
+              //           ),
+              //           const SizedBox(
+              //             height: 14,
+              //           ),
+              //           // CustomExpertsInfo(
+              //           //   // expertsList: expertsList,
+              //           //   id: widget.id,
+              //           //   title: 'Age : ',
+              //           //   subTitle: expert.age.toString(),
+              //           // ),
+              //           const SizedBox(
+              //             height: 14,
+              //           ),
+              //           CustomExpertsInfo(
+              //             id: id,
+              //             title: 'From : ',
+              //             subTitle: expert.address!,
+              //           ),
+              //           const SizedBox(
+              //             height: 14,
+              //           ),
+              //           CustomExpertsInfo(
+              //             id: id,
+              //             title: 'mobile : ',
+              //             subTitle: expert.phoneNumber!,
+              //           ),
+              //           const SizedBox(
+              //             height: 14,
+              //           ),
+              //           CustomExpertsInfo(
+              //             id: id,
+              //             title: 'Email : ',
+              //             subTitle: expert.email!,
+              //           ),
+              //           const SizedBox(
+              //             height: 22,
+              //           )
+              //         ],
+              //       ),
+              //     ),
+              //     const SizedBox(
+              //       width: 27,
+              //     ),
+              //     Expanded(
+              //       flex: 4,
+              //       child: Image.network(expert.personalPhoto!),
+              //     )
+              //   ],
+              // ),
             ],
           );
         }

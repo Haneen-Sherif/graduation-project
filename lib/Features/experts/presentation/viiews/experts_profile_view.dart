@@ -23,12 +23,12 @@ class _ExpertsProfileViewState extends State<ExpertsProfileView> {
       child: Scaffold(
         key: expertsInfoKey,
         drawer: const CustomDrawer(),
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(70),
-          child: CustomAppBar(
-            anotherKey: expertsInfoKey,
-          ),
-        ),
+        // appBar: PreferredSize(
+        //   preferredSize: const Size.fromHeight(70),
+        //   child: CustomAppBar(
+        //     anotherKey: expertsInfoKey,
+        //   ),
+        // ),
         body: ExpertsProfileViewBody(id: widget.id),
       ),
     );

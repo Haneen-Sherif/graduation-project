@@ -72,10 +72,10 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.text,
                 obscureText: false,
-                text: "Name",
+                text: "Username",
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Name address must not be empty';
+                    return 'Username must not be empty';
                   }
                   return null;
                 },

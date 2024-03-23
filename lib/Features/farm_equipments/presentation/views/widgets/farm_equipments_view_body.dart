@@ -31,62 +31,83 @@ class _FarmEquipmentsViewBodyState extends State<FarmEquipmentsViewBody> {
     final Size size = MediaQuery.of(context).size;
 
     return SafeArea(
-      child: Align(
-        alignment: Alignment.center,
-        child: CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(
-              child: Column(children: [
-                SizedBox(
-                  height: 57,
-                ),
-                CustomTitle(title: "Farm Equipments"),
-                SizedBox(
-                  height: 74,
-                ),
-              ]),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomTitle(title: "Farm Equipments"),
+            SizedBox(
+              height: 26,
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      CustomButton(
-                        width: size.width * 0.6,
-                        text: "Add Equipment",
-                        onPressed: () {
-                          context.push(
-                            AppRoutes.kAddEquipmentView,
-                            extra: widget.id,
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 11,
-                      ),
-                    ]),
-              ),
+            // const SliverToBoxAdapter(
+            //   child: Column(children: [
+            //     CustomTitle(title: "Farm Equipments"),
+            //     SizedBox(
+            //       height: 26,
+            //     ),
+            //   ]),
+            // ),
+
+            EquipmentListView(
+              id: widget.id,
             ),
 
-            SliverToBoxAdapter(
-                child: EquipmentListView(
-              id: widget.id,
-            )),
-            // }
-            //   },
+            // SliverFillRemaining(
+            //     child: EquipmentListView(
+            //   id: widget.id,
+            // )),
+
+            Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+              const SizedBox(
+                height: 56,
+              ),
+              CustomButton(
+                width: size.width * 0.6,
+                text: "Add Equipment",
+                onPressed: () {
+                  context.push(
+                    AppRoutes.kAddEquipmentView,
+                    extra: widget.id,
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 11,
+              ),
+            ]),
+            // SliverToBoxAdapter(
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(right: 16),
+            //     child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.end,
+            //         children: [
+            //           CustomButton(
+            //             width: size.width * 0.6,
+            //             text: "Add Equipment",
+            //             onPressed: () {
+            //               context.push(
+            //                 AppRoutes.kAddEquipmentView,
+            //                 extra: widget.id,
+            //               );
+            //             },
+            //           ),
+            //           const SizedBox(
+            //             height: 11,
+            //           ),
+            //         ]),
+            //   ),
             // ),
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Column(children: [
-                const Expanded(
-                  child: SizedBox(
-                    height: 16,
-                  ),
-                ),
-                HomeFooterWidget(size: size)
-              ]),
-            )
+            // SliverFillRemaining(
+            //   hasScrollBody: false,
+            //   child: Column(children: [
+            //     const Expanded(
+            //       child: SizedBox(
+            //         height: 16,
+            //       ),
+            //     ),
+            //     HomeFooterWidget(size: size)
+            //   ]),
+            // )
           ],
         ),
       ),

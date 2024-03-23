@@ -16,26 +16,26 @@ class ExpertsProfileViewBody extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 26),
-            child: CustomExpertsInfoBody(
-              id: id,
-            ),
+          // child: Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 26),
+          child: CustomExpertsInfoBody(
+            id: id,
           ),
+          // ),
         ),
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Column(
-            children: [
-              Expanded(
-                child: const SizedBox(
-                  height: 12,
-                ),
-              ),
-              HomeFooterWidget(size: size)
-            ],
-          ),
-        )
+        // SliverFillRemaining(
+        //   hasScrollBody: false,
+        //   child: Column(
+        //     children: [
+        //       Expanded(
+        //         child: const SizedBox(
+        //           height: 12,
+        //         ),
+        //       ),
+        //       HomeFooterWidget(size: size)
+        //     ],
+        //   ),
+        // )
       ],
     );
   }

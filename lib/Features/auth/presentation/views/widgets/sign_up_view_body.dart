@@ -54,14 +54,6 @@ class SignUpViewBody extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 17,
-          ),
-          SocialMedia(width: width, text: "Or Sign Up with"),
-          const SizedBox(
-            height: 36,
-          ),
-          const GoogleOrFaceBook(),
-          const SizedBox(
             height: 36,
           ),
         ],

@@ -23,13 +23,23 @@ class CustomSignUpForm extends StatefulWidget {
 class _CustomSignUpFormState extends State<CustomSignUpForm> {
   final ImagePicker picker = ImagePicker();
   File? img;
+  File? img2;
   String? imgValidationError;
+  String? imgValidationError2;
 
   Future pickImage() async {
     XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       img = pickedFile != null ? File(pickedFile.path) : null;
       imgValidationError = null;
+    });
+  }
+
+  Future pickImage2() async {
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      img2 = pickedFile != null ? File(pickedFile.path) : null;
+      imgValidationError2 = null;
     });
   }
 
@@ -264,7 +274,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
             ),
             AnimatedSwitcher(
               duration: Duration(milliseconds: 1000),
-              child: userType == "expert"
+              child: userType == "specialist"
                   ? Column(
                       children: [
                         GestureDetector(
@@ -314,52 +324,55 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                               borderRadius: BorderRadius.circular(12),
                               color: Colors.white),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 16),
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    child: Text(
-                                      "Personal Photo",
-                                      style: Styles.textStyle15.copyWith(
-                                          color: const Color(0xff383838)),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 16),
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          "Personal Photo",
+                                          style: Styles.textStyle15.copyWith(
+                                              color: const Color(0xff383838)),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Expanded(
+                                      child: SizedBox(),
+                                    )
+                                  ],
                                 ),
                               ),
                               const SizedBox(
                                 width: 4,
                               ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 8),
-                                  child: MaterialButton(
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      // image = await picker.pickImage(
-                                      //     source: ImageSource.gallery);
-                                      // setState(() {
-                                      //   image = image;
-                                      // });
-                                      pickImage();
-                                    },
-                                    child: Container(
-                                      height: 25,
-                                      decoration: ShapeDecoration(
-                                        color: kPrimaryColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: MaterialButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    pickImage();
+                                  },
+                                  child: Container(
+                                    height: 25,
+                                    decoration: ShapeDecoration(
+                                      color: kPrimaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          FittedBox(
-                                            fit: BoxFit.scaleDown,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 4),
                                             child: Text(
                                               "Upload Image",
                                               textAlign: TextAlign.center,
@@ -370,8 +383,84 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                               ),
                                             ),
                                           ),
-                                        ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Container(
+                          height: 45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16),
+                                        child: Text(
+                                          "Graduation Certificate",
+                                          style: Styles.textStyle15.copyWith(
+                                              color: const Color(0xff383838)),
+                                        ),
                                       ),
+                                    ),
+                                    Expanded(child: SizedBox())
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: MaterialButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    pickImage2();
+                                  },
+                                  child: Container(
+                                    height: 25,
+                                    decoration: ShapeDecoration(
+                                      color: kPrimaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8, vertical: 4),
+                                            child: Text(
+                                              "Upload Image",
+                                              textAlign: TextAlign.center,
+                                              style:
+                                                  Styles.textStyle10.copyWith(
+                                                color: const Color(0xFFFFF9F9),
+                                                letterSpacing: 1.08,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -419,10 +508,10 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                     title: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          "Expert",
+                          "Specialist",
                           style: Styles.textStyle15,
                         )),
-                    value: "expert",
+                    value: "specialist",
                     groupValue: userType,
                     visualDensity:
                         const VisualDensity(horizontal: -4, vertical: -4),
@@ -454,7 +543,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                     addressController.text,
                   );
                 } else if (formKey.currentState!.validate() &&
-                    userType == "expert") {
+                    userType == "specialist") {
                   BlocProvider.of<AuthCubit>(context).expertSignUp(
                     nameController.text,
                     emailController.text,
@@ -489,8 +578,4 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
         dateController.value = TextEditingValue(text: formatter.format(picked));
       });
   }
-
-  // ImageProvider getImage() {
-  //   return FileImage(File(image!.path));
-  // }
 }

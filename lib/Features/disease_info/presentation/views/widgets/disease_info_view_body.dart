@@ -40,16 +40,16 @@ class DiseaseInfoViewBody extends StatelessWidget {
                     final disease = snapshot.data!;
                     return Column(
                       children: [
-                        const CustomTitle(title: " Fish Diseases"),
+                        CustomTitle(title: disease.name!),
                         const SizedBox(
                           height: 26,
                         ),
                         Image.file(File(disease.photoPath!)),
-                        const SizedBox(
-                          height: 24,
-                        ),
+                        // const SizedBox(
+                        //   height: 12,
+                        // ),
                         CustomFishInfoRow(
-                          title: disease.name!,
+                          title: '',
                           subTitle: disease.description!,
                         ),
                         const SizedBox(

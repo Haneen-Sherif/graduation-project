@@ -18,18 +18,20 @@ class CustomExpertsInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: title,
-            style: Styles.textStyle15.copyWith(
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          TextSpan(text: subTitle, style: Styles.textStyle15),
-        ],
-      ),
+    return Row(
+      children: [
+        Text(
+          title,
+          style: Styles.textStyle12
+              .copyWith(fontWeight: FontWeight.w500, color: Color(0xff979799)),
+        ),
+        SizedBox(
+          width: 32,
+        ),
+        Text(subTitle,
+            style: Styles.textStyle15
+                .copyWith(color: Colors.black.withOpacity(0.78))),
+      ],
     );
   }
 }

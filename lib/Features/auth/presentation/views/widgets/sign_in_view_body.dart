@@ -53,11 +53,11 @@ class SignInViewBody extends StatelessWidget {
               ],
             ),
           ),
-          SocialMedia(width: width, text: 'Or Sign In with'),
-          const SizedBox(
-            height: 32,
-          ),
-          const GoogleOrFaceBook(),
+          // SocialMedia(width: width, text: 'Or Sign In with'),
+          // const SizedBox(
+          //   height: 32,
+          // ),
+          // const GoogleOrFaceBook(),
           const SizedBox(
             height: 32,
           ),

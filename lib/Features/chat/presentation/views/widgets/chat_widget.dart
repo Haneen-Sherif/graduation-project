@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:intl/intl.dart';
 
@@ -44,8 +45,10 @@ class ChatWidget extends StatelessWidget {
                     horizontal: 24,
                     vertical: 16,
                   ),
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFFEBE9E9),
+                  decoration: ShapeDecoration(
+                    color: chatIndex == 0
+                        ? kPrimaryColor.withOpacity(0.46)
+                        : Color(0xFFEBE9E9),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(16),

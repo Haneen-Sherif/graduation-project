@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
+class DetectButton extends StatelessWidget {
+  const DetectButton({
     super.key,
-    required this.width,
     required this.text,
     required this.onPressed,
     this.color,
+    this.width,
+    required this.myWidget,
+    required this.space,
   });
 
-  final double width;
+  final double? width;
   final String text;
   final Color? color;
   final void Function() onPressed;
+  final Widget myWidget;
+  final double space;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +31,15 @@ class CustomButton extends StatelessWidget {
         decoration: ShapeDecoration(
           color: color ?? kPrimaryColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(35),
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              width: space,
+            ),
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
@@ -44,6 +51,9 @@ class CustomButton extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(
+              child: myWidget,
+            )
           ],
         ),
       ),

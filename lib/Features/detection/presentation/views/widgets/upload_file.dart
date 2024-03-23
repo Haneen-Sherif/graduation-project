@@ -63,7 +63,7 @@ class _UploadFileState extends State<UploadFile> {
         extra: {
           'name': diseaseName,
           'per': diseasePer.toString(),
-          'img' : img!.path
+          'img': img!.path
         },
       );
     } else {
@@ -82,10 +82,10 @@ class _UploadFileState extends State<UploadFile> {
           margin: const EdgeInsets.symmetric(horizontal: 38),
           padding: const EdgeInsets.all(38),
           decoration: BoxDecoration(
-            color: const Color(0xFFE5E5E5),
+            // color: const Color(0xFFE5E5E5),
             border: const DashedBorder.fromBorderSide(
               dashLength: 8,
-              side: BorderSide(color: Color(0x7F585EC7), width: 3),
+              side: BorderSide(color: Color(0xFF57ACB5), width: 3),
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -108,33 +108,39 @@ class _UploadFileState extends State<UploadFile> {
         const SizedBox(
           height: 40,
         ),
-
-        img == null? SizedBox() :  Container(
-          margin: const EdgeInsets.symmetric(horizontal: 38),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(7),
-            color: kPrimaryColor.withOpacity(0.16),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(img!.path.split('/').last),
-              // Image.asset(Assets.imagesGallery),
-              // Expanded(
-              //   child: Container(
-              //     margin: const EdgeInsets.symmetric(horizontal: 16),
-              //     height: 1,
-              //     decoration: BoxDecoration(
-              //       color: const Color(0xff5A5D95),
-              //       borderRadius: BorderRadius.circular(3),
-              //     ),
-              //   ),
-              // ),
-              Image.asset(Assets.imagesCheckmark)
-            ],
-          ),
-        ),
+        img == null
+            ? SizedBox()
+            : Container(
+                margin: const EdgeInsets.symmetric(horizontal: 38),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  color: kPrimaryColor.withOpacity(0.16),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(img!.path.split('/').last)),
+                    ),
+                    // Image.asset(Assets.imagesGallery),
+                    // Expanded(
+                    //   child: Container(
+                    //     margin: const EdgeInsets.symmetric(horizontal: 16),
+                    //     height: 1,
+                    //     decoration: BoxDecoration(
+                    //       color: const Color(0xff5A5D95),
+                    //       borderRadius: BorderRadius.circular(3),
+                    //     ),
+                    //   ),
+                    // ),
+                    Image.asset(Assets.imagesCheckmark)
+                  ],
+                ),
+              ),
         const SizedBox(
           height: 56,
         ),

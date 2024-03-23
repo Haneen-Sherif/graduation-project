@@ -22,6 +22,7 @@ class CheckEmailViewBody extends StatelessWidget {
             left: 20,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const ForgotPasswordHeader(),
               const SizedBox(

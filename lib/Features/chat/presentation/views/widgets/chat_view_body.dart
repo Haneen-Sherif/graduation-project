@@ -69,12 +69,8 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                           onPressed: () async {
                             await Services.showModalSheet(context: context);
                           },
-                          icon: const Icon(
-                            Icons.more_vert_rounded,
-                            color: Color(
-                              0xff1E68D7,
-                            ),
-                          ),
+                          icon: const Icon(Icons.more_vert_rounded,
+                              color: kPrimaryColor),
                         ),
                       ),
                     )

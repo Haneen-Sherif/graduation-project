@@ -17,13 +17,15 @@ class CustomDrawerItem extends StatelessWidget {
       onTap: onTap,
       child: FittedBox(
         fit: BoxFit.scaleDown,
-        child: Text(
-          title,
-          // overflow: TextOverflow.ellipsis,
-          // maxLines: 1,
-          style: Styles.textStyle25.copyWith(
-            fontWeight: FontWeight.w500,
-          ),
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: Styles.textStyle25.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
       ),
     );

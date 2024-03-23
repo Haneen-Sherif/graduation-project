@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_forgot_password_back_icon.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/widgets/edit_equipments_view_body.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_app_bar.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_drawer.dart';
@@ -24,10 +25,14 @@ class _EditEquipmentsViewState extends State<EditEquipmentsView> {
         key: editEquipmentKey,
         drawer: const CustomDrawer(),
         appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(70),
-            child: CustomAppBar(
-              anotherKey: editEquipmentKey,
-            )),
+          preferredSize: const Size.fromHeight(70),
+          child: Padding(
+              padding: EdgeInsets.only(left: 21, top: 16),
+              child: CustomForgotPasswordBackIcon()),
+          // child: CustomAppBar(
+          //   anotherKey: editEquipmentKey,
+          // )
+        ),
         body: EditEquipmentsViewBody(
             id: widget.id, equipmentId: widget.equipmentId),
       ),

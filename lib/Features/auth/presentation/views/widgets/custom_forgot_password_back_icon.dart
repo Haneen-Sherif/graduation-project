@@ -5,7 +5,10 @@ import 'package:graduation_project/generated/assets.dart';
 class CustomForgotPasswordBackIcon extends StatelessWidget {
   const CustomForgotPasswordBackIcon({
     super.key,
+    this.color,
   });
+
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,8 @@ class CustomForgotPasswordBackIcon extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Image.asset(Assets.iconsBack),
+                child:
+                    Image.asset(Assets.iconsBack, color: color ?? Colors.black),
               ),
             ),
           ],

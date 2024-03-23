@@ -17,10 +17,6 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final List<FishModel> fishList =
-    //     BlocProvider.of<HomeCubit>(context).fishList;
-    // final List<ExpertsModel> expertsList =
-    //     BlocProvider.of<HomeCubit>(context).expertsList;
     Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async {
@@ -37,8 +33,18 @@ class HomeViewBody extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: Text("Fish Diseases",
-                textAlign: TextAlign.center, style: Styles.textStyle27),
+            child: Column(
+              children: [
+                Text("Fish Diseases",
+                    textAlign: TextAlign.center,
+                    style:
+                        Styles.textStyle24.copyWith(color: Color(0xff1D2B4F))),
+                Text(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                  style: Styles.textStyle12.copyWith(color: Color(0xff636E88)),
+                )
+              ],
+            ),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
@@ -54,7 +60,7 @@ class HomeViewBody extends StatelessWidget {
                 children: [
                   Container(
                     height: 79,
-                    color: const Color(0xff8488CD),
+                    color: kPrimaryColor,
                   ),
                   Positioned(
                     top: -40,
@@ -71,14 +77,22 @@ class HomeViewBody extends StatelessWidget {
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
-              height: 24,
+              height: 18,
             ),
           ),
           SliverToBoxAdapter(
-            child: Text(
-              "Experts",
-              textAlign: TextAlign.center,
-              style: Styles.textStyle27,
+            child: Column(
+              children: [
+                Text(
+                  "Specialists",
+                  textAlign: TextAlign.center,
+                  style: Styles.textStyle24.copyWith(color: Color(0xff1D2B4F)),
+                ),
+                Text(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                  style: Styles.textStyle12.copyWith(color: Color(0xff636E88)),
+                )
+              ],
             ),
           ),
           const SliverToBoxAdapter(
@@ -95,7 +109,7 @@ class HomeViewBody extends StatelessWidget {
                 children: [
                   Container(
                     height: 79,
-                    color: const Color(0xff8488CD),
+                    color: kPrimaryColor,
                   ),
                   Positioned(
                     top: -70,
@@ -108,6 +122,13 @@ class HomeViewBody extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Text(
+              "About Us",
+              textAlign: TextAlign.center,
+              style: Styles.textStyle24.copyWith(color: Color(0xff1D2B4F)),
             ),
           ),
           SliverFillRemaining(

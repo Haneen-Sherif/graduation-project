@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
 class DiseaseInfoOrder extends StatelessWidget {
@@ -11,29 +12,23 @@ class DiseaseInfoOrder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 2),
-      child: Container(
-        width: 24,
-        height: 22,
-        decoration: const ShapeDecoration(
-          color: Color(0xff777BCB),
-          shape: OvalBorder(
-            side: BorderSide(
-              width: 1,
-              color: Color(0xff777BCB),
-            ),
-          ),
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        color: kPrimaryColor,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: kPrimaryColor,
         ),
-        child: Center(
-          child: Text(
-            number,
-            style: Styles.textStyle12.copyWith(
-              fontWeight: FontWeight.w700,
-              fontFamily: "Montserrat",
-              color: Colors.white,
-            ),
-          ),
+      ),
+      child: Text(
+        textAlign: TextAlign.center,
+        number,
+        style: Styles.textStyle12.copyWith(
+          fontWeight: FontWeight.w700,
+          fontFamily: "Montserrat",
+          color: Colors.white,
         ),
       ),
     );

@@ -25,6 +25,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Drawer(
+      elevation: 0,
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -43,7 +44,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   padding: EdgeInsets.symmetric(horizontal: 32),
                   child: CustomDrawerBody(),
                 ),
-
               ],
             ),
           ),
