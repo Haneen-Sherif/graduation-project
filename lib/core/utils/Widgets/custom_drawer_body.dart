@@ -57,9 +57,9 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
 
             // Retrieve the tokens from shared preferences
             final accessToken = prefs.getString('accessToken');
-            final refreshToken = prefs.getString('refreshToken');
+            // final refreshToken = prefs.getString('refreshToken');
 
-            String decodedPayload = "";
+            // String decodedPayload = "";
 
             List<String> parts = accessToken!.split('.');
             final payload = _decodeBase64(parts[1]);

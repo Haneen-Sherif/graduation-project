@@ -6,6 +6,7 @@ import 'package:graduation_project/Features/farm_equipments/data/models/equipmen
 import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
+import 'package:graduation_project/core/utils/styles.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditEquipmentsForm extends StatefulWidget {
@@ -103,7 +104,15 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 46),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  "Equipment Name",
+                  style: Styles.textStyle15,
+                ),
+                SizedBox(
+                  height: 9,
+                ),
                 CustomTextFormField(
                   controller: widget.editEquipmentController,
                   width: widget.size.width,
@@ -120,6 +129,13 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
                 ),
                 const SizedBox(
                   height: 12,
+                ),
+                Text(
+                  "Count",
+                  style: Styles.textStyle15,
+                ),
+                SizedBox(
+                  height: 9,
                 ),
                 CustomTextFormField(
                   controller: widget.countController,
@@ -138,6 +154,13 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
                 const SizedBox(
                   height: 12,
                 ),
+                Text(
+                  "Discription",
+                  style: Styles.textStyle15,
+                ),
+                SizedBox(
+                  height: 9,
+                ),
                 CustomTextFormField(
                   controller: widget.descriptionController,
                   width: widget.size.width,
@@ -155,84 +178,88 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
                 const SizedBox(
                   height: 30,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    pickImage();
-                  },
-                  child: Stack(
-                    children: [
-                      img == null
-                          ? Image.network(equipment.photoPath!)
-                          : Image.file(img!),
-                      // if (imgValidationError != null)
-                      //   Positioned(
-                      //     top: 0,
-                      //     right: 0,
-                      //     child: Container(
-                      //       padding: EdgeInsets.all(4),
-                      //       color: Colors.red,
-                      //       child: Text(
-                      //         imgValidationError!,
-                      //         style: TextStyle(color: Colors.white),
-                      //       ),
-                      //     ),
-                      //   ),
-                    ],
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      pickImage();
+                    },
+                    child: Stack(
+                      children: [
+                        img == null
+                            ? Image.network(equipment.photoPath!)
+                            : Image.file(img!),
+                        // if (imgValidationError != null)
+                        //   Positioned(
+                        //     top: 0,
+                        //     right: 0,
+                        //     child: Container(
+                        //       padding: EdgeInsets.all(4),
+                        //       color: Colors.red,
+                        //       child: Text(
+                        //         imgValidationError!,
+                        //         style: TextStyle(color: Colors.white),
+                        //       ),
+                        //     ),
+                        //   ),
+                      ],
+                    ),
+                    // child: img == null
+                    //     ? Image.network(equipment.photoPath!)
+                    //     : Image.file(img!),
                   ),
-                  // child: img == null
-                  //     ? Image.network(equipment.photoPath!)
-                  //     : Image.file(img!),
                 ),
                 const SizedBox(
                   height: 38,
                 ),
-                CustomButton(
-                  width: widget.size.width * 0.4,
-                  text: "Edit",
-                  onPressed: () {
-                    String? newEquipmentName =
-                        widget.editEquipmentController?.text == ''
-                            ? equipment.name
-                            : widget.editEquipmentController?.text;
-                    String? newDescription =
-                        widget.descriptionController?.text == ''
-                            ? equipment.description
-                            : widget.descriptionController?.text;
-                    int newCount = widget.countController!.text == ''
-                        ? int.parse(equipment.count.toString())
-                        : int.parse(widget.countController!.text);
+                Center(
+                  child: CustomButton(
+                    width: widget.size.width * 0.4,
+                    text: "Edit",
+                    onPressed: () {
+                      String? newEquipmentName =
+                          widget.editEquipmentController?.text == ''
+                              ? equipment.name
+                              : widget.editEquipmentController?.text;
+                      String? newDescription =
+                          widget.descriptionController?.text == ''
+                              ? equipment.description
+                              : widget.descriptionController?.text;
+                      int newCount = widget.countController!.text == ''
+                          ? int.parse(equipment.count.toString())
+                          : int.parse(widget.countController!.text);
 
-                    if (newEquipmentName != equipment.name ||
-                        newDescription != equipment.description ||
-                        newCount != equipment.count ||
-                        img != null) {
-                      BlocProvider.of<EquipmentsCubit>(context).editEquipment(
-                        widget.id,
-                        newEquipmentName,
-                        newDescription,
-                        newCount,
-                        img ?? File(equipment.photoPath!),
-                        widget.equipmentId,
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("There are no changes to update"),
-                      ));
-                    }
-                    // widget.formKey.currentState!.save();
-                    // print(widget.id);
-                    // print(widget.editEquipmentController?.text);
-                    // print(equipment.name!);
-                    // print(widget.descriptionController?.text);
-                    // print(equipment.description!);
-                    // print(widget.countController?.text);
-                    // print(equipment.count.toString());
+                      if (newEquipmentName != equipment.name ||
+                          newDescription != equipment.description ||
+                          newCount != equipment.count ||
+                          img != null) {
+                        BlocProvider.of<EquipmentsCubit>(context).editEquipment(
+                          widget.id,
+                          newEquipmentName,
+                          newDescription,
+                          newCount,
+                          img ?? File(equipment.photoPath!),
+                          widget.equipmentId,
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("There are no changes to update"),
+                        ));
+                      }
+                      // widget.formKey.currentState!.save();
+                      // print(widget.id);
+                      // print(widget.editEquipmentController?.text);
+                      // print(equipment.name!);
+                      // print(widget.descriptionController?.text);
+                      // print(equipment.description!);
+                      // print(widget.countController?.text);
+                      // print(equipment.count.toString());
 
-                    // print(img);
-                    // print(File(equipment.photoPath!.toString()));
-                    // print(myImage);
-                    // print(widget.equipmentId);
-                  },
+                      // print(img);
+                      // print(File(equipment.photoPath!.toString()));
+                      // print(myImage);
+                      // print(widget.equipmentId);
+                    },
+                  ),
                 ),
               ],
             ),

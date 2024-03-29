@@ -22,6 +22,7 @@ class _EquipmentListViewState extends State<EquipmentListView> {
   Widget build(BuildContext context) {
     return BlocBuilder<EquipmentsCubit, EquipmentsState>(
         builder: (context, state) {
+      print("EquipmentListView: Builder function called with state: $state");
       if (state is EquipmentsLoading) {
         return Center(
           child: CircularProgressIndicator(),

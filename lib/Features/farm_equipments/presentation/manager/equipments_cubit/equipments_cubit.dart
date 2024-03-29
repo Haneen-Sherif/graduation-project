@@ -121,7 +121,7 @@ class EquipmentsCubit extends Cubit<EquipmentsState> {
 
   Future<void> editEquipment(String ownerId, String? name, String? description,
       int? count, File? photoPath, int eId) async {
-    emit(EquipmentsLoading());
+    print("Editing equipment with ID: $eId");
 
     var request = http.MultipartRequest(
         'PUT', Uri.parse("$baseUrlApi/api/$ownerId/Equipment"));
@@ -188,8 +188,6 @@ class EquipmentsCubit extends Cubit<EquipmentsState> {
   }
 
   Future<EquipmentsModel> getEquipment(String ownerId, int id) async {
-    emit(EquipmentsLoading());
-
     try {
       print('Fetching equipment for ownerId: $ownerId and equipmentId: $id');
       final response = await http.get(

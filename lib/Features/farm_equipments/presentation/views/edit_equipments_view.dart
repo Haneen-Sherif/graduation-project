@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_forgot_password_back_icon.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/widgets/edit_equipments_view_body.dart';
-import 'package:graduation_project/core/utils/Widgets/custom_app_bar.dart';
+
 import 'package:graduation_project/core/utils/Widgets/custom_drawer.dart';
 
 class EditEquipmentsView extends StatefulWidget {
@@ -20,6 +20,7 @@ class _EditEquipmentsViewState extends State<EditEquipmentsView> {
 
   @override
   Widget build(BuildContext context) {
+    print("EditEquipmentsView: Build method called");
     return SafeArea(
       child: Scaffold(
         key: editEquipmentKey,
