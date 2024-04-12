@@ -13,14 +13,14 @@ class CustomTextCheckEmail extends StatelessWidget {
         children: [
           TextSpan(
             text: 'We’ve sent a code to ',
-            style: Styles.textStyle16.copyWith(
+            style: Styles.textStyle16(context).copyWith(
               color: Colors.black.withOpacity(0.699999988079071),
               fontFamily: 'Inter',
             ),
           ),
           TextSpan(
             text: 'helloworld@gmail.com',
-            style: Styles.textStyle16.copyWith(
+            style: Styles.textStyle16(context).copyWith(
               fontFamily: 'Inter',
               fontWeight: FontWeight.w500,
             ),

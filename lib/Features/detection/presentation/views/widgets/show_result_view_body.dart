@@ -9,7 +9,8 @@ import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
 
 class ShowResultViewBody extends StatelessWidget {
-  const ShowResultViewBody({super.key, required this.name, required this.per, required this.img});
+  const ShowResultViewBody(
+      {super.key, required this.name, required this.per, required this.img});
 
   final String name;
   final String img;
@@ -35,7 +36,7 @@ class ShowResultViewBody extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            Text('Result', style: Styles.textStyle27),
+            Text('Result', style: Styles.textStyle27(context)),
             const SizedBox(
               height: 16,
             ),
@@ -48,7 +49,7 @@ class ShowResultViewBody extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return DiseaseResult(
                     diseaseName: name,
-                    diseasePer: per~/100,
+                    diseasePer: per ~/ 100,
                     diseaseType: diseaseResultLest[index].diseaseType,
                     diseaseImage: img,
                     recommendationAction:

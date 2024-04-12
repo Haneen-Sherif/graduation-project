@@ -60,7 +60,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         hintText: widget.hintText,
         contentPadding: EdgeInsets.symmetric(horizontal: widget.width * 0.05),
         labelText: widget.text,
-        labelStyle: Styles.textStyle15.copyWith(
+        labelStyle: Styles.textStyle14(context).copyWith(
+          color: widget.hintTextColor ?? Colors.black.withOpacity(0.78),
+          letterSpacing: 0.90,
+        ),
+        hintStyle: Styles.textStyle14(context).copyWith(
           color: widget.hintTextColor ?? Colors.black.withOpacity(0.78),
           letterSpacing: 0.90,
         ),

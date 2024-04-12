@@ -24,7 +24,7 @@ class ReportRow extends StatelessWidget {
         ),
         Text(
           text,
-          style: Styles.textStyle14.copyWith(
+          style: Styles.textStyle14(context).copyWith(
             fontFamily: 'Roboto',
           ),
         ),

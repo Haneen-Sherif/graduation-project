@@ -29,7 +29,7 @@ class CustomFishInfoRow extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
                   subTitle,
-                  style: Styles.textStyle12.copyWith(
+                  style: Styles.textStyle12(context).copyWith(
                     letterSpacing: 0.72,
                   ),
                 ),

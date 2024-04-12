@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/verify_code_list_view_item.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/routes.dart';
@@ -46,72 +48,89 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      autovalidateMode: AutovalidateMode.always,
-      key: widget.formKey,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+              ),
+            );
+            context.push(AppRoutes.kResetPasswordView);
+          } else if (state is AuthFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+              ),
+            );
+          }
+        },
+        child: Form(
+          autovalidateMode: AutovalidateMode.always,
+          key: widget.formKey,
+          child: Column(
             children: [
-              Expanded(
-                child: VerifyCodeListViewItem(
-                  codeController: c1,
-                  first: true,
-                  last: false,
-                  size: widget.size,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: VerifyCodeListViewItem(
+                      codeController: c1,
+                      first: true,
+                      last: false,
+                      size: widget.size,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: VerifyCodeListViewItem(
+                      codeController: c2,
+                      first: false,
+                      last: false,
+                      size: widget.size,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: VerifyCodeListViewItem(
+                      codeController: c3,
+                      first: false,
+                      last: false,
+                      size: widget.size,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: VerifyCodeListViewItem(
+                      codeController: c4,
+                      first: false,
+                      last: true,
+                      size: widget.size,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
-                width: 15,
+                height: 25,
               ),
-              Expanded(
-                child: VerifyCodeListViewItem(
-                  codeController: c2,
-                  first: false,
-                  last: false,
-                  size: widget.size,
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Expanded(
-                child: VerifyCodeListViewItem(
-                  codeController: c3,
-                  first: false,
-                  last: false,
-                  size: widget.size,
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Expanded(
-                child: VerifyCodeListViewItem(
-                  codeController: c4,
-                  first: false,
-                  last: true,
-                  size: widget.size,
-                ),
+              CustomButton(
+                width: widget.size.width * 0.8,
+                text: "Verify",
+                onPressed: () {
+                  if (widget.formKey.currentState!.validate()) {
+                    widget.formKey.currentState!.save();
+                    context.push(AppRoutes.kResetPasswordView);
+                  }
+                },
               ),
             ],
           ),
-          const SizedBox(
-            height: 25,
-          ),
-          CustomButton(
-            width: widget.size.width * 0.8,
-            text: "Verify",
-            onPressed: () {
-              if (widget.formKey.currentState!.validate()) {
-                widget.formKey.currentState!.save();
-                context.push(AppRoutes.kResetPasswordView);
-              }
-            },
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

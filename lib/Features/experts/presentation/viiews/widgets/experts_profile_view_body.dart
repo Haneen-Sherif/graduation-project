@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/experts/presentation/viiews/widgets/custom_experts_info_body.dart';
-import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 
 class ExpertsProfileViewBody extends StatelessWidget {
   const ExpertsProfileViewBody({
@@ -12,7 +11,7 @@ class ExpertsProfileViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    // final Size size = MediaQuery.of(context).size;
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(

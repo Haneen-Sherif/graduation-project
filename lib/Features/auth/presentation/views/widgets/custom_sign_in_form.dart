@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_forget_password.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
 import 'package:graduation_project/core/utils/routes.dart';
@@ -53,11 +54,14 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
             });
           }
           if (state is LoginSuccess) {
+            nameController.clear();
+            passwordController.clear();
             context.push(AppRoutes.kHomeView);
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
+                backgroundColor: Colors.red,
               ),
             );
           }
@@ -67,7 +71,10 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
           key: formKey,
           child: Column(
             children: [
-              if (isLoading) CircularProgressIndicator(),
+              if (isLoading)
+                CircularProgressIndicator(
+                  color: kPrimaryColor,
+                ),
               CustomTextFormField(
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.text,

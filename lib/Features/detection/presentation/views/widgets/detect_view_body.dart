@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/detection/presentation/views/widgets/upload_file.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
-import 'package:graduation_project/constants.dart';
-import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
-import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
-import 'package:graduation_project/generated/assets.dart';
 
 class DetectViewBody extends StatelessWidget {
   const DetectViewBody({super.key});
@@ -21,7 +16,7 @@ class DetectViewBody extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            Text('Image Upload', style: Styles.textStyle27),
+            Text('Image Upload', style: Styles.textStyle27(context)),
             const SizedBox(
               height: 55,
             ),

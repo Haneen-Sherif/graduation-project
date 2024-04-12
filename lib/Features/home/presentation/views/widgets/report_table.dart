@@ -24,7 +24,7 @@ class ReportTable extends StatelessWidget {
               ),
               child: Text(
                 'Time',
-                style: Styles.textStyle14.copyWith(
+                style: Styles.textStyle14(context).copyWith(
                   fontFamily: 'Roboto',
                   color: const Color(0xFF94A3B8),
                   fontWeight: FontWeight.w500,

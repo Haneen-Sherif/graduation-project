@@ -30,7 +30,7 @@ class CheckEmailViewBody extends StatelessWidget {
               ),
               Text(
                 'Please check your email',
-                style: Styles.textStyle30.copyWith(
+                style: Styles.textStyle30(context).copyWith(
                   letterSpacing: -0.30,
                 ),
               ),

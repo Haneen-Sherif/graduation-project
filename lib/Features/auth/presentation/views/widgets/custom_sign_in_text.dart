@@ -19,7 +19,7 @@ class CustomSignInText extends StatelessWidget {
           child: Text(
             'Welcome back to\nFishShield ',
             textAlign: TextAlign.center,
-            style: Styles.textStyle25.copyWith(
+            style: Styles.textStyle25(context).copyWith(
               letterSpacing: 1.50,
             ),
           ),

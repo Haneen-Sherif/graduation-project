@@ -13,7 +13,7 @@ class ReSendCode extends StatelessWidget {
       children: [
         Text(
           'Send code again',
-          style: Styles.textStyle16.copyWith(
+          style: Styles.textStyle16(context).copyWith(
             color: Colors.black.withOpacity(0.699999988079071),
             fontFamily: 'Inter',
             fontWeight: FontWeight.w600,
@@ -24,7 +24,7 @@ class ReSendCode extends StatelessWidget {
         ),
         Text(
           '00:20',
-          style: Styles.textStyle16.copyWith(
+          style: Styles.textStyle16(context).copyWith(
             color: Colors.black.withOpacity(0.699999988079071),
             fontFamily: 'Inter',
           ),

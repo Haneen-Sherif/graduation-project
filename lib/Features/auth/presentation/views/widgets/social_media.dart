@@ -32,7 +32,7 @@ class SocialMedia extends StatelessWidget {
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: Styles.textStyle14.copyWith(
+            style: Styles.textStyle14(context).copyWith(
               color: Colors.black.withOpacity(0.78),
               letterSpacing: 0.84,
             ),

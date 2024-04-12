@@ -108,7 +108,7 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
               children: [
                 Text(
                   "Equipment Name",
-                  style: Styles.textStyle15,
+                  style: Styles.textStyle15(context),
                 ),
                 SizedBox(
                   height: 9,
@@ -132,7 +132,7 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
                 ),
                 Text(
                   "Count",
-                  style: Styles.textStyle15,
+                  style: Styles.textStyle15(context),
                 ),
                 SizedBox(
                   height: 9,
@@ -156,7 +156,7 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
                 ),
                 Text(
                   "Discription",
-                  style: Styles.textStyle15,
+                  style: Styles.textStyle15(context),
                 ),
                 SizedBox(
                   height: 9,

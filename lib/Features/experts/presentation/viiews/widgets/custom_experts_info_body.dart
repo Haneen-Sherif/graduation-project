@@ -5,8 +5,6 @@ import 'package:graduation_project/Features/auth/presentation/views/widgets/cust
 import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
 import 'package:graduation_project/Features/experts/presentation/viiews/widgets/custom_experts_info.dart';
-import 'package:graduation_project/constants.dart';
-import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
@@ -125,7 +123,7 @@ class CustomExpertsInfoBody extends StatelessWidget {
                     ),
                     Text(
                       "Professional information :",
-                      style: Styles.textStyle12.copyWith(
+                      style: Styles.textStyle12(context).copyWith(
                           fontWeight: FontWeight.w500,
                           color: Color(0xff979799)),
                     ),
@@ -135,7 +133,7 @@ class CustomExpertsInfoBody extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(expert.moreInfo!,
-                          style: Styles.textStyle15
+                          style: Styles.textStyle15(context)
                               .copyWith(color: Colors.black.withOpacity(0.78))),
                     ),
                   ],

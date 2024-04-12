@@ -38,7 +38,7 @@ class CustomButton extends StatelessWidget {
               child: Text(
                 text,
                 textAlign: TextAlign.center,
-                style: Styles.textStyle18.copyWith(
+                style: Styles.textStyle18(context).copyWith(
                   color: const Color(0xFFFFF9F9),
                   letterSpacing: 1.08,
                 ),

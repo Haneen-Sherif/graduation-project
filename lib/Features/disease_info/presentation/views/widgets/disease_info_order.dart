@@ -25,7 +25,7 @@ class DiseaseInfoOrder extends StatelessWidget {
       child: Text(
         textAlign: TextAlign.center,
         number,
-        style: Styles.textStyle12.copyWith(
+        style: Styles.textStyle12(context).copyWith(
           fontWeight: FontWeight.w700,
           fontFamily: "Montserrat",
           color: Colors.white,

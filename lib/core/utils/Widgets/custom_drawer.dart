@@ -37,7 +37,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                   child: Text(
                     'Welcome',
-                    style: Styles.textStyle35,
+                    style: Styles.textStyle35(context),
                   ),
                 ),
                 const Padding(

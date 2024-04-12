@@ -13,7 +13,7 @@ class CustomTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: Styles.textStyle27,
+      style: Styles.textStyle27(context),
     );
   }
 }

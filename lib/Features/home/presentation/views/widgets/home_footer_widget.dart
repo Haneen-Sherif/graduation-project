@@ -36,7 +36,7 @@ class HomeFooterWidget extends StatelessWidget {
                     Text(
                       '©FishShield \nAll Rights Reserved. ',
                       textAlign: TextAlign.center,
-                      style: Styles.textStyle10.copyWith(
+                      style: Styles.textStyle10(context).copyWith(
                         color: Colors.white,
                         fontFamily: 'Roboto',
                       ),

@@ -76,7 +76,7 @@ class ExpertsListView extends StatelessWidget {
                               children: [
                                 Text(
                                   "Dr. ",
-                                  style: Styles.textStyle7.copyWith(
+                                  style: Styles.textStyle7(context).copyWith(
                                     letterSpacing: 0.96,
                                   ),
                                 ),
@@ -84,7 +84,7 @@ class ExpertsListView extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   expert.userName!,
-                                  style: Styles.textStyle7.copyWith(
+                                  style: Styles.textStyle7(context).copyWith(
                                     letterSpacing: 0.96,
                                   ),
                                 ),

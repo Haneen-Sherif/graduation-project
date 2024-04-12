@@ -19,7 +19,7 @@ class CustomForgetPassword extends StatelessWidget {
           onTap: onTap,
           child: Text(
             'Forgot Password ?',
-            style: Styles.textStyle14.copyWith(
+            style: Styles.textStyle14(context).copyWith(
               color: kPrimaryColor,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.84,

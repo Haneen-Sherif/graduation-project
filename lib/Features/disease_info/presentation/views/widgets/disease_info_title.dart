@@ -13,7 +13,7 @@ class DiseaseInfoTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Styles.textStyle16.copyWith(
+      style: Styles.textStyle16(context).copyWith(
         fontWeight: FontWeight.w500,
         letterSpacing: 0.96,
       ),

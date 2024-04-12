@@ -25,7 +25,7 @@ class OurTeamItem extends StatelessWidget {
           fit: BoxFit.scaleDown,
           child: Text(
             ourTeamList[index].name,
-            style: Styles.textStyle20.copyWith(
+            style: Styles.textStyle20(context).copyWith(
               fontWeight: FontWeight.w700,
               fontFamily: "Montserrat",
               color: const Color(0xff585EC7),
@@ -39,7 +39,7 @@ class OurTeamItem extends StatelessWidget {
           fit: BoxFit.scaleDown,
           child: Text(
             ourTeamList[index].description,
-            style: Styles.textStyle12.copyWith(
+            style: Styles.textStyle12(context).copyWith(
               color: const Color(0xff737373),
               fontFamily: "Montserrat",
               fontWeight: FontWeight.w700,

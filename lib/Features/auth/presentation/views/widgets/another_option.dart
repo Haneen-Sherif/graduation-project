@@ -22,7 +22,7 @@ class AnotherOption extends StatelessWidget {
         child: Text.rich(
           TextSpan(
             text: text1,
-            style: Styles.textStyle14.copyWith(
+            style: Styles.textStyle14(context).copyWith(
               color: Colors.black.withOpacity(0.78),
               letterSpacing: 0.84,
             ),
@@ -30,7 +30,7 @@ class AnotherOption extends StatelessWidget {
               TextSpan(
                 recognizer: TapGestureRecognizer()..onTap = onTap,
                 text: text2,
-                style: Styles.textStyle14.copyWith(
+                style: Styles.textStyle14(context).copyWith(
                   color: kPrimaryColor,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.84,

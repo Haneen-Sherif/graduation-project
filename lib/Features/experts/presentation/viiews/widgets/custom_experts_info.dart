@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
 class CustomExpertsInfo extends StatelessWidget {
@@ -22,14 +21,14 @@ class CustomExpertsInfo extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Styles.textStyle12
+          style: Styles.textStyle12(context)
               .copyWith(fontWeight: FontWeight.w500, color: Color(0xff979799)),
         ),
         SizedBox(
           width: 32,
         ),
         Text(subTitle,
-            style: Styles.textStyle15
+            style: Styles.textStyle15(context)
                 .copyWith(color: Colors.black.withOpacity(0.78))),
       ],
     );

@@ -56,7 +56,7 @@ class CustomFishInfoList extends StatelessWidget {
                         Expanded(
                           child: Text(
                             subTitle[index],
-                            style: Styles.textStyle12.copyWith(
+                            style: Styles.textStyle12(context).copyWith(
                               letterSpacing: 0.72,
                             ),
                           ),

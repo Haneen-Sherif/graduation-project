@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/another_option.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_sign_up_form.dart';
-import 'package:graduation_project/Features/auth/presentation/views/widgets/google_or_facebook.dart';
-import 'package:graduation_project/Features/auth/presentation/views/widgets/social_media.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/generated/assets.dart';
 

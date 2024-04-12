@@ -47,7 +47,7 @@ class _ForgotPasswordViewBodyState extends State<ForgotPasswordViewBody> {
               ),
               Text(
                 'Forgot password?',
-                style: Styles.textStyle30.copyWith(
+                style: Styles.textStyle30(context).copyWith(
                   letterSpacing: -0.30,
                 ),
               ),
@@ -56,7 +56,7 @@ class _ForgotPasswordViewBodyState extends State<ForgotPasswordViewBody> {
               ),
               Text(
                 'Don’t worry! It happens. Please enter the email associated with your account.',
-                style: Styles.textStyle16.copyWith(
+                style: Styles.textStyle16(context).copyWith(
                   color: Colors.black.withOpacity(0.699999988079071),
                   fontFamily: 'Inter',
                 ),

@@ -38,14 +38,14 @@ class FishInfoListView extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       fishList[index].title,
                       textAlign: TextAlign.center,
-                      style: Styles.textStyle16.copyWith(
+                      style: Styles.textStyle16(context).copyWith(
                         fontWeight: FontWeight.w400,
                         letterSpacing: 0.96,
                       ),
                     ),
                     Text(
                       fishList[index].description,
-                      style: Styles.textStyle12.copyWith(
+                      style: Styles.textStyle12(context).copyWith(
                         letterSpacing: 0.72,
                       ),
                     )

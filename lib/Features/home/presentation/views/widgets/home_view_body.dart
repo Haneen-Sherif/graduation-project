@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/experts_list_view.dart';
+import 'package:graduation_project/Features/home/presentation/views/widgets/feedback_container.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/fish_list_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_stack_widget.dart';
@@ -37,11 +38,12 @@ class HomeViewBody extends StatelessWidget {
               children: [
                 Text("Fish Diseases",
                     textAlign: TextAlign.center,
-                    style:
-                        Styles.textStyle24.copyWith(color: Color(0xff1D2B4F))),
+                    style: Styles.textStyle24(context)
+                        .copyWith(color: Color(0xff1D2B4F))),
                 Text(
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                  style: Styles.textStyle12.copyWith(color: Color(0xff636E88)),
+                  style: Styles.textStyle12(context)
+                      .copyWith(color: Color(0xff636E88)),
                 )
               ],
             ),
@@ -86,11 +88,13 @@ class HomeViewBody extends StatelessWidget {
                 Text(
                   "Specialists",
                   textAlign: TextAlign.center,
-                  style: Styles.textStyle24.copyWith(color: Color(0xff1D2B4F)),
+                  style: Styles.textStyle24(context)
+                      .copyWith(color: Color(0xff1D2B4F)),
                 ),
                 Text(
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                  style: Styles.textStyle12.copyWith(color: Color(0xff636E88)),
+                  style: Styles.textStyle12(context)
+                      .copyWith(color: Color(0xff636E88)),
                 )
               ],
             ),
@@ -128,7 +132,14 @@ class HomeViewBody extends StatelessWidget {
             child: Text(
               "About Us",
               textAlign: TextAlign.center,
-              style: Styles.textStyle24.copyWith(color: Color(0xff1D2B4F)),
+              style: Styles.textStyle24(context)
+                  .copyWith(color: Color(0xff1D2B4F)),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 54),
+              child: FeedbackContainer(),
             ),
           ),
           SliverFillRemaining(

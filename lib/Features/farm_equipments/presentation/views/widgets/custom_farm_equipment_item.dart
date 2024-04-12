@@ -38,7 +38,7 @@ class CustomFarmEquipmentItem extends StatelessWidget {
                 title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Styles.textStyle10.copyWith(
+                style: Styles.textStyle10(context).copyWith(
                   fontWeight: FontWeight.w500,
                   letterSpacing: 0.96,
                 ),
@@ -47,7 +47,7 @@ class CustomFarmEquipmentItem extends StatelessWidget {
                 subTitle,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: Styles.textStyle7.copyWith(
+                style: Styles.textStyle7(context).copyWith(
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0.96,
                 ),
@@ -68,7 +68,7 @@ class CustomFarmEquipmentItem extends StatelessWidget {
                     child: Center(
                       child: Text(
                         count,
-                        style: Styles.textStyle6.copyWith(
+                        style: Styles.textStyle6(context).copyWith(
                           color: Colors.white,
                           letterSpacing: 0.6,
                         ),

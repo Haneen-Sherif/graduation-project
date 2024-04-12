@@ -38,7 +38,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
         children: [
           Text(
             'New password',
-            style: Styles.textStyle14.copyWith(
+            style: Styles.textStyle14(context).copyWith(
               fontFamily: 'Inter',
             ),
           ),
@@ -83,7 +83,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           ),
           Text(
             'Confirm new password',
-            style: Styles.textStyle14.copyWith(
+            style: Styles.textStyle14(context).copyWith(
               fontFamily: 'Inter',
             ),
           ),
@@ -148,7 +148,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             children: [
               Text(
                 'Already have an account? ',
-                style: Styles.textStyle14.copyWith(
+                style: Styles.textStyle14(context).copyWith(
                   color: Colors.black.withOpacity(0.699999988079071),
                   fontFamily: 'Inter',
                 ),
@@ -159,7 +159,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 },
                 child: Text(
                   'Log in',
-                  style: Styles.textStyle14.copyWith(
+                  style: Styles.textStyle14(context).copyWith(
                     color: kPrimaryColor,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w600,

@@ -16,7 +16,7 @@ class RememberPassword extends StatelessWidget {
       children: [
         Text(
           'Remember password? ',
-          style: Styles.textStyle14.copyWith(
+          style: Styles.textStyle14(context).copyWith(
             color: Colors.black.withOpacity(0.699999988079071),
             fontFamily: 'Inter',
           ),
@@ -27,7 +27,7 @@ class RememberPassword extends StatelessWidget {
           },
           child: Text(
             'Log in',
-            style: Styles.textStyle14.copyWith(
+            style: Styles.textStyle14(context).copyWith(
               color: kPrimaryColor,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w600,

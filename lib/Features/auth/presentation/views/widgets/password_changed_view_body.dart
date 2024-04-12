@@ -24,7 +24,7 @@ class PasswordChangedViewBody extends StatelessWidget {
             FittedBox(
               child: Text(
                 'Password changed',
-                style: Styles.textStyle30.copyWith(
+                style: Styles.textStyle30(context).copyWith(
                   letterSpacing: -0.30,
                 ),
               ),
@@ -37,7 +37,7 @@ class PasswordChangedViewBody extends StatelessWidget {
               child: Text(
                 'Your password has been changed succesfully',
                 textAlign: TextAlign.center,
-                style: Styles.textStyle16.copyWith(
+                style: Styles.textStyle16(context).copyWith(
                   color: Colors.black.withOpacity(0.699999988079071),
                   fontFamily: 'Inter',
                 ),

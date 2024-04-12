@@ -155,17 +155,19 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody> {
                                     children: [
                                       Text(
                                         expert.userName!,
-                                        style: Styles.textStyle14.copyWith(
-                                            fontFamily: "Open Sans",
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xff1E1E1E)),
+                                        style: Styles.textStyle14(context)
+                                            .copyWith(
+                                                fontFamily: "Open Sans",
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xff1E1E1E)),
                                       ),
                                       Text(
                                         "online",
-                                        style: Styles.textStyle10.copyWith(
-                                            fontFamily: "Open Sans",
-                                            fontWeight: FontWeight.w700,
-                                            color: Color(0xff1E1E1E)),
+                                        style: Styles.textStyle10(context)
+                                            .copyWith(
+                                                fontFamily: "Open Sans",
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xff1E1E1E)),
                                       )
                                     ],
                                   )
@@ -222,7 +224,7 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody> {
                         // },
                         decoration: InputDecoration.collapsed(
                           hintText: "Type your message...",
-                          hintStyle: Styles.textStyle16.copyWith(
+                          hintStyle: Styles.textStyle16(context).copyWith(
                             color: Colors.black.withOpacity(0.5),
                           ),
                         ),

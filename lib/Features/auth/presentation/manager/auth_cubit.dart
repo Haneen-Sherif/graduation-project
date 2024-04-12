@@ -12,6 +12,78 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
+  Future<void> resetPassword(
+    String email,
+    String code,
+    String pass,
+    String confirmPass,
+  ) async {
+    emit(AuthLoading());
+
+    try {
+      final Map<String, String> requestBody = {
+        "email": email,
+        "code": code,
+        "pass": pass,
+        "confirmPass": confirmPass
+      };
+      final response = await http.post(
+        Uri.parse("$baseUrlApi/api/Accounts/reset-password"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        print("Success: Password reset email sent successfully.");
+        emit(AuthSuccess(message: "Email sent successfully"));
+      } else if (response.statusCode >= 500) {
+        print("Server Error: Something went wrong on the server");
+        emit(AuthFailure(message: "Server Error"));
+      } else {
+        print("Unexpected Error: ${response.statusCode}");
+        emit(AuthFailure(message: "Unexpected Error"));
+      }
+    } catch (e) {
+      print("Network Error: $e");
+      emit(AuthFailure(message: "Network Error"));
+    }
+  }
+
+  Future<void> forgot(
+    String email,
+  ) async {
+    emit(AuthLoading());
+
+    try {
+      final Map<String, String> requestBody = {
+        'email': email,
+      };
+      final response = await http.post(
+        Uri.parse("$baseUrlApi/api/Accounts/forgot"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        print("Success: Password reset email sent successfully.");
+        emit(AuthSuccess(message: "Email sent successfully"));
+      } else if (response.statusCode >= 500) {
+        print("Server Error: Something went wrong on the server");
+        emit(AuthFailure(message: "Server Error"));
+      } else {
+        print("Unexpected Error: ${response.statusCode}");
+        emit(AuthFailure(message: "Unexpected Error"));
+      }
+    } catch (e) {
+      print("Network Error: $e");
+      emit(AuthFailure(message: "Network Error"));
+    }
+  }
+
   Future<void> signUp(
     String name,
     String email,
@@ -94,6 +166,8 @@ class AuthCubit extends Cubit<AuthState> {
         prefs.setString('refreshToken', refreshToken);
         emit(LoginSuccess());
       } else if (response.statusCode == 401) {
+        emit(AuthFailure(message: 'Incorrect username or password'));
+      } else {
         emit(AuthFailure(message: 'Incorrect username or password'));
       }
     } catch (e) {

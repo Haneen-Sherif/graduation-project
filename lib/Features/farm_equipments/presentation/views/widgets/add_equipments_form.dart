@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
-import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/generated/assets.dart';
 import 'package:image_picker/image_picker.dart';
 

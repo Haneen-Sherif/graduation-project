@@ -84,7 +84,8 @@ class ChatWidget extends StatelessWidget {
                                   animatedTexts: [
                                     TyperAnimatedText(
                                       msg.trim(),
-                                      textStyle: Styles.textStyle12.copyWith(
+                                      textStyle:
+                                          Styles.textStyle12(context).copyWith(
                                         color: const Color(0xff1E1E1E),
                                         fontFamily: "Open Sans",
                                       ),
@@ -102,7 +103,8 @@ class ChatWidget extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   formattedTime,
-                  style: Styles.textStyle12.copyWith(fontFamily: "Open Sans"),
+                  style: Styles.textStyle12(context)
+                      .copyWith(fontFamily: "Open Sans"),
                 ),
               ],
             ),

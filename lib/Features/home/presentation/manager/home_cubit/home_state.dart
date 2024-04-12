@@ -9,6 +9,14 @@ class HomeLoading extends HomeState {}
 
 class HomeSuccess extends HomeState {}
 
+class HomeMessageSuccess extends HomeState {
+  final String message;
+
+  HomeMessageSuccess({required this.message});
+
+  List<Object> get props => [message];
+}
+
 class HomeFailure extends HomeState {
   final String message;
 

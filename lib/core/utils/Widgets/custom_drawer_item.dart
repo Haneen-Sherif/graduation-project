@@ -21,7 +21,7 @@ class CustomDrawerItem extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Styles.textStyle25.copyWith(
+              style: Styles.textStyle25(context).copyWith(
                 fontWeight: FontWeight.w500,
               ),
             ),

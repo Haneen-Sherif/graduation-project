@@ -15,6 +15,36 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
 
   List<DiseasesModel> diseases = [];
+  Future<void> addFeedback(String email, String name, String message) async {
+    try {
+      final Map<String, String> requestBody = {
+        'name': name,
+        'email': email,
+        'message': message,
+      };
+      final response = await http.post(
+        Uri.parse("$baseUrlApi/api/Feedbacks"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        print("Success: Feedback sent successfully.");
+        emit(HomeMessageSuccess(message: "Feedback sent successfully"));
+      } else if (response.statusCode >= 500) {
+        print("Server Error: Something went wrong on the server");
+        emit(HomeFailure(message: "Server Error"));
+      } else {
+        print("Unexpected Error: ${response.statusCode}");
+        emit(HomeFailure(message: "Unexpected Error"));
+      }
+    } catch (e) {
+      print("Network Error: $e");
+      emit(HomeFailure(message: "Network Error"));
+    }
+  }
 
   Future<DiseasesModel> getDisease(int id) async {
     emit(HomeLoading());

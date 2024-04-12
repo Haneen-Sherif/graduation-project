@@ -71,7 +71,7 @@ class FishListView extends StatelessWidget {
                               maxLines: 2,
                               disease.name!,
                               textAlign: TextAlign.center,
-                              style: Styles.textStyle7.copyWith(
+                              style: Styles.textStyle7(context).copyWith(
                                 letterSpacing: 0.96,
                               ),
                             ),

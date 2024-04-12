@@ -2,8 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/detect_button.dart';
-import 'package:graduation_project/constants.dart';
-import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
@@ -20,16 +18,17 @@ class HomeStackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: AspectRatio(
-        aspectRatio: 0.7,
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage(Assets.imagesFishBG),
-            ),
+    return AspectRatio(
+      aspectRatio: 0.7,
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.fill,
+            image: AssetImage(Assets.imagesFishBG),
           ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
           child: Column(
             children: [
               ListTile(
@@ -61,7 +60,7 @@ class HomeStackWidget extends StatelessWidget {
                       'Early detection, lifelong wellness.',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: Styles.textStyle30.copyWith(
+                      style: Styles.textStyle30(context).copyWith(
                         color: Colors.white,
                       ),
                     ),
@@ -71,7 +70,7 @@ class HomeStackWidget extends StatelessWidget {
                     AutoSizeText(
                       'Dive into our Fish Disease App.',
                       maxLines: 2,
-                      style: Styles.textStyle18.copyWith(
+                      style: Styles.textStyle18(context).copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
                         overflow: TextOverflow.ellipsis,

@@ -335,8 +335,10 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                         fit: BoxFit.scaleDown,
                                         child: Text(
                                           "Personal Photo",
-                                          style: Styles.textStyle15.copyWith(
-                                              color: const Color(0xff383838)),
+                                          style: Styles.textStyle14(context)
+                                              .copyWith(
+                                                  color:
+                                                      const Color(0xff383838)),
                                         ),
                                       ),
                                     ),
@@ -374,10 +376,10 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8, vertical: 4),
                                             child: Text(
-                                              "Upload Image",
+                                              "Upload",
                                               textAlign: TextAlign.center,
-                                              style:
-                                                  Styles.textStyle10.copyWith(
+                                              style: Styles.textStyle10(context)
+                                                  .copyWith(
                                                 color: const Color(0xFFFFF9F9),
                                                 letterSpacing: 1.08,
                                               ),
@@ -413,8 +415,10 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                             const EdgeInsets.only(left: 16),
                                         child: Text(
                                           "Graduation Certificate",
-                                          style: Styles.textStyle15.copyWith(
-                                              color: const Color(0xff383838)),
+                                          style: Styles.textStyle14(context)
+                                              .copyWith(
+                                                  color:
+                                                      const Color(0xff383838)),
                                         ),
                                       ),
                                     ),
@@ -450,10 +454,10 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8, vertical: 4),
                                             child: Text(
-                                              "Upload Image",
+                                              "Upload",
                                               textAlign: TextAlign.center,
-                                              style:
-                                                  Styles.textStyle10.copyWith(
+                                              style: Styles.textStyle10(context)
+                                                  .copyWith(
                                                 color: const Color(0xFFFFF9F9),
                                                 letterSpacing: 1.08,
                                               ),
@@ -487,7 +491,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           "Farm Owner",
-                          style: Styles.textStyle15,
+                          style: Styles.textStyle15(context),
                         )),
                     value: "farm_owner",
                     groupValue: userType,
@@ -509,7 +513,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           "Specialist",
-                          style: Styles.textStyle15,
+                          style: Styles.textStyle15(context),
                         )),
                     value: "specialist",
                     groupValue: userType,

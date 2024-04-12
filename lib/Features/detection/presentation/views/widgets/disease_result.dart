@@ -9,21 +9,26 @@ class DiseaseResult extends StatelessWidget {
     required this.diseaseName,
     required this.diseaseType,
     required this.diseaseImage,
-    required this.recommendationAction, required this.diseasePer,
+    required this.recommendationAction,
+    required this.diseasePer,
   });
 
   final String diseaseName;
   final String diseaseType;
   final String diseaseImage;
   final String recommendationAction;
-  final  diseasePer;
+  final diseasePer;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(child: Image.file(File(diseaseImage) ,width: 200,)),
+        Center(
+            child: Image.file(
+          File(diseaseImage),
+          width: 200,
+        )),
         SizedBox(
           height: 37,
         ),
@@ -37,20 +42,20 @@ class DiseaseResult extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: 'Disease Name: ',
-                      style: Styles.textStyle16.copyWith(
+                      style: Styles.textStyle16(context).copyWith(
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0.96,
                       ),
                     ),
                     TextSpan(
                       text: diseaseName,
-                      style: Styles.textStyle16.copyWith(
+                      style: Styles.textStyle16(context).copyWith(
                         letterSpacing: 0.96,
                       ),
                     ),
                     TextSpan(
                       text: " (${diseasePer.toString()}%)",
-                      style: Styles.textStyle16.copyWith(
+                      style: Styles.textStyle16(context).copyWith(
                         letterSpacing: 0.96,
                       ),
                     ),
@@ -68,14 +73,14 @@ class DiseaseResult extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: 'Disease Type : ',
-                      style: Styles.textStyle16.copyWith(
+                      style: Styles.textStyle16(context).copyWith(
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0.96,
                       ),
                     ),
                     TextSpan(
                       text: diseaseType,
-                      style: Styles.textStyle16.copyWith(
+                      style: Styles.textStyle16(context).copyWith(
                         letterSpacing: 0.96,
                       ),
                     ),
@@ -144,7 +149,7 @@ class DiseaseResult extends StatelessWidget {
         ),
         Text(
           'Recommendation action :',
-          style: Styles.textStyle16.copyWith(
+          style: Styles.textStyle16(context).copyWith(
             fontWeight: FontWeight.w500,
             letterSpacing: 0.96,
           ),
@@ -156,7 +161,7 @@ class DiseaseResult extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             recommendationAction,
-            style: Styles.textStyle13,
+            style: Styles.textStyle13(context),
           ),
         )
       ],

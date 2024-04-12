@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/generated/assets.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -24,17 +23,16 @@ class CustomAppBar extends StatelessWidget {
       ),
       child: ListTile(
         leading: IconButton(
-            onPressed: () {
-              anotherKey.currentState!.openDrawer();
-            },
-            icon: const Icon(
-              Icons.menu,
-              size: 40,
-            ),
+          onPressed: () {
+            anotherKey.currentState!.openDrawer();
+          },
+          icon: const Icon(
+            Icons.menu,
+            size: 40,
           ),
+        ),
         title: Image.asset(Assets.imagesLogo_1),
       ),
     );
   }
-
 }

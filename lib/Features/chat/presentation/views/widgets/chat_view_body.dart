@@ -64,7 +64,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                               context.pop();
                             },
                             icon: Image.asset(Assets.iconsBack)),
-                        title: Text('Chat', style: Styles.textStyle20),
+                        title: Text('Chat', style: Styles.textStyle20(context)),
                         trailing: IconButton(
                           onPressed: () async {
                             await Services.showModalSheet(context: context);
@@ -94,14 +94,14 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                       children: [
                         Text(
                           "Doc Bot",
-                          style: Styles.textStyle16.copyWith(
+                          style: Styles.textStyle16(context).copyWith(
                             fontFamily: "Roboto",
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         Text(
                           "online",
-                          style: Styles.textStyle12.copyWith(
+                          style: Styles.textStyle12(context).copyWith(
                             fontFamily: "Roboto",
                           ),
                         )
@@ -153,7 +153,7 @@ class _ChatViewBodyState extends State<ChatViewBody> {
                       },
                       decoration: InputDecoration.collapsed(
                         hintText: "Type your message...",
-                        hintStyle: Styles.textStyle16.copyWith(
+                        hintStyle: Styles.textStyle16(context).copyWith(
                           color: Colors.black.withOpacity(0.5),
                         ),
                       ),
