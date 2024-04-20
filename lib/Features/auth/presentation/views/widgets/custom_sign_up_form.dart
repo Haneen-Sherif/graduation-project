@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
+import 'package:graduation_project/Features/home/presentation/views/widgets/feedback_text_form_field.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
@@ -108,19 +109,20 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
+              backgroundColor: kPrimaryColor,
             ),
           );
           context.pushReplacement(AppRoutes.kSignInView);
         } else if (state is AuthFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-            ),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     content: Text(state.message),
+          //   ),
+          // );
         }
       },
       child: Form(
-        autovalidateMode: AutovalidateMode.always,
+        // autovalidateMode: AutovalidateMode.always,
         key: formKey,
         child: Column(
           children: [
@@ -304,20 +306,42 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                         const SizedBox(
                           height: 16,
                         ),
-                        CustomTextFormField(
+                        FeedbackTextFormField(
+                          keyboardType: TextInputType.multiline,
+                          minLines: 3,
+                          maxLines: 5,
+                          borderFocusColor: kPrimaryColor,
+                          cursorColor: kPrimaryColor,
+                          hintStyle: Styles.textStyle14(context).copyWith(
+                            color: Colors.black.withOpacity(0.78),
+                            letterSpacing: 0.90,
+                          ),
+                          borderColor: Colors.white,
+                          fillColor: Colors.white,
                           textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.text,
-                          obscureText: false,
-                          text: "Professional Information",
+                          controller: professionalInfoController,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Professional information must not be empty';
                             }
                             return null;
                           },
-                          controller: professionalInfoController,
-                          width: widget.width,
+                          hintText: "Professional Information",
                         ),
+                        // CustomTextFormField(
+                        //   textInputAction: TextInputAction.next,
+                        //   keyboardType: TextInputType.multiline,
+                        //   obscureText: false,
+                        //   text: "Professional Information",
+                        //   validator: (value) {
+                        //     if (value!.isEmpty) {
+                        //       return 'Professional information must not be empty';
+                        //     }
+                        //     return null;
+                        //   },
+                        //   controller: professionalInfoController,
+                        //   width: widget.width,
+                        // ),
                         const SizedBox(
                           height: 16,
                         ),
@@ -393,13 +417,19 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                     ),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
                         const SizedBox(
                           height: 16,
                         ),
+                        imgValidationError != null
+                            ? Text(
+                                imgValidationError!,
+                                style: TextStyle(color: Colors.red),
+                              )
+                            : Container(),
                         // Container(
                         //   height: 45,
                         //   decoration: BoxDecoration(
@@ -551,17 +581,23 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                   );
                 } else if (formKey.currentState!.validate() &&
                     userType == "specialist") {
-                  BlocProvider.of<AuthCubit>(context).expertSignUp(
-                    nameController.text,
-                    emailController.text,
-                    phoneNumberController.text,
-                    passwordController.text,
-                    confirmPasswordController.text,
-                    addressController.text,
-                    dateController.text,
-                    img!,
-                    professionalInfoController.text,
-                  );
+                  if (img == null) {
+                    setState(() {
+                      imgValidationError = 'Please upload your personal photo';
+                    });
+                  } else {
+                    BlocProvider.of<AuthCubit>(context).expertSignUp(
+                      nameController.text,
+                      emailController.text,
+                      phoneNumberController.text,
+                      passwordController.text,
+                      confirmPasswordController.text,
+                      addressController.text,
+                      dateController.text,
+                      img!,
+                      professionalInfoController.text,
+                    );
+                  }
                 }
               },
             ),

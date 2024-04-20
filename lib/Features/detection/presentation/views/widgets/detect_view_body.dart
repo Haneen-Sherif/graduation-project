@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/detection/presentation/views/widgets/upload_file.dart';
-import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
 class DetectViewBody extends StatelessWidget {
@@ -69,7 +68,7 @@ class DetectViewBody extends StatelessWidget {
                 height: 56,
               ),
             ),
-            HomeFooterWidget(size: size)
+            // HomeFooterWidget(size: size)
           ]),
         )
       ],

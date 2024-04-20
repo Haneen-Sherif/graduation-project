@@ -31,6 +31,9 @@ class HomeStackWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 15),
           child: Column(
             children: [
+              SizedBox(
+                height: 8,
+              ),
               ListTile(
                 leading: IconButton(
                   onPressed: () {
@@ -38,13 +41,13 @@ class HomeStackWidget extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.menu,
-                    size: 40,
+                    size: 30,
                     color: Colors.white,
                   ),
                 ),
                 title: Image.asset(
                   Assets.imagesLogo_1,
-                  height: 40,
+                  height: 30,
                   color: Colors.white,
                 ),
               ),
@@ -109,7 +112,7 @@ class HomeStackWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 110,
+                height: 55,
               )
             ],
           ),

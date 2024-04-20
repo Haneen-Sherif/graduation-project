@@ -40,6 +40,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
         ),
         CustomDrawerItem(
           onTap: () {
+            context.pop();
             context.push(AppRoutes.kDetectView);
           },
           title: 'Disease Detection',
@@ -81,6 +82,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
                 .getAllEquipments(nameIdentifier, nameIdentifier);
             setState(() {});
             // print(decodedPayload);
+            context.pop();
             context.push(AppRoutes.kFarmEquipmentsView, extra: nameIdentifier);
           },
           title: 'Farm Equipments',
@@ -102,6 +104,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
         ),
         CustomDrawerItem(
           onTap: () {
+            context.pop();
             context.push(AppRoutes.kOurTeamView);
           },
           title: 'About',
@@ -124,6 +127,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
         ),
         CustomDrawerItem(
           onTap: () {
+            context.pop();
             context.push(AppRoutes.kChatView);
           },
           title: 'Doc Bot',

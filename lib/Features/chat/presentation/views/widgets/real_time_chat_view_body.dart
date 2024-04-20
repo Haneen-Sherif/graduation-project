@@ -402,6 +402,9 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
                   child: Row(children: [
                     Expanded(
                       child: TextField(
+                        onSubmitted: (value) {
+                          return onSendMessage();
+                        },
                         focusNode: focusNode,
                         style: const TextStyle(color: Colors.black),
                         controller: _message,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/widgets/add_equipments_form.dart';
-import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 
 class AddEquipmentsViewBody extends StatefulWidget {
@@ -75,7 +74,7 @@ class _AddEquipmentsViewBodyState extends State<AddEquipmentsViewBody> {
                   height: 16,
                 ),
               ),
-              HomeFooterWidget(size: size),
+              // HomeFooterWidget(size: size),
             ],
           ),
         )

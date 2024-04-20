@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/Features/our_team/data/models/our_team_model.dart';
 import 'package:graduation_project/Features/our_team/presentation/manager/our_team_cubit/our_team_cubit.dart';
 import 'package:graduation_project/Features/our_team/presentation/views/widgets/our_team_item.dart';
@@ -13,7 +12,7 @@ class OurTeamViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<OurTeamModel> ourTeamList =
         BlocProvider.of<OurTeamCubit>(context).ourTeamList;
-    final Size size = MediaQuery.of(context).size;
+    // final Size size = MediaQuery.of(context).size;
     return CustomScrollView(
       slivers: [
         const SliverToBoxAdapter(
@@ -58,7 +57,7 @@ class OurTeamViewBody extends StatelessWidget {
                   height: 16,
                 ),
               ),
-              HomeFooterWidget(size: size)
+              // HomeFooterWidget(size: size)
             ],
           ),
         )

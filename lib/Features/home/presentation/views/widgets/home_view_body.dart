@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/experts_list_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/feedback_container.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/fish_list_view.dart';
-import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_stack_widget.dart';
-import 'package:graduation_project/Features/home/presentation/views/widgets/report_widget.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
@@ -138,22 +136,22 @@ class HomeViewBody extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 54),
+              padding: const EdgeInsets.symmetric(horizontal: 27),
               child: FeedbackContainer(),
             ),
           ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: ReportWidget(size: size),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 12,
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: HomeFooterWidget(size: size),
-          )
+          // SliverFillRemaining(
+          //   hasScrollBody: false,
+          //   child: ReportWidget(size: size),
+          // ),
+          // const SliverToBoxAdapter(
+          //   child: SizedBox(
+          //     height: 12,
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: HomeFooterWidget(size: size),
+          // )
         ],
       ),
     );
@@ -164,15 +162,15 @@ class HomeViewBody extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
+              surfaceTintColor: Colors.white,
+              elevation: 0,
               title: const Text(
                 'Exit App',
-                style: TextStyle(color: kSecondaryColor),
               ),
               content: const Text(
                 'Do you want to close the app?',
-                style: TextStyle(color: kSecondaryColor),
               ),
-              backgroundColor: kPrimaryColor,
+              // backgroundColor: kPrimaryColor,
               actions: <Widget>[
                 _buildDialogButton(context, 'No', false),
                 _buildDialogButton(context, 'Yes', true),
@@ -188,7 +186,7 @@ class HomeViewBody extends StatelessWidget {
       onPressed: () => Navigator.of(context).pop(value),
       child: Text(
         text,
-        style: const TextStyle(color: kSecondaryColor),
+        style: const TextStyle(color: kPrimaryColor),
       ),
     );
   }

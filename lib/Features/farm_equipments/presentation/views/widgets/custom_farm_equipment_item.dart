@@ -30,6 +30,7 @@ class CustomFarmEquipmentItem extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 12, left: 8, right: 8),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 10,
@@ -84,7 +85,7 @@ class CustomFarmEquipmentItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    width: 14,
+                    width: 6,
                   ),
                   GestureDetector(
                     onTap: delete,
@@ -93,10 +94,10 @@ class CustomFarmEquipmentItem extends StatelessWidget {
                       size: 12,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [],
-                  )
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [],
+                  // )
                 ],
               )
             ],

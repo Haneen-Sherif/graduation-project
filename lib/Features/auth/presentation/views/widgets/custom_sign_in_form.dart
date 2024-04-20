@@ -67,7 +67,7 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
           }
         },
         child: Form(
-          autovalidateMode: AutovalidateMode.always,
+          // autovalidateMode: AutovalidateMode.disabled,
           key: _formKey,
           child: Column(
             children: [

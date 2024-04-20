@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
 import 'package:graduation_project/generated/assets.dart';
@@ -34,6 +35,7 @@ class _AddEquipmentsFormState extends State<AddEquipmentsForm> {
   final picker = ImagePicker();
   File? img;
   String? imgValidationError;
+  bool isLoading = false;
 
   Future pickImage() async {
     XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -48,19 +50,20 @@ class _AddEquipmentsFormState extends State<AddEquipmentsForm> {
     bool digitRegex = true;
     return BlocListener<EquipmentsCubit, EquipmentsState>(
         listener: (context, state) {
-          // if (state is EquipmentsLoading) {
-          //   setState(() {
-          //     isLoading = true;
-          //   });
-          // } else {
-          //   setState(() {
-          //     isLoading = false;
-          //   });
-          // }
+          if (state is EquipmentsLoading) {
+            setState(() {
+              isLoading = true;
+            });
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+          }
           if (state is EquipmentsSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text("Equipment added successfully"),
+                backgroundColor: kPrimaryColor,
               ),
             );
             // BlocProvider.of<EquipmentsCubit>(context)
@@ -71,6 +74,7 @@ class _AddEquipmentsFormState extends State<AddEquipmentsForm> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
+                backgroundColor: Colors.red,
               ),
             );
           }
@@ -81,6 +85,12 @@ class _AddEquipmentsFormState extends State<AddEquipmentsForm> {
             padding: const EdgeInsets.symmetric(horizontal: 46),
             child: Column(
               children: [
+                if (isLoading)
+                  Center(
+                    child: CircularProgressIndicator(
+                      color: kPrimaryColor,
+                    ),
+                  ),
                 CustomTextFormField(
                   controller: widget.nameController,
                   width: widget.size.width,
@@ -167,7 +177,7 @@ class _AddEquipmentsFormState extends State<AddEquipmentsForm> {
                     if (widget.formKey.currentState!.validate()) {
                       if (img == null) {
                         setState(() {
-                          imgValidationError = 'Please select an image';
+                          imgValidationError = 'Please upload an image';
                         });
                       } else {
                         widget.formKey.currentState!.save();

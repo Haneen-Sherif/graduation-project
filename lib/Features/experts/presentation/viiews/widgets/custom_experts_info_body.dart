@@ -6,6 +6,7 @@ import 'package:graduation_project/Features/auth/presentation/views/widgets/cust
 import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
 import 'package:graduation_project/Features/experts/presentation/viiews/widgets/custom_experts_info.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
@@ -97,7 +98,10 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
       future: expertsCubit.getExpert(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            backgroundColor: kPrimaryColor,
+          ));
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {

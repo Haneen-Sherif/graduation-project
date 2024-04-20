@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/farm_equipments/data/models/equipments_model.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
 import 'package:graduation_project/core/utils/styles.dart';
@@ -38,6 +39,7 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
   File? img;
   String? imgValidationError;
   Future<EquipmentsModel>? _futureEquipment;
+  bool isLoading = false;
 
   Future pickImage() async {
     XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -66,7 +68,10 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
       future: _futureEquipment,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+              child: CircularProgressIndicator(
+            backgroundColor: kPrimaryColor,
+          ));
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
@@ -80,10 +85,20 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
   Widget _buildForm(EquipmentsModel equipment) {
     return BlocListener<EquipmentsCubit, EquipmentsState>(
         listener: (context, state) {
+          if (state is EquipmentsLoading) {
+            setState(() {
+              isLoading = true;
+            });
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+          }
           if (state is EquipmentsSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text("Equipment updated successfully"),
+                backgroundColor: kPrimaryColor,
               ),
             );
             // BlocProvider.of<EquipmentsCubit>(context)
@@ -106,6 +121,12 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (isLoading)
+                  Center(
+                    child: CircularProgressIndicator(
+                      color: kPrimaryColor,
+                    ),
+                  ),
                 Text(
                   "Equipment Name",
                   style: Styles.textStyle15(context),

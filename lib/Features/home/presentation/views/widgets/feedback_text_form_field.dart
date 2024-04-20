@@ -13,6 +13,11 @@ class FeedbackTextFormField extends StatelessWidget {
     this.minLines,
     this.maxLines,
     this.hintText,
+    this.borderColor,
+    this.fillColor,
+    this.borderFocusColor,
+    this.cursorColor,
+    this.hintStyle,
   });
 
   final TextInputType? keyboardType;
@@ -23,6 +28,11 @@ class FeedbackTextFormField extends StatelessWidget {
   final String? hintText;
   final int? minLines;
   final int? maxLines;
+  final Color? borderColor;
+  final Color? borderFocusColor;
+  final Color? fillColor;
+  final Color? cursorColor;
+  final TextStyle? hintStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +42,7 @@ class FeedbackTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       controller: controller,
-      cursorColor: Color(0xffafb0b8),
+      cursorColor: cursorColor ?? Color(0xffafb0b8),
       validator: validator,
       cursorHeight: 20.0,
       decoration: InputDecoration(
@@ -41,21 +51,24 @@ class FeedbackTextFormField extends StatelessWidget {
         errorMaxLines: 2,
         labelText: lebelText,
         hintText: hintText,
-        hintStyle: Styles.textStyle15(context).copyWith(
-          color: Color(0xffafb0b8),
-          letterSpacing: 0.90,
-        ),
+        hintStyle: hintStyle ??
+            Styles.textStyle15(context).copyWith(
+              color: Color(0xffafb0b8),
+              letterSpacing: 0.90,
+            ),
         labelStyle: Styles.textStyle15(context).copyWith(
           color: Color(0xffafb0b8),
           letterSpacing: 0.90,
         ),
-        fillColor: Color(0xfff5f2f2),
+        fillColor: fillColor ?? Color(0xfff5f2f2),
         filled: true,
-        border: buildOutlineInputBorder(Color(0xffafb0b8)),
+        border: buildOutlineInputBorder(borderColor ?? Color(0xffafb0b8)),
         errorBorder: buildOutlineInputBorder(Colors.red),
         focusedErrorBorder: buildOutlineInputBorder(Colors.red),
-        focusedBorder: buildOutlineInputBorder(Color(0xffafb0b8)),
-        enabledBorder: buildOutlineInputBorder(Color(0xffafb0b8)),
+        focusedBorder:
+            buildOutlineInputBorder(borderFocusColor ?? Color(0xffafb0b8)),
+        enabledBorder:
+            buildOutlineInputBorder(borderColor ?? Color(0xffafb0b8)),
       ),
     );
   }
