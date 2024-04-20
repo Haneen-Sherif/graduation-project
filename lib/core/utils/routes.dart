@@ -29,7 +29,7 @@ abstract class AppRoutes {
   static String kExpertsProfileView = '/expertsProfileView/:id';
   static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
-  static String kRealTimeChatView = '/realTimeChatView/:id';
+  static String kRealTimeChatView = '/realTimeChatView/:name/:id';
   static String kDetectView = '/detectView';
   static String kShowResultView = '/showResultView/:name/:per/:img';
   static String kExpertsView = '/expertsView';
@@ -184,11 +184,24 @@ abstract class AppRoutes {
       GoRoute(
         path: kRealTimeChatView,
         pageBuilder: (context, state) {
+          final Map<String, dynamic> extras =
+              state.extra as Map<String, dynamic>;
+          final String name = extras['name'].toString();
+
+          final String id = extras['id'].toString();
           return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
-            child: RealTimeChatView(id: state.extra.toString()),
+            child: RealTimeChatView(
+              name: name,
+              id: id,
+            ),
             transitionsBuilder: _buildCustomTransition1,
           );
+          // return CustomTransitionPage(
+          //   transitionDuration: Duration(seconds: 1),
+          //   child: RealTimeChatView(id: state.extra.toString()),
+          //   transitionsBuilder: _buildCustomTransition1,
+          // );
         },
       ),
       GoRoute(

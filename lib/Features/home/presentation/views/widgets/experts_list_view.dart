@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
+import 'package:graduation_project/constants.dart';
 
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
@@ -17,10 +19,13 @@ class ExpertsListView extends StatelessWidget {
     return BlocBuilder<ExpertsCubit, ExpertsState>(builder: (context, state) {
       if (state is ExpertsLoading) {
         return Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            color: kPrimaryColor,
+          ),
         );
       } else if (state is ExpertsSuccess) {
-        final experts = BlocProvider.of<ExpertsCubit>(context).experts;
+        List<ExpertsModel> experts =
+            BlocProvider.of<ExpertsCubit>(context).experts;
 
         // print("=====================");
         // print(diseases);
@@ -32,7 +37,7 @@ class ExpertsListView extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: experts.length,
             itemBuilder: (context, index) {
-              final expert = experts[index];
+              ExpertsModel expert = experts[index];
               return GestureDetector(
                 onTap: () {
                   context.push(
@@ -63,7 +68,7 @@ class ExpertsListView extends StatelessWidget {
                       child: Column(
                         children: [
                           Image.network(
-                            expert.personalPhoto!,
+                            expert.personalPhoto ?? '',
                             height: 96,
                             width: 79,
                             fit: BoxFit.fill,
@@ -83,7 +88,7 @@ class ExpertsListView extends StatelessWidget {
                                 Text(
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
-                                  expert.userName!,
+                                  expert.userName ?? '',
                                   style: Styles.textStyle7(context).copyWith(
                                     letterSpacing: 0.96,
                                   ),

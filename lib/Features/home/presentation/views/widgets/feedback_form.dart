@@ -178,7 +178,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: CustomButton(
-                        width: size.width * 0.4,
+                        width: size.width * 0.5,
                         text: "Send Message",
                         onPressed: () {
                           if (formKey.currentState!.validate()) {

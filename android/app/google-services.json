@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "43824056087",
+    "project_id": "real-time-chat-c8a21",
+    "storage_bucket": "real-time-chat-c8a21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43824056087:android:69c3a9b72e144ac3b21952",
+        "android_client_info": {
+          "package_name": "com.example.graduation_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA77x8B4ME-CkuUwOU5Qo1UYLXqeN3Ilqo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

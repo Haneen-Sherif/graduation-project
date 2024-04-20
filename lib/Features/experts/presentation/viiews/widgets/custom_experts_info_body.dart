@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,8 +9,9 @@ import 'package:graduation_project/Features/experts/presentation/viiews/widgets/
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CustomExpertsInfoBody extends StatelessWidget {
+class CustomExpertsInfoBody extends StatefulWidget {
   const CustomExpertsInfoBody({
     super.key,
     required this.id,
@@ -18,10 +20,81 @@ class CustomExpertsInfoBody extends StatelessWidget {
   final String id;
 
   @override
+  State<CustomExpertsInfoBody> createState() => _CustomExpertsInfoBodyState();
+}
+
+class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
+    with WidgetsBindingObserver {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String username = '';
+  @override
+  void initState() {
+    super.initState();
+    getName();
+    WidgetsBinding.instance.addObserver(this);
+    setStatus("Online");
+  }
+
+  void setStatus(String status) async {
+    await _firestore
+        .collection('users')
+        .doc(username)
+        .update({'status': status});
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      setStatus("Online");
+    } else {
+      setStatus("Offline");
+    }
+  }
+
+  // Map<String, dynamic>? userMap;
+  String chatRoomId(String user1, String user2) {
+    // if (user1.isEmpty || user2.isEmpty) {
+    //   print("user1: $user1");
+    //   print("user2: $user2");
+    //   return '';
+    // }
+
+    String firstCharUser1 = user1[0].toLowerCase();
+    String firstCharUser2 = user2[0].toLowerCase();
+
+    if (firstCharUser1.codeUnitAt(0) > firstCharUser2.codeUnitAt(0)) {
+      print("$user1$user2");
+      return "$user1$user2";
+    } else {
+      print("$user1$user2");
+      return "$user2$user1";
+    }
+  }
+
+  // String chatRoomId(String user1, String user2) {
+  //   if (user1[0].toLowerCase().codeUnits[0] >
+  //       user2.toLowerCase().codeUnits[0]) {
+  //     return "$user1$user2";
+  //   } else {
+  //     return "$user2$user1";
+  //   }
+  // }
+
+  Future<String> getName() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final name = await prefs.getString('username');
+
+    username = name!;
+    print(username);
+    return username;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final expertsCubit = BlocProvider.of<ExpertsCubit>(context);
     return FutureBuilder<ExpertsModel>(
-      future: expertsCubit.getExpert(id),
+      future: expertsCubit.getExpert(widget.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -59,10 +132,16 @@ class CustomExpertsInfoBody extends StatelessWidget {
                           color: Colors.white,
                         ),
                         GestureDetector(
-                            onTap: () {
+                            onTap: () async {
+                              String roomId =
+                                  await chatRoomId(username, expert.userName!);
+
                               context.push(
                                 AppRoutes.kRealTimeChatView,
-                                extra: expert.id,
+                                extra: {
+                                  'name': roomId,
+                                  'id': expert.id,
+                                },
                               );
                             },
                             child: Image.asset(Assets.iconsChat))
@@ -98,7 +177,7 @@ class CustomExpertsInfoBody extends StatelessWidget {
                   children: [
                     CustomExpertsInfo(
                       // expertsList: expertsList,
-                      id: id,
+                      id: widget.id,
                       title: 'Name : ',
                       subTitle: expert.userName!,
                     ),
@@ -106,7 +185,7 @@ class CustomExpertsInfoBody extends StatelessWidget {
                       height: 25,
                     ),
                     CustomExpertsInfo(
-                      id: id,
+                      id: widget.id,
                       title: 'From : ',
                       subTitle: expert.address!,
                     ),
@@ -114,7 +193,7 @@ class CustomExpertsInfoBody extends StatelessWidget {
                       height: 25,
                     ),
                     CustomExpertsInfo(
-                      id: id,
+                      id: widget.id,
                       title: 'Email : ',
                       subTitle: expert.email!,
                     ),

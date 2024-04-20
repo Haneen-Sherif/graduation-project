@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/social_media_row.dart';
@@ -7,6 +8,7 @@ import 'package:graduation_project/core/utils/Widgets/custom_drawer_body.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -16,9 +18,23 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   void initState() {
+    getName();
     super.initState();
+  }
+
+  String username = '';
+
+  Future<String> getName() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final name = await prefs.getString('username');
+
+    username = name!;
+    print("username: $username");
+    return username;
   }
 
   @override
@@ -209,11 +225,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   Widget _buildDialogButton(BuildContext context, String text, bool value) {
     return TextButton(
-      onPressed: () {
+      onPressed: () async {
         if (value) {
           while (context.canPop()) {
             context.pop();
           }
+          await _firestore
+              .collection('users')
+              .doc(username)
+              .update({'status': 'Offline'});
           context.pushReplacement(AppRoutes.kSignInView);
         } else {
           Navigator.pop(context);

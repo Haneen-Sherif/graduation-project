@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +12,66 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
+
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<void> signUp(
+    String name,
+    String email,
+    String phone,
+    String password,
+    String confirmPass,
+    String address,
+  ) async {
+    emit(AuthLoading());
+
+    try {
+      final response = await http.post(
+        Uri.parse("$baseUrlApi/api/Accounts/farmOwner"),
+        body: {
+          'email': email,
+          'userName': name,
+          'password': password,
+          'confirmPass': confirmPass,
+          'phoneNumber': phone,
+          'farmAddress': address,
+        },
+      );
+
+      String errorMessage = '';
+
+      if (response.statusCode == 201) {
+        print("Success: User registered successfully");
+
+        emit(AuthSuccess(message: "Registered successfully"));
+      } else if (response.statusCode == 400) {
+        final errorData = jsonDecode(response.body);
+
+        if (errorData['DuplicateEmail'] != null &&
+            errorData['DuplicateUserName'] != null) {
+          errorMessage =
+              "${errorData['DuplicateEmail'].join(', ')} or ${errorData['DuplicateUserName'].join(', ')}";
+        } else if (errorData['DuplicateEmail'] != null) {
+          errorMessage = errorData['DuplicateEmail'].join(', ');
+        } else if (errorData['DuplicateUserName'] != null) {
+          errorMessage = errorData['DuplicateUserName'].join(', ');
+        }
+        print(errorMessage);
+
+        emit(AuthFailure(message: errorMessage));
+        // } else if (response.statusCode >= 500) {
+        //   print("Server Error: Something went wrong on the server");
+        //   emit(AuthFailure(message: "Server Error"));
+        // } else {
+        //   print("Unexpected Error: ${response.statusCode}");
+        //   emit(AuthFailure(message: "Unexpected Error"));
+        //
+      }
+    } catch (e) {
+      print("Network Error: $e");
+      emit(AuthFailure(message: "Network Error"));
+    }
+  }
 
   Future<void> resetPassword(
     String email,
@@ -84,63 +145,6 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> signUp(
-    String name,
-    String email,
-    String phone,
-    String password,
-    String confirmPass,
-    String address,
-  ) async {
-    emit(AuthLoading());
-
-    try {
-      final response = await http.post(
-        Uri.parse("$baseUrlApi/api/Accounts/farmOwner"),
-        body: {
-          'email': email,
-          'userName': name,
-          'password': password,
-          'confirmPass': confirmPass,
-          'phoneNumber': phone,
-          'farmAddress': address,
-        },
-      );
-
-      String errorMessage = '';
-
-      if (response.statusCode == 201) {
-        print("Success: User registered successfully");
-        emit(AuthSuccess(message: "Registered successfully"));
-      } else if (response.statusCode == 400) {
-        final errorData = jsonDecode(response.body);
-
-        if (errorData['DuplicateEmail'] != null &&
-            errorData['DuplicateUserName'] != null) {
-          errorMessage =
-              "${errorData['DuplicateEmail'].join(', ')} or ${errorData['DuplicateUserName'].join(', ')}";
-        } else if (errorData['DuplicateEmail'] != null) {
-          errorMessage = errorData['DuplicateEmail'].join(', ');
-        } else if (errorData['DuplicateUserName'] != null) {
-          errorMessage = errorData['DuplicateUserName'].join(', ');
-        }
-        print(errorMessage);
-
-        emit(AuthFailure(message: errorMessage));
-        // } else if (response.statusCode >= 500) {
-        //   print("Server Error: Something went wrong on the server");
-        //   emit(AuthFailure(message: "Server Error"));
-        // } else {
-        //   print("Unexpected Error: ${response.statusCode}");
-        //   emit(AuthFailure(message: "Unexpected Error"));
-        //
-      }
-    } catch (e) {
-      print("Network Error: $e");
-      emit(AuthFailure(message: "Network Error"));
-    }
-  }
-
   Future<void> signIn(String name, String password) async {
     emit(AuthLoading());
     try {
@@ -160,10 +164,20 @@ class AuthCubit extends Cubit<AuthState> {
 
         final accessToken = result['accessToken'];
         final refreshToken = result['refreshToken'];
+
         // print(accessToken);
         // print(refreshToken);
         prefs.setString('accessToken', accessToken);
         prefs.setString('refreshToken', refreshToken);
+        prefs.setString('username', name);
+        try {
+          await _firestore
+              .collection('users')
+              .doc(name)
+              .set({'name': name, 'status': 'Online'});
+        } catch (e) {
+          print(e);
+        }
         emit(LoginSuccess());
       } else if (response.statusCode == 401) {
         emit(AuthFailure(message: 'Incorrect username or password'));
@@ -249,6 +263,7 @@ class AuthCubit extends Cubit<AuthState> {
       // );
 
       String errorMessage = '';
+      print(response.statusCode);
 
       if (response.statusCode == 201) {
         print("Success: User registered successfully");
@@ -275,6 +290,21 @@ class AuthCubit extends Cubit<AuthState> {
         //   print("Unexpected Error: ${response.statusCode}");
         //   emit(AuthFailure(message: "Unexpected Error"));
         //
+      } else if (response.statusCode == 500) {
+        final errorData = jsonDecode(responseData);
+
+        // if (errorData['message'] != null &&
+        //     errorData['DuplicateUserName'] != null) {
+        //   errorMessage =
+        //       "${errorData['DuplicateEmail'].join(', ')} or ${errorData['DuplicateUserName'].join(', ')}";
+        // } else if (errorData['DuplicateEmail'] != null) {
+        //   errorMessage = errorData['DuplicateEmail'].join(', ');
+        // } else if (errorData['DuplicateUserName'] != null) {
+        //   errorMessage = errorData['DuplicateUserName'].join(', ');
+        // }
+        print(errorData['message']);
+
+        emit(AuthFailure(message: errorData['message']));
       }
     } catch (e) {
       print("Network Error: $e");

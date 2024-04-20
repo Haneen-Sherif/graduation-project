@@ -38,10 +38,10 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
     super.dispose();
   }
 
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
     return BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthLoading) {
@@ -68,7 +68,7 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
         },
         child: Form(
           autovalidateMode: AutovalidateMode.always,
-          key: formKey,
+          key: _formKey,
           child: Column(
             children: [
               if (isLoading)
@@ -134,9 +134,8 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
               CustomButton(
                 width: widget.width,
                 text: "Sign In",
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
                     BlocProvider.of<AuthCubit>(context)
                         .signIn(nameController.text, passwordController.text);
                   }

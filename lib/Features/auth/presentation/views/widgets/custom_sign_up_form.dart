@@ -124,7 +124,10 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
         key: formKey,
         child: Column(
           children: [
-            if (isLoading) CircularProgressIndicator(),
+            if (isLoading)
+              CircularProgressIndicator(
+                color: kPrimaryColor,
+              ),
             CustomTextFormField(
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.text,
@@ -397,81 +400,81 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                         const SizedBox(
                           height: 16,
                         ),
-                        Container(
-                          height: 45,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.white),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  children: [
-                                    FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 16),
-                                        child: Text(
-                                          "Graduation Certificate",
-                                          style: Styles.textStyle14(context)
-                                              .copyWith(
-                                                  color:
-                                                      const Color(0xff383838)),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(child: SizedBox())
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8),
-                                child: MaterialButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {
-                                    pickImage2();
-                                  },
-                                  child: Container(
-                                    height: 25,
-                                    decoration: ShapeDecoration(
-                                      color: kPrimaryColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 4),
-                                            child: Text(
-                                              "Upload",
-                                              textAlign: TextAlign.center,
-                                              style: Styles.textStyle10(context)
-                                                  .copyWith(
-                                                color: const Color(0xFFFFF9F9),
-                                                letterSpacing: 1.08,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   height: 45,
+                        //   decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(12),
+                        //       color: Colors.white),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Expanded(
+                        //         child: Row(
+                        //           children: [
+                        //             FittedBox(
+                        //               fit: BoxFit.scaleDown,
+                        //               child: Padding(
+                        //                 padding:
+                        //                     const EdgeInsets.only(left: 16),
+                        //                 child: Text(
+                        //                   "Graduation Certificate",
+                        //                   style: Styles.textStyle14(context)
+                        //                       .copyWith(
+                        //                           color:
+                        //                               const Color(0xff383838)),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Expanded(child: SizedBox())
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       const SizedBox(
+                        //         width: 4,
+                        //       ),
+                        //       Padding(
+                        //         padding: const EdgeInsets.only(right: 8),
+                        //         child: MaterialButton(
+                        //           padding: EdgeInsets.zero,
+                        //           onPressed: () {
+                        //             pickImage2();
+                        //           },
+                        //           child: Container(
+                        //             height: 25,
+                        //             decoration: ShapeDecoration(
+                        //               color: kPrimaryColor,
+                        //               shape: RoundedRectangleBorder(
+                        //                 borderRadius: BorderRadius.circular(10),
+                        //               ),
+                        //             ),
+                        //             child: Row(
+                        //               mainAxisAlignment:
+                        //                   MainAxisAlignment.center,
+                        //               children: [
+                        //                 FittedBox(
+                        //                   fit: BoxFit.scaleDown,
+                        //                   child: Padding(
+                        //                     padding: const EdgeInsets.symmetric(
+                        //                         horizontal: 8, vertical: 4),
+                        //                     child: Text(
+                        //                       "Upload",
+                        //                       textAlign: TextAlign.center,
+                        //                       style: Styles.textStyle10(context)
+                        //                           .copyWith(
+                        //                         color: const Color(0xFFFFF9F9),
+                        //                         letterSpacing: 1.08,
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     )
                   : SizedBox(),
