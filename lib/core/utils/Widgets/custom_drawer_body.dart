@@ -116,7 +116,10 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
           height: 30,
         ),
         CustomDrawerItem(
-          onTap: () {},
+          onTap: () {
+            context.pop();
+            context.push(AppRoutes.kAllMessagesView);
+          },
           title: 'Chat',
         ),
         Divider(

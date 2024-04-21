@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_forgot_password_back_icon.dart';
+import 'package:graduation_project/Features/chat/services/chat_service.dart';
 import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
 import 'package:graduation_project/Features/experts/presentation/viiews/widgets/custom_experts_info.dart';
@@ -53,24 +54,18 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
   }
 
   // Map<String, dynamic>? userMap;
-  String chatRoomId(String user1, String user2) {
-    // if (user1.isEmpty || user2.isEmpty) {
-    //   print("user1: $user1");
-    //   print("user2: $user2");
-    //   return '';
-    // }
+  // String chatRoomId(String user1, String user2) {
+  //   String firstCharUser1 = user1[0].toLowerCase();
+  //   String firstCharUser2 = user2[0].toLowerCase();
 
-    String firstCharUser1 = user1[0].toLowerCase();
-    String firstCharUser2 = user2[0].toLowerCase();
-
-    if (firstCharUser1.codeUnitAt(0) > firstCharUser2.codeUnitAt(0)) {
-      print("$user1$user2");
-      return "$user1$user2";
-    } else {
-      print("$user1$user2");
-      return "$user2$user1";
-    }
-  }
+  //   if (firstCharUser1.codeUnitAt(0) > firstCharUser2.codeUnitAt(0)) {
+  //     print("$user1$user2");
+  //     return "$user1$user2";
+  //   } else {
+  //     print("$user1$user2");
+  //     return "$user2$user1";
+  //   }
+  // }
 
   // String chatRoomId(String user1, String user2) {
   //   if (user1[0].toLowerCase().codeUnits[0] >
@@ -138,7 +133,8 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
                         GestureDetector(
                             onTap: () async {
                               String roomId =
-                                  await chatRoomId(username, expert.userName!);
+                                  await ChatService.generateChatRoomId(
+                                      [username, expert.userName!]);
 
                               context.push(
                                 AppRoutes.kRealTimeChatView,

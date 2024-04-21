@@ -82,15 +82,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
+                            elevation: 0,
                             title: const Text(
-                              'Exit App',
-                              style: TextStyle(color: kSecondaryColor),
+                              'Logout',
+                              style: TextStyle(color: kPrimaryColor),
                             ),
                             content: const Text(
-                              'Do you want to close the app?',
-                              style: TextStyle(color: kSecondaryColor),
+                              'Do you want to log out?',
+                              style: TextStyle(color: kPrimaryColor),
                             ),
-                            backgroundColor: kPrimaryColor,
+                            backgroundColor: Colors.white,
                             actions: <Widget>[
                               _buildDialogButton(context, 'No', false),
                               _buildDialogButton(context, 'Yes', true),
@@ -241,7 +242,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
       },
       child: Text(
         text,
-        style: const TextStyle(color: kSecondaryColor),
+        style: const TextStyle(color: kPrimaryColor),
       ),
     );
   }

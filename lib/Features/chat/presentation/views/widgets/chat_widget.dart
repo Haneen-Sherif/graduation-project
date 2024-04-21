@@ -46,7 +46,9 @@ class ChatWidget extends StatelessWidget {
                         : CrossAxisAlignment.start,
                     children: [
                       Align(
-                        alignment: Alignment.centerRight,
+                        alignment: chatIndex == 0
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 24,
@@ -152,8 +154,12 @@ class ChatWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 18),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: chatIndex == 0
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              crossAxisAlignment: chatIndex == 0
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
               children: [
                 Container(
                   height: size.height / 2.5,

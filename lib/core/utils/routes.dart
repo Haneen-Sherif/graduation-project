@@ -6,8 +6,10 @@ import 'package:graduation_project/Features/auth/presentation/views/password_cha
 import 'package:graduation_project/Features/auth/presentation/views/reset_password_view.dart';
 import 'package:graduation_project/Features/auth/presentation/views/sign_in_view.dart';
 import 'package:graduation_project/Features/auth/presentation/views/sign_up_view.dart';
+import 'package:graduation_project/Features/chat/presentation/views/all_messages_view.dart';
 import 'package:graduation_project/Features/chat/presentation/views/chat_view.dart';
 import 'package:graduation_project/Features/chat/presentation/views/real_time_chat_view.dart';
+import 'package:graduation_project/Features/chat/presentation/views/real_time_chat_view_2.dart';
 import 'package:graduation_project/Features/detection/presentation/views/detect_view.dart';
 import 'package:graduation_project/Features/detection/presentation/views/show_result_view.dart';
 import 'package:graduation_project/Features/disease_info/presentation/views/disease_info_view.dart';
@@ -30,6 +32,7 @@ abstract class AppRoutes {
   static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
   static String kRealTimeChatView = '/realTimeChatView/:name/:id';
+  static String kRealTimeChatView2 = '/realTimeChatView2/:userName/:roomName';
   static String kDetectView = '/detectView';
   static String kShowResultView = '/showResultView/:name/:per/:img';
   static String kExpertsView = '/expertsView';
@@ -38,6 +41,7 @@ abstract class AppRoutes {
   static String kResetPasswordView = '/resetPasswordView';
   static String kPasswordChangedView = '/passwordChangedView';
   static String kOurTeamView = '/ourTeamView';
+  static String kAllMessagesView = '/allMessagesView';
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -205,11 +209,44 @@ abstract class AppRoutes {
         },
       ),
       GoRoute(
+        path: kRealTimeChatView2,
+        pageBuilder: (context, state) {
+          final Map<String, dynamic> extras =
+              state.extra as Map<String, dynamic>;
+          final String userName = extras['userName'].toString();
+
+          final String roomName = extras['roomName'].toString();
+          return CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: RealTimeChatView2(
+              userName: userName,
+              roomName: roomName,
+            ),
+            transitionsBuilder: _buildCustomTransition1,
+          );
+          // return CustomTransitionPage(
+          //   transitionDuration: Duration(seconds: 1),
+          //   child: RealTimeChatView(id: state.extra.toString()),
+          //   transitionsBuilder: _buildCustomTransition1,
+          // );
+        },
+      ),
+      GoRoute(
         path: kOurTeamView,
         pageBuilder: (context, state) {
           return const CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
             child: OurTeamView(),
+            transitionsBuilder: _buildCustomTransition1,
+          );
+        },
+      ),
+      GoRoute(
+        path: kAllMessagesView,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: AllMessagesView(),
             transitionsBuilder: _buildCustomTransition1,
           );
         },

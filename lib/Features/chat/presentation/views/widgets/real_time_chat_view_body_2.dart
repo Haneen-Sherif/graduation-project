@@ -3,11 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter/widgets.dart';
 import 'package:graduation_project/Features/chat/presentation/views/widgets/chat_widget.dart';
-import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
-import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
@@ -15,17 +12,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
-class RealTimeChatViewBody extends StatefulWidget {
-  const RealTimeChatViewBody(
-      {super.key, required this.id, required this.chatRoomId});
+class RealTimeChatViewBody2 extends StatefulWidget {
+  const RealTimeChatViewBody2(
+      {super.key, required this.farmOwner, required this.roomName});
   // final Map<String, dynamic> userMap;
-  final String chatRoomId;
-  final String id;
+  final String farmOwner;
+  final String roomName;
   @override
-  State<RealTimeChatViewBody> createState() => _RealTimeChatViewBodyState();
+  State<RealTimeChatViewBody2> createState() => _RealTimeChatViewBody2State();
 }
 
-class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
+class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
     with WidgetsBindingObserver {
   late TextEditingController _message;
   // late _controller = ScrollController();
@@ -60,7 +57,7 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
     int status = 1;
     await _firestore
         .collection('chatroon')
-        .doc(widget.chatRoomId)
+        .doc(widget.roomName)
         .collection('chats')
         .doc(fileName)
         .set({
@@ -79,7 +76,7 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
       // Handle error
       await _firestore
           .collection('chatroon')
-          .doc(widget.chatRoomId)
+          .doc(widget.roomName)
           .collection('chats')
           .doc(fileName)
           .delete();
@@ -104,12 +101,13 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
       print(imageUrl);
       await _firestore
           .collection('chatroon')
-          .doc(widget.chatRoomId)
+          .doc(widget.roomName)
           .collection('chats')
           .doc(fileName)
           .update({
         'message': imageUrl,
       });
+
       await _firestore.collection('users').doc(username).update(
           {'message': _message.text, 'type': 'img', 'time': DateTime.now()});
     }
@@ -126,11 +124,19 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
       print("messange sent successfully");
       await _firestore
           .collection('chatroon')
-          .doc(widget.chatRoomId)
+          .doc(widget.roomName)
           .collection('chats')
           .add(messages);
+
       await _firestore.collection('users').doc(username).update(
           {'message': _message.text, 'type': 'text', 'time': DateTime.now()});
+
+      // if (messages['sendby'] != username) {
+      //   await _firestore.collection('chatroon').doc(widget.roomName).update({
+      //     'lastMessage': _message.text,
+      //     'unreadCount': FieldValue.increment(1),
+      //   });
+      // }
       _message.clear();
       _listScrollController.animateTo(0,
           duration: Duration(microseconds: 500), curve: Curves.fastOutSlowIn);
@@ -179,152 +185,20 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
 
   @override
   Widget build(BuildContext context) {
-    final expertsCubit = BlocProvider.of<ExpertsCubit>(context);
+    // final expertsCubit = BlocProvider.of<ExpertsCubit>(context);
 
     return SafeArea(
       child: Column(
         children: [
-          Column(
-            children: [
-              Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 24, bottom: 13, top: 13),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            context.pop();
-                          },
-                          child: Image.asset(Assets.iconsBack)),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      FutureBuilder<ExpertsModel>(
-                          future: expertsCubit.getExpert(widget.id),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Center(child: CircularProgressIndicator());
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                  child: Text('Error: ${snapshot.error}'));
-                            } else {
-                              final expert = snapshot.data!;
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(50),
-                                        child: Image.network(
-                                          expert.personalPhoto!,
-                                          height: 50,
-                                        ),
-                                      ),
-                                      StreamBuilder<DocumentSnapshot>(
-                                          stream: _firestore
-                                              .collection('users')
-                                              .doc(expert.userName!)
-                                              .snapshots(),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.data != null) {
-                                              return snapshot.data!['status'] ==
-                                                      "Online"
-                                                  ? Positioned(
-                                                      bottom: 0,
-                                                      right: 0,
-                                                      child: Container(
-                                                        height: 14,
-                                                        width: 14,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(
-                                                                0xff59CD30),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        14)),
-                                                      ),
-                                                    )
-                                                  : Positioned(
-                                                      bottom: 0,
-                                                      right: 0,
-                                                      child: Container(
-                                                        height: 14,
-                                                        width: 14,
-                                                        decoration: BoxDecoration(
-                                                            color: Colors
-                                                                .transparent,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        14)),
-                                                      ),
-                                                    );
-                                            } else {
-                                              return Container();
-                                            }
-                                          })
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 4,
-                                  ),
-                                  SizedBox(
-                                    width: 13,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        expert.userName!,
-                                        style: Styles.textStyle14(context)
-                                            .copyWith(
-                                                fontFamily: "Open Sans",
-                                                fontWeight: FontWeight.w700,
-                                                color: Color(0xff1E1E1E)),
-                                      ),
-                                      StreamBuilder<DocumentSnapshot>(
-                                          stream: _firestore
-                                              .collection('users')
-                                              .doc(expert.userName!)
-                                              .snapshots(),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.data != null) {
-                                              return Text(
-                                                snapshot.data!['status'],
-                                                style: Styles.textStyle10(
-                                                        context)
-                                                    .copyWith(
-                                                        fontFamily: "Open Sans",
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color:
-                                                            Color(0xff1E1E1E)),
-                                              );
-                                            } else {
-                                              return Container();
-                                            }
-                                          })
-                                    ],
-                                  )
-                                ],
-                              );
-                            }
-                          })
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          Text('Chat with ${widget.farmOwner}'),
+          SizedBox(
+            height: 66,
           ),
           Flexible(
             child: StreamBuilder<QuerySnapshot>(
               stream: _firestore
                   .collection('chatroon')
-                  .doc(widget.chatRoomId)
+                  .doc(widget.roomName)
                   .collection('chats')
                   .orderBy('time', descending: true)
                   .snapshots(),
@@ -341,6 +215,7 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
                     color: kPrimaryColor,
                   );
                 }
+
                 // Print the number of documents returned by the query
                 print('Number of documents: ${snapshot.data!.docs.length}');
 

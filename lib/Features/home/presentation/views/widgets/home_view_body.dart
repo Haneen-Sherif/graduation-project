@@ -1,18 +1,48 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/experts_list_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/feedback_container.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/fish_list_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/home_stack_widget.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeViewBody extends StatelessWidget {
+class HomeViewBody extends StatefulWidget {
   const HomeViewBody({
     Key? key,
     required this.scaffoldKey,
   }) : super(key: key);
 
   final GlobalKey<ScaffoldState> scaffoldKey;
+
+  @override
+  State<HomeViewBody> createState() => _HomeViewBodyState();
+}
+
+class _HomeViewBodyState extends State<HomeViewBody> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    getName();
+    super.initState();
+  }
+
+  String username = '';
+
+  Future<String> getName() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final name = await prefs.getString('username');
+
+    username = name!;
+    print("username: $username");
+    return username;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +54,7 @@ class HomeViewBody extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: HomeStackWidget(size: size, scaffoldKey: scaffoldKey),
+            child: HomeStackWidget(size: size, scaffoldKey: widget.scaffoldKey),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
@@ -183,7 +213,20 @@ class HomeViewBody extends StatelessWidget {
 
   Widget _buildDialogButton(BuildContext context, String text, bool value) {
     return TextButton(
-      onPressed: () => Navigator.of(context).pop(value),
+      onPressed: () async {
+        if (value) {
+          while (context.canPop()) {
+            context.pop();
+          }
+          await _firestore
+              .collection('users')
+              .doc(username)
+              .update({'status': 'Offline'});
+          exit(0);
+        } else {
+          Navigator.pop(context);
+        }
+      },
       child: Text(
         text,
         style: const TextStyle(color: kPrimaryColor),

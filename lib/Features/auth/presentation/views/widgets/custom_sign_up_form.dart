@@ -611,6 +611,23 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
     DateTime selectedDate = DateTime.now();
     DateFormat formatter = DateFormat('MM/dd/yyyy');
     final DateTime? picked = await showDatePicker(
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: kPrimaryColor, // header background color
+                onPrimary: Colors.black, // header text color
+                // onSurface: Colors.green, // body text color
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: kPrimaryColor, // button text color
+                ),
+              ),
+            ),
+            child: child!,
+          );
+        },
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(1920),
