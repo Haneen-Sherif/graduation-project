@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/verify_code_list_view_item.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 
@@ -11,10 +12,12 @@ class VerifyCodeForm extends StatefulWidget {
     super.key,
     required this.formKey,
     required this.size,
+    required this.email,
   });
 
   final GlobalKey<FormState> formKey;
   final Size size;
+  final String email;
 
   @override
   State<VerifyCodeForm> createState() => _VerifyCodeFormState();
@@ -54,13 +57,18 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
+                backgroundColor: kPrimaryColor,
               ),
             );
-            context.push(AppRoutes.kResetPasswordView);
+            context.push(AppRoutes.kResetPasswordView, extra: {
+              'email': widget.email,
+              'code': c1.text + c2.text + c3.text + c4.text
+            });
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
+                backgroundColor: Colors.red,
               ),
             );
           }
@@ -125,7 +133,10 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
                 onPressed: () {
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
-                    context.push(AppRoutes.kResetPasswordView);
+                    BlocProvider.of<AuthCubit>(context).isCodeEnterTrue(
+                      widget.email,
+                      c1.text + c2.text + c3.text + c4.text,
+                    );
                   }
                 },
               ),

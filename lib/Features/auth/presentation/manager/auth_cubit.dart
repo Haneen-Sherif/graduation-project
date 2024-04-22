@@ -145,6 +145,45 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> isCodeEnterTrue(
+    String email,
+    String code,
+  ) async {
+    emit(AuthLoading());
+
+    try {
+      final Map<String, String> requestBody = {
+        'email': email,
+        'code': code,
+      };
+      final response = await http.post(
+        Uri.parse("$baseUrlApi/api/Accounts/IsCodeEnterTrue"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        print("Success");
+        if (response.body == 'true') {
+          emit(AuthSuccess(message: "Success"));
+        } else {
+          emit(AuthFailure(message: "Please enter the correct code"));
+        }
+      } else if (response.statusCode >= 500) {
+        print("Server Error: Something went wrong on the server");
+        emit(AuthFailure(message: "Server Error"));
+      } else {
+        print("Unexpected Error: ${response.statusCode}");
+        emit(AuthFailure(message: "Unexpected Error"));
+      }
+    } catch (e) {
+      print("Network Error: $e");
+      emit(AuthFailure(message: "Network Error"));
+    }
+  }
+
   Future<void> signIn(String name, String password) async {
     emit(AuthLoading());
     try {

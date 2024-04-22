@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/remember_password.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
 import 'package:graduation_project/core/utils/routes.dart';
@@ -28,13 +29,16 @@ class ForgotPasswordForm extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
+                backgroundColor: kPrimaryColor,
               ),
             );
-            context.push(AppRoutes.kCheckEmailView);
+            context.push(AppRoutes.kCheckEmailView,
+                extra: emailController.text);
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
+                backgroundColor: Colors.red,
               ),
             );
           }

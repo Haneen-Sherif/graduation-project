@@ -6,7 +6,9 @@ import 'package:graduation_project/Features/auth/presentation/views/widgets/veri
 import 'package:graduation_project/core/utils/styles.dart';
 
 class CheckEmailViewBody extends StatelessWidget {
-  const CheckEmailViewBody({super.key});
+  const CheckEmailViewBody({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +43,7 @@ class CheckEmailViewBody extends StatelessWidget {
               const SizedBox(
                 height: 28,
               ),
-              VerifyCodeForm(
-                formKey: formKey,
-                size: size,
-              ),
+              VerifyCodeForm(formKey: formKey, size: size, email: email),
               const SizedBox(
                 height: 37,
               ),

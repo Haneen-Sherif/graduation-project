@@ -37,8 +37,8 @@ abstract class AppRoutes {
   static String kShowResultView = '/showResultView/:name/:per/:img';
   static String kExpertsView = '/expertsView';
   static String kForgotPasswordView = '/forgotPasswordView';
-  static String kCheckEmailView = '/checkEmailView';
-  static String kResetPasswordView = '/resetPasswordView';
+  static String kCheckEmailView = '/checkEmailView/:email';
+  static String kResetPasswordView = '/resetPasswordView/:email/:code';
   static String kPasswordChangedView = '/passwordChangedView';
   static String kOurTeamView = '/ourTeamView';
   static String kAllMessagesView = '/allMessagesView';
@@ -81,9 +81,9 @@ abstract class AppRoutes {
       GoRoute(
         path: kCheckEmailView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
+          return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
-            child: CheckEmailView(),
+            child: CheckEmailView(email: state.extra.toString()),
             transitionsBuilder: _buildCustomTransition2,
           );
         },
@@ -91,9 +91,16 @@ abstract class AppRoutes {
       GoRoute(
         path: kResetPasswordView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
+          final Map<String, dynamic> extras =
+              state.extra as Map<String, dynamic>;
+          final String email = extras['email'].toString();
+          final String code = extras['code'].toString();
+          return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
-            child: ResetPasswordView(),
+            child: ResetPasswordView(
+              email: email,
+              code: code,
+            ),
             transitionsBuilder: _buildCustomTransition2,
           );
         },

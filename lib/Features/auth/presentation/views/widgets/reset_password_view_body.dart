@@ -4,7 +4,11 @@ import 'package:graduation_project/Features/auth/presentation/views/widgets/rese
 import 'package:graduation_project/core/utils/styles.dart';
 
 class ResetPasswordViewBody extends StatefulWidget {
-  const ResetPasswordViewBody({super.key});
+  const ResetPasswordViewBody(
+      {super.key, required this.email, required this.code});
+
+  final String email;
+  final String code;
 
   @override
   State<ResetPasswordViewBody> createState() => _ResetPasswordViewBodyState();
@@ -73,6 +77,8 @@ class _ResetPasswordViewBodyState extends State<ResetPasswordViewBody> {
                 newPasswordController: newPasswordController,
                 size: size,
                 confirmNewPasswordController: confirmNewPasswordController,
+                email: widget.email,
+                code: widget.code,
               ),
               const SizedBox(
                 height: 29,
