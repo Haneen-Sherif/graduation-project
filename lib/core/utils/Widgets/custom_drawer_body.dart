@@ -39,6 +39,46 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
           height: 30,
         ),
         CustomDrawerItem(
+          onTap: () async {
+            final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+
+            // Retrieve the tokens from shared preferences
+            final accessToken = prefs.getString('accessToken');
+            // final refreshToken = prefs.getString('refreshToken');
+
+            // String decodedPayload = "";
+
+            List<String> parts = accessToken!.split('.');
+            final payload = _decodeBase64(parts[1]);
+            final payloadMap = json.decode(payload);
+            if (payloadMap is! Map<String, dynamic>) {
+              throw Exception('invalid payload');
+            }
+            print(payload);
+            print(payloadMap[
+                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
+
+            String nameIdentifier = payloadMap[
+                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+            // String encodedPayload = parts[1];
+            // // String decodedPayload = utf8.decode(base64Url.decode(encodedPayload));
+            // decodedPayload =
+            //     await utf8.decode(base64Url.decode(encodedPayload));
+
+            // print(decodedPayload);
+            context.pop();
+            context.push(AppRoutes.kProfileView, extra: nameIdentifier);
+          },
+          title: 'Profile',
+        ),
+        Divider(
+          color: Color(0xffD7D5D5),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        CustomDrawerItem(
           onTap: () {
             context.pop();
             context.push(AppRoutes.kDetectView);

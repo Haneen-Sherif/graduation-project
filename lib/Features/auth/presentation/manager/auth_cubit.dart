@@ -145,6 +145,37 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> deleteAccount(
+    String id,
+  ) async {
+    emit(AuthLoading());
+
+    try {
+      final requestBody = [id];
+      final response = await http.delete(
+        Uri.parse("$baseUrlApi/api/Accounts"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 204) {
+        print("Success: Account deleted successfully.");
+        emit(AuthSuccess(message: "Account deleted successfully"));
+      } else if (response.statusCode >= 500) {
+        print("Server Error: Something went wrong on the server");
+        emit(AuthFailure(message: "Server Error"));
+      } else {
+        print("Unexpected Error: ${response.statusCode}");
+        emit(AuthFailure(message: "Unexpected Error"));
+      }
+    } catch (e) {
+      print("Network Error: $e");
+      emit(AuthFailure(message: "Network Error"));
+    }
+  }
+
   Future<void> isCodeEnterTrue(
     String email,
     String code,

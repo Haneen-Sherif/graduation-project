@@ -19,6 +19,7 @@ import 'package:graduation_project/Features/farm_equipments/presentation/views/e
 import 'package:graduation_project/Features/farm_equipments/presentation/views/farm_equipments_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/home_view.dart';
 import 'package:graduation_project/Features/our_team/presentation/views/our_team_view.dart';
+import 'package:graduation_project/Features/profle/presentation/views/profile_view.dart';
 import 'package:graduation_project/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRoutes {
@@ -31,6 +32,7 @@ abstract class AppRoutes {
   static String kExpertsProfileView = '/expertsProfileView/:id';
   static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
+  static String kProfileView = '/profileView/:id';
   static String kRealTimeChatView = '/realTimeChatView/:name/:id';
   static String kRealTimeChatView2 = '/realTimeChatView2/:userName/:roomName';
   static String kDetectView = '/detectView';
@@ -188,6 +190,16 @@ abstract class AppRoutes {
           return const CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
             child: ChatView(),
+            transitionsBuilder: _buildCustomTransition1,
+          );
+        },
+      ),
+      GoRoute(
+        path: kProfileView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: ProfileView(id: state.extra.toString()),
             transitionsBuilder: _buildCustomTransition1,
           );
         },
