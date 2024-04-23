@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_forgot_password_back_icon.dart';
 import 'package:graduation_project/Features/chat/services/chat_service.dart';
@@ -89,6 +90,7 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
   @override
   Widget build(BuildContext context) {
     final expertsCubit = BlocProvider.of<ExpertsCubit>(context);
+    final Size size = MediaQuery.sizeOf(context);
     return FutureBuilder<ExpertsModel>(
       future: expertsCubit.getExpert(widget.id),
       builder: (context, snapshot) {
@@ -105,20 +107,76 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 153,
+                height: size.height * 0.25,
                 width: double.infinity,
                 color: Color(0xff57ACB5),
                 child: Stack(clipBehavior: Clip.none, children: [
                   Positioned(
-                    bottom: -75,
+                    bottom: 4,
+                    right: 4,
+                    child: StreamBuilder<DocumentSnapshot>(
+                      stream: _firestore
+                          .collection('users')
+                          .doc(expert.userName)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator(
+                            color: kPrimaryColor,
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('Error fetching rating');
+                        } else if (snapshot.hasData) {
+                          final data =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                          final initialRating = data['raiting'] ?? 1.0;
+
+                          return RatingBar.builder(
+                            itemSize: 18,
+                            initialRating: initialRating.toDouble(),
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: true,
+                            itemCount: 5,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            onRatingUpdate: (rating) async {
+                              try {
+                                await _firestore
+                                    .collection('users')
+                                    .doc(expert.userName)
+                                    .update({'raiting': rating});
+                              } catch (e) {
+                                print('Error updating rating: $e');
+                              }
+                              print('New rating: $rating');
+                            },
+                          );
+                        } else {
+                          return Text('Error fetching rating');
+                        }
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    bottom: -40,
                     left: 0,
                     right: 0,
                     child: CircleAvatar(
                       backgroundColor: Color(0xff57ACB5),
-                      radius: 90,
+                      radius: size.width * 0.18,
                       child: ClipRRect(
-                          borderRadius: BorderRadius.circular(153),
-                          child: Image.network(expert.personalPhoto!)),
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.18),
+                          child: Image.network(
+                            expert.personalPhoto!,
+                            width: size.width * 0.18,
+                            height: size.width * 0.18,
+                          )),
                     ),
                   ),
                   Padding(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,7 @@ import 'package:graduation_project/constants.dart';
 
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
+import 'package:graduation_project/generated/assets.dart';
 
 class ExpertsListView extends StatelessWidget {
   const ExpertsListView({
@@ -16,6 +18,13 @@ class ExpertsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    //  Future<String>  getRaiting() async {
+    //         await _firestore
+    //                               .collection('users')
+    //                               .doc(expert.userName)
+    //                               .get({'raiting': rating});
+    //   }
     return BlocBuilder<ExpertsCubit, ExpertsState>(builder: (context, state) {
       if (state is ExpertsLoading) {
         return Center(
@@ -75,25 +84,67 @@ class ExpertsListView extends StatelessWidget {
                           ),
                           SizedBox(
                             height: 23,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Dr. ",
-                                  style: Styles.textStyle7(context).copyWith(
-                                    letterSpacing: 0.96,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Dr. ",
+                                    style: Styles.textStyle7(context).copyWith(
+                                      letterSpacing: 0.96,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  expert.userName ?? '',
-                                  style: Styles.textStyle7(context).copyWith(
-                                    letterSpacing: 0.96,
+                                  Text(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    expert.userName ?? '',
+                                    style: Styles.textStyle7(context).copyWith(
+                                      letterSpacing: 0.96,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  Expanded(child: SizedBox()),
+                                  Row(
+                                    children: [
+                                      Image.asset(Assets.iconsStar2),
+                                      SizedBox(width: 4),
+                                      StreamBuilder<DocumentSnapshot>(
+                                        stream: _firestore
+                                            .collection('users')
+                                            .doc(expert.userName)
+                                            .snapshots(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return Text('-');
+                                          } else if (snapshot.hasError) {
+                                            return Text('-');
+                                          } else {
+                                            final data = snapshot.data;
+                                            if (snapshot.data != null) {
+                                              final rating =
+                                                  data?['raiting'] ?? '-';
+                                              return Text(
+                                                '$rating',
+                                                style:
+                                                    Styles.textStyle7(context)
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                              );
+                                            } else {
+                                              return Text('-');
+                                            }
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ],
