@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,10 +30,39 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   void initState() {
     getName();
+    getOwnerId();
     super.initState();
   }
 
   String username = '';
+  String farmOwnerId = '';
+
+  Future<void> getOwnerId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Retrieve the tokens from shared preferences
+    final accessToken = await prefs.getString('accessToken');
+    // final refreshToken = prefs.getString('refreshToken');
+
+    // String decodedPayload = "";
+
+    List<String> parts = accessToken!.split('.');
+    final payload = _decodeBase64(parts[1]);
+    final payloadMap = json.decode(payload);
+    if (payloadMap is! Map<String, dynamic>) {
+      throw Exception('invalid payload');
+    }
+    print(payload);
+    print(payloadMap[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
+
+    String nameIdentifier = payloadMap[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    print("nameIdentifier $nameIdentifier");
+    setState(() {
+      farmOwnerId = nameIdentifier;
+    });
+  }
 
   Future<String> getName() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -149,7 +179,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     right: 0,
                     child: SizedBox(
                       height: 122,
-                      child: ExpertsListView(),
+                      child: ExpertsListView(
+                        farmOwnerId: farmOwnerId,
+                      ),
                     ),
                   ),
                 ],
@@ -233,4 +265,23 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       ),
     );
   }
+}
+
+String _decodeBase64(String str) {
+  String output = str.replaceAll('-', '+').replaceAll('_', '/');
+
+  switch (output.length % 4) {
+    case 0:
+      break;
+    case 2:
+      output += '==';
+      break;
+    case 3:
+      output += '=';
+      break;
+    default:
+      throw Exception('Illegal base64url string!"');
+  }
+
+  return utf8.decode(base64Url.decode(output));
 }

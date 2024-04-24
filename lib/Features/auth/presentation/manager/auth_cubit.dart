@@ -14,6 +14,41 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String? role;
+
+  Future<String> getRole() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('accessToken');
+
+    if (accessToken == null) {
+      throw Exception('Access token not found in SharedPreferences');
+    }
+
+    List<String> parts = accessToken.split('.');
+    if (parts.length != 3) {
+      throw Exception('Invalid access token format');
+    }
+
+    String payload = parts[1];
+    String normalizedPayload = base64Url.normalize(payload);
+    String decodedPayload = utf8.decode(base64Url.decode(normalizedPayload));
+
+    Map<String, dynamic> payloadMap = json.decode(decodedPayload);
+
+    if (payloadMap is! Map<String, dynamic>) {
+      throw Exception('Invalid payload format');
+    }
+
+    if (!payloadMap.containsKey(
+        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role')) {
+      throw Exception('Role claim not found in payload');
+    }
+
+    role = payloadMap[
+        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    print('User role: $role');
+    return role!;
+  }
 
   Future<void> signUp(
     String name,
@@ -235,11 +270,10 @@ class AuthCubit extends Cubit<AuthState> {
         final accessToken = result['accessToken'];
         final refreshToken = result['refreshToken'];
 
-        // print(accessToken);
-        // print(refreshToken);
         prefs.setString('accessToken', accessToken);
         prefs.setString('refreshToken', refreshToken);
         prefs.setString('username', name);
+
         try {
           await _firestore
               .collection('users')
@@ -247,6 +281,12 @@ class AuthCubit extends Cubit<AuthState> {
               .set({'name': name, 'status': 'Online'});
         } catch (e) {
           print(e);
+        }
+        String myRole = await getRole();
+        if (myRole == "FarmOwner") {
+          prefs.setString('role', "FarmOwner");
+        } else {
+          prefs.setString('role', "Doctor");
         }
         emit(LoginSuccess());
       } else if (response.statusCode == 401) {
@@ -401,4 +441,23 @@ class AuthCubit extends Cubit<AuthState> {
       return null;
     }
   }
+}
+
+String _decodeBase64(String str) {
+  String output = str.replaceAll('-', '+').replaceAll('_', '/');
+
+  switch (output.length % 4) {
+    case 0:
+      break;
+    case 2:
+      output += '==';
+      break;
+    case 3:
+      output += '=';
+      break;
+    default:
+      throw Exception('Illegal base64url string!"');
+  }
+
+  return utf8.decode(base64Url.decode(output));
 }

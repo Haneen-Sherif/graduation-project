@@ -3,9 +3,11 @@ import 'package:graduation_project/Features/experts/presentation/viiews/widgets/
 import 'package:graduation_project/core/utils/Widgets/custom_drawer.dart';
 
 class ExpertsProfileView extends StatefulWidget {
-  const ExpertsProfileView({super.key, required this.id});
+  const ExpertsProfileView(
+      {super.key, required this.id, required this.farmOwnerId});
 
   final String id;
+  final String farmOwnerId;
 
   @override
   State<ExpertsProfileView> createState() => _ExpertsProfileViewState();
@@ -26,7 +28,10 @@ class _ExpertsProfileViewState extends State<ExpertsProfileView> {
         //     anotherKey: expertsInfoKey,
         //   ),
         // ),
-        body: ExpertsProfileViewBody(id: widget.id),
+        body: ExpertsProfileViewBody(
+          id: widget.id,
+          farmOwnerId: widget.farmOwnerId,
+        ),
       ),
     );
   }

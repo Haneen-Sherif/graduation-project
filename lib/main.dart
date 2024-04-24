@@ -2,9 +2,11 @@ import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/chat_provider.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/models_provider.dart';
+import 'package:graduation_project/Features/chat/presentation/manager/rating_cubit/rating_cubit.dart';
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
 import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
@@ -18,6 +20,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Stripe.publishableKey = ApiKeys.publishableKey;
   runApp(
     DevicePreview(
       builder: (context) => const MyApp(),
@@ -48,6 +51,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => AuthCubit()),
           BlocProvider(create: (context) => EquipmentsCubit()),
           BlocProvider(create: (context) => ExpertsCubit()),
+          BlocProvider(create: (context) => RatingCubit()),
         ],
         child: MaterialApp.router(
           locale: DevicePreview.locale(context),

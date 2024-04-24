@@ -22,6 +22,13 @@ abstract class Styles {
     );
   }
 
+  static TextStyle textStyle11(context) {
+    return TextStyle(
+      fontSize: getResponsiveFontSize(context, fontSize: 11),
+      fontWeight: FontWeight.w600,
+    );
+  }
+
   static TextStyle textStyle12(context) {
     return TextStyle(
       fontSize: getResponsiveFontSize(context, fontSize: 12),

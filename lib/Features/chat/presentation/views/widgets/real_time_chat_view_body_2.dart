@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/chat/presentation/views/widgets/chat_widget.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/styles.dart';
@@ -44,10 +45,10 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
 
   Future getImage() async {
     ImagePicker _picker = ImagePicker();
-    await _picker.pickImage(source: ImageSource.gallery).then((xFile) {
+    await _picker.pickImage(source: ImageSource.gallery).then((xFile) async {
       if (xFile != null) {
         imageFile = File(xFile.path);
-        uploadImage();
+        await uploadImage();
       }
     });
   }
@@ -55,25 +56,27 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
   Future uploadImage() async {
     String fileName = Uuid().v1();
     int status = 1;
-    await _firestore
-        .collection('chatroon')
-        .doc(widget.roomName)
-        .collection('chats')
-        .doc(fileName)
-        .set({
-      'sendby': username,
-      'message': '',
-      'type': 'img',
-      'time': FieldValue.serverTimestamp()
-    });
+    try {
+      await _firestore
+          .collection('chatroon')
+          .doc(widget.roomName)
+          .collection('chats')
+          .doc(fileName)
+          .set({
+        'sendby': username,
+        'message': '',
+        'type': 'img',
+        'time': FieldValue.serverTimestamp()
+      });
+    } catch (e) {
+      print(e);
+    }
     var ref =
         FirebaseStorage.instance.ref().child('images').child("$fileName.jpg");
     var uploadTask;
     try {
       uploadTask = await ref.putFile(imageFile!);
-      // Handle success if needed
     } catch (error) {
-      // Handle error
       await _firestore
           .collection('chatroon')
           .doc(widget.roomName)
@@ -86,30 +89,28 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
       return null;
     }
 
-    // var uploadTask = await ref.putFile(imageFile!).catchError((error) async {
-    //   await _firestore
-    //       .collection('chatroon')
-    //       .doc(widget.chatRoomId)
-    //       .collection('chats')
-    //       .doc(fileName)
-    //       .delete();
-    //   status = 0;
-    // });
-
     if (status == 1) {
       String imageUrl = await uploadTask.ref.getDownloadURL();
       print(imageUrl);
-      await _firestore
-          .collection('chatroon')
-          .doc(widget.roomName)
-          .collection('chats')
-          .doc(fileName)
-          .update({
-        'message': imageUrl,
-      });
+      try {
+        await _firestore
+            .collection('chatroon')
+            .doc(widget.roomName)
+            .collection('chats')
+            .doc(fileName)
+            .update({
+          'message': imageUrl,
+        });
+      } catch (e) {
+        print(e);
+      }
 
-      await _firestore.collection('users').doc(username).update(
-          {'message': _message.text, 'type': 'img', 'time': DateTime.now()});
+      try {
+        await _firestore.collection('users').doc(username).update(
+            {'message': _message.text, 'type': 'img', 'time': DateTime.now()});
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -131,12 +132,6 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
       await _firestore.collection('users').doc(username).update(
           {'message': _message.text, 'type': 'text', 'time': DateTime.now()});
 
-      // if (messages['sendby'] != username) {
-      //   await _firestore.collection('chatroon').doc(widget.roomName).update({
-      //     'lastMessage': _message.text,
-      //     'unreadCount': FieldValue.increment(1),
-      //   });
-      // }
       _message.clear();
       _listScrollController.animateTo(0,
           duration: Duration(microseconds: 500), curve: Curves.fastOutSlowIn);
@@ -190,9 +185,113 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
     return SafeArea(
       child: Column(
         children: [
-          Text('Chat with ${widget.farmOwner}'),
-          SizedBox(
-            height: 66,
+          Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 24, bottom: 13, top: 13),
+              child: Row(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child: Image.asset(Assets.iconsBack)),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: [
+                          // ClipRRect(
+                          //   borderRadius: BorderRadius.circular(50),
+                          //   child: Image.network(
+                          //     fit: BoxFit.fill,
+                          //     expert.personalPhoto!,
+                          //     height: 50,
+                          //     width: 50,
+                          //   ),
+                          // ),
+                          StreamBuilder<DocumentSnapshot>(
+                              stream: _firestore
+                                  .collection('users')
+                                  .doc(widget.farmOwner)
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data != null) {
+                                  return snapshot.data!['status'] == "Online"
+                                      ? Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Container(
+                                            height: 14,
+                                            width: 14,
+                                            decoration: BoxDecoration(
+                                                color: Color(0xff59CD30),
+                                                borderRadius:
+                                                    BorderRadius.circular(14)),
+                                          ),
+                                        )
+                                      : Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Container(
+                                            height: 14,
+                                            width: 14,
+                                            decoration: BoxDecoration(
+                                                color: Colors.transparent,
+                                                borderRadius:
+                                                    BorderRadius.circular(14)),
+                                          ),
+                                        );
+                                } else {
+                                  return Container();
+                                }
+                              })
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      SizedBox(
+                        width: 13,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.farmOwner,
+                            style: Styles.textStyle14(context).copyWith(
+                                fontFamily: "Open Sans",
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff1E1E1E)),
+                          ),
+                          StreamBuilder<DocumentSnapshot>(
+                              stream: _firestore
+                                  .collection('users')
+                                  .doc(widget.farmOwner)
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data != null) {
+                                  return Text(
+                                    snapshot.data!['status'],
+                                    style: Styles.textStyle10(context).copyWith(
+                                        fontFamily: "Open Sans",
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xff1E1E1E)),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              })
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
           Flexible(
             child: StreamBuilder<QuerySnapshot>(
@@ -240,7 +339,6 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
                                 ? 0
                                 : 1,
                       );
-                      // return Text(snapshot.data!.docs[index]['message']);
                     },
                     itemCount: snapshot.data!.docs.length,
                   );
@@ -250,24 +348,7 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
                 }
               },
             ),
-            // child: ListView.builder(
-            //   controller: _listScrollController,
-            //   itemCount: messages.length,
-            //   itemBuilder: (context, index) {
-            //     return ChatWidget(
-            //       timestamp: DateTime.now(),
-            //       msg: messages[index]['msg'],
-            //       chatIndex: messages[index]['chatIndex'],
-            //     );
-            //   },
-            // ),
           ),
-          // if (_isTyping) ...[
-          //   const SpinKitThreeBounce(
-          //     color: kPrimaryColor,
-          //     size: 18,
-          //   ),
-          // ],
           const SizedBox(
             height: 15,
           ),
@@ -278,18 +359,13 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
                   child: Row(children: [
                     Expanded(
                       child: TextField(
+                        cursorColor: kPrimaryColor,
                         onSubmitted: (value) {
                           return onSendMessage();
                         },
                         focusNode: focusNode,
                         style: const TextStyle(color: Colors.black),
                         controller: _message,
-                        // onSubmitted: (value) async {
-                        //   await sendMessageFCT(
-                        //     modelsProvider: modelsProvider,
-                        //     chatProvider: chatProvider,
-                        //   );
-                        // },
                         decoration: InputDecoration.collapsed(
                           hintText: "Type your message...",
                           hintStyle: Styles.textStyle16(context).copyWith(

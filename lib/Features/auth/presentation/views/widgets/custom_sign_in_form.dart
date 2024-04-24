@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +8,7 @@ import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dart';
 import 'package:graduation_project/core/utils/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomSignInForm extends StatefulWidget {
   const CustomSignInForm({super.key, required this.width});
@@ -18,6 +20,7 @@ class CustomSignInForm extends StatefulWidget {
 }
 
 class _CustomSignInFormState extends State<CustomSignInForm> {
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   bool passwordVisible = true;
   bool isLoading = false;
   late TextEditingController passwordController;
@@ -28,6 +31,7 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
   void initState() {
     passwordController = TextEditingController();
     nameController = TextEditingController();
+    getRole();
     super.initState();
   }
 
@@ -35,7 +39,16 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
   void dispose() {
     passwordController.dispose();
     nameController.dispose();
+
     super.dispose();
+  }
+
+  String? role;
+  Future<void> getRole() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    role = await prefs.getString('role');
+    setState(() {});
   }
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -43,7 +56,7 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthLoading) {
             setState(() {
               isLoading = true;
@@ -54,9 +67,22 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
             });
           }
           if (state is LoginSuccess) {
+            await getRole();
+            if (role == "FarmOwner") {
+              await _firestore
+                  .collection('users')
+                  .doc(nameController.text)
+                  .update({'role': 'FarmOwner'});
+              context.push(AppRoutes.kHomeView);
+            } else if (role == "Doctor") {
+              await _firestore
+                  .collection('users')
+                  .doc(nameController.text)
+                  .update({'role': 'Doctor'});
+              context.push(AppRoutes.kHomeView2);
+            }
             nameController.clear();
             passwordController.clear();
-            context.push(AppRoutes.kHomeView);
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

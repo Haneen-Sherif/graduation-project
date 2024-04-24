@@ -219,8 +219,10 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(50),
                                         child: Image.network(
+                                          fit: BoxFit.fill,
                                           expert.personalPhoto!,
                                           height: 50,
+                                          width: 50,
                                         ),
                                       ),
                                       StreamBuilder<DocumentSnapshot>(

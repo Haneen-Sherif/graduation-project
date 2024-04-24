@@ -18,6 +18,7 @@ import 'package:graduation_project/Features/farm_equipments/presentation/views/a
 import 'package:graduation_project/Features/farm_equipments/presentation/views/edit_equipments_view.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/farm_equipments_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/home_view.dart';
+import 'package:graduation_project/Features/home/presentation/views/home_view_2.dart';
 import 'package:graduation_project/Features/our_team/presentation/views/our_team_view.dart';
 import 'package:graduation_project/Features/profle/presentation/views/profile_view.dart';
 import 'package:graduation_project/Features/splash/presentation/views/splash_view.dart';
@@ -26,10 +27,11 @@ abstract class AppRoutes {
   static String kSignInView = '/signInView';
   static String kSignUpView = '/signUpView';
   static String kHomeView = '/homeView';
+  static String kHomeView2 = '/homeView2';
   static String kDiseaseInfoView = '/diseaseInfoView/:index';
   static String kAddEquipmentView = '/addEquipmentView/:id';
   static String kEditEquipmentView = '/editEquipmentView/:id/:equipmentId';
-  static String kExpertsProfileView = '/expertsProfileView/:id';
+  static String kExpertsProfileView = '/expertsProfileView/:id/:farmOwnerId';
   static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
   static String kProfileView = '/profileView/:id';
@@ -44,6 +46,7 @@ abstract class AppRoutes {
   static String kPasswordChangedView = '/passwordChangedView';
   static String kOurTeamView = '/ourTeamView';
   static String kAllMessagesView = '/allMessagesView';
+  static String kMyCartView = '/myCartView';
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -128,6 +131,26 @@ abstract class AppRoutes {
         },
       ),
       GoRoute(
+        path: kHomeView2,
+        pageBuilder: (context, state) {
+          return const CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: HomeView2(),
+            transitionsBuilder: _buildCustomTransition1,
+          );
+        },
+      ),
+      // GoRoute(
+      //   path: kMyCartView,
+      //   pageBuilder: (context, state) {
+      //     return const CustomTransitionPage(
+      //       transitionDuration: Duration(seconds: 1),
+      //       child: MyCartView(),
+      //       transitionsBuilder: _buildCustomTransition1,
+      //     );
+      //   },
+      // ),
+      GoRoute(
         path: kDiseaseInfoView,
         pageBuilder: (context, state) {
           return CustomTransitionPage(
@@ -167,9 +190,17 @@ abstract class AppRoutes {
       GoRoute(
         path: kExpertsProfileView,
         pageBuilder: (context, state) {
+          final Map<String, dynamic> extras =
+              state.extra as Map<String, dynamic>;
+          final String id = extras['id'].toString();
+
+          final String farmOwnerId = extras['farmOwnerId'].toString();
           return CustomTransitionPage(
-            transitionDuration: const Duration(seconds: 1),
-            child: ExpertsProfileView(id: state.extra.toString()),
+            transitionDuration: Duration(seconds: 1),
+            child: ExpertsProfileView(
+              id: id,
+              farmOwnerId: farmOwnerId,
+            ),
             transitionsBuilder: _buildCustomTransition2,
           );
         },

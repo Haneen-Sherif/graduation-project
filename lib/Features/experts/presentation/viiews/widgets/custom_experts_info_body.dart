@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_forgot_password_back_icon.dart';
+import 'package:graduation_project/Features/chat/presentation/manager/rating_cubit/rating_cubit.dart';
 import 'package:graduation_project/Features/chat/services/chat_service.dart';
 import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
@@ -18,9 +19,11 @@ class CustomExpertsInfoBody extends StatefulWidget {
   const CustomExpertsInfoBody({
     super.key,
     required this.id,
+    required this.ownerId,
   });
 
   final String id;
+  final String ownerId;
 
   @override
   State<CustomExpertsInfoBody> createState() => _CustomExpertsInfoBodyState();
@@ -30,10 +33,12 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
     with WidgetsBindingObserver {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String username = '';
+
   @override
   void initState() {
     super.initState();
     getName();
+
     WidgetsBinding.instance.addObserver(this);
     setStatus("Online");
   }
@@ -53,29 +58,6 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
       setStatus("Offline");
     }
   }
-
-  // Map<String, dynamic>? userMap;
-  // String chatRoomId(String user1, String user2) {
-  //   String firstCharUser1 = user1[0].toLowerCase();
-  //   String firstCharUser2 = user2[0].toLowerCase();
-
-  //   if (firstCharUser1.codeUnitAt(0) > firstCharUser2.codeUnitAt(0)) {
-  //     print("$user1$user2");
-  //     return "$user1$user2";
-  //   } else {
-  //     print("$user1$user2");
-  //     return "$user2$user1";
-  //   }
-  // }
-
-  // String chatRoomId(String user1, String user2) {
-  //   if (user1[0].toLowerCase().codeUnits[0] >
-  //       user2.toLowerCase().codeUnits[0]) {
-  //     return "$user1$user2";
-  //   } else {
-  //     return "$user2$user1";
-  //   }
-  // }
 
   Future<String> getName() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -114,53 +96,37 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
                   Positioned(
                     bottom: 4,
                     right: 4,
-                    child: StreamBuilder<DocumentSnapshot>(
-                      stream: _firestore
-                          .collection('users')
-                          .doc(expert.userName)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator(
-                            color: kPrimaryColor,
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text('Error fetching rating');
-                        } else if (snapshot.hasData) {
-                          final data =
-                              snapshot.data!.data() as Map<String, dynamic>;
-                          final initialRating = data['raiting'] ?? 1.0;
-
-                          return RatingBar.builder(
-                            itemSize: 18,
-                            initialRating: initialRating.toDouble(),
-                            minRating: 1,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
-                            onRatingUpdate: (rating) async {
-                              try {
-                                await _firestore
-                                    .collection('users')
-                                    .doc(expert.userName)
-                                    .update({'raiting': rating});
-                              } catch (e) {
-                                print('Error updating rating: $e');
-                              }
-                              print('New rating: $rating');
-                            },
-                          );
-                        } else {
-                          return Text('Error fetching rating');
-                        }
-                      },
-                    ),
+                    child: BlocListener<RatingCubit, RatingState>(
+                        listener: (context, state) {
+                          if (state is RatingSuccess) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(state.message),
+                                backgroundColor: kPrimaryColor,
+                              ),
+                            );
+                          }
+                        },
+                        child: RatingBar.builder(
+                          itemSize: 18,
+                          initialRating: 1,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(widget.ownerId);
+                            print(expert.id!);
+                            // When the rating changes, call the setRating method from RatingCubit
+                            BlocProvider.of<RatingCubit>(context)
+                                .setRating(rating, widget.ownerId, expert.id!);
+                          },
+                        )),
                   ),
                   Positioned(
                     bottom: -40,
@@ -171,11 +137,12 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
                       radius: size.width * 0.18,
                       child: ClipRRect(
                           borderRadius:
-                              BorderRadius.circular(size.width * 0.18),
+                              BorderRadius.circular(size.width * 0.30),
                           child: Image.network(
                             expert.personalPhoto!,
-                            width: size.width * 0.18,
-                            height: size.width * 0.18,
+                            fit: BoxFit.fill,
+                            width: size.width * 0.30,
+                            height: size.width * 0.30,
                           )),
                     ),
                   ),

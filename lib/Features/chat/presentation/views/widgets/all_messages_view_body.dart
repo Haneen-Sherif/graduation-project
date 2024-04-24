@@ -40,7 +40,10 @@ class _AllMessagesViewBodyState extends State<AllMessagesViewBody> {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('users').snapshots(),
+      stream: _firestore
+          .collection('users')
+          .where('role', isEqualTo: "FarmOwner")
+          .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Center(

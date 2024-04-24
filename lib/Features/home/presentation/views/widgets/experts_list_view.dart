@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:graduation_project/Features/chat/presentation/manager/rating_cubit/rating_cubit.dart';
 import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
@@ -14,11 +14,15 @@ import 'package:graduation_project/generated/assets.dart';
 class ExpertsListView extends StatelessWidget {
   const ExpertsListView({
     super.key,
+    required this.farmOwnerId,
   });
+
+  final String farmOwnerId;
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
     //  Future<String>  getRaiting() async {
     //         await _firestore
     //                               .collection('users')
@@ -47,11 +51,14 @@ class ExpertsListView extends StatelessWidget {
             itemCount: experts.length,
             itemBuilder: (context, index) {
               ExpertsModel expert = experts[index];
+              BlocProvider.of<RatingCubit>(context).calcRating(expert.id!);
+              int rateCount = BlocProvider.of<RatingCubit>(context).rateCount;
+
               return GestureDetector(
                 onTap: () {
                   context.push(
                     AppRoutes.kExpertsProfileView,
-                    extra: expert.id,
+                    extra: {'id': expert.id, 'farmOwnerId': farmOwnerId},
                   );
                 },
                 child: SizedBox(
@@ -110,39 +117,46 @@ class ExpertsListView extends StatelessWidget {
                                     children: [
                                       Image.asset(Assets.iconsStar2),
                                       SizedBox(width: 4),
-                                      StreamBuilder<DocumentSnapshot>(
-                                        stream: _firestore
-                                            .collection('users')
-                                            .doc(expert.userName)
-                                            .snapshots(),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return Text('-');
-                                          } else if (snapshot.hasError) {
-                                            return Text('-');
-                                          } else {
-                                            final data = snapshot.data;
-                                            if (snapshot.data != null) {
-                                              final rating =
-                                                  data?['raiting'] ?? '-';
-                                              return Text(
-                                                '$rating',
-                                                style:
-                                                    Styles.textStyle7(context)
-                                                        .copyWith(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w600),
-                                              );
-                                            } else {
-                                              return Text('-');
-                                            }
-                                          }
-                                        },
+                                      // StreamBuilder<DocumentSnapshot>(
+                                      //   stream: _firestore
+                                      //       .collection('users')
+                                      //       .doc(expert.userName)
+                                      //       .snapshots(),
+                                      //   builder: (context, snapshot) {
+                                      //     if (snapshot.connectionState ==
+                                      //         ConnectionState.waiting) {
+                                      //       return Text('-');
+                                      //     } else if (snapshot.hasError) {
+                                      //       return Text('-');
+                                      //     } else {
+                                      //       final data = snapshot.data;
+                                      //       if (snapshot.data != null) {
+                                      //         final rating =
+                                      //             data?['raiting'] ?? '-';
+                                      //         return Text(
+                                      //           '$rating',
+                                      //           style:
+                                      //               Styles.textStyle7(context)
+                                      //                   .copyWith(
+                                      //                       fontWeight:
+                                      //                           FontWeight
+                                      //                               .w600),
+                                      //         );
+                                      //       } else {
+                                      //         return Text('-');
+                                      //       }
+                                      //     }
+                                      //   },
+                                      // ),
+                                      Text(
+                                        " (${rateCount})",
+                                        style:
+                                            Styles.textStyle7(context).copyWith(
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),

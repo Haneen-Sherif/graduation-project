@@ -16,8 +16,8 @@ class ChatService {
 
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('chatRooms')
-          .where('participants', arrayContains: username)
+          .collection('chatroon')
+          .where('chatroon', arrayContains: username)
           .get();
 
       querySnapshot.docs.forEach((doc) {
