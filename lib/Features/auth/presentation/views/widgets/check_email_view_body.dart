@@ -39,7 +39,9 @@ class CheckEmailViewBody extends StatelessWidget {
               const SizedBox(
                 height: 13,
               ),
-              const CustomTextCheckEmail(),
+              CustomTextCheckEmail(
+                email: email,
+              ),
               const SizedBox(
                 height: 28,
               ),

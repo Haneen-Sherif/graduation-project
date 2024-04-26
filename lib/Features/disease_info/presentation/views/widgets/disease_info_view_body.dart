@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Features/disease_info/presentation/views/widgets/custom_fish_info_list.dart';
@@ -7,7 +5,7 @@ import 'package:graduation_project/Features/disease_info/presentation/views/widg
 import 'package:graduation_project/Features/disease_info/presentation/views/widgets/disease_info_order.dart';
 import 'package:graduation_project/Features/home/data/models/fish_model.dart';
 import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
-import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 
 class DiseaseInfoViewBody extends StatelessWidget {
@@ -33,7 +31,10 @@ class DiseaseInfoViewBody extends StatelessWidget {
                 future: homeCubit.getDisease(id),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: kPrimaryColor,
+                    ));
                   } else if (snapshot.hasError) {
                     return Text("Error: ${snapshot.error}");
                   } else {
@@ -44,7 +45,9 @@ class DiseaseInfoViewBody extends StatelessWidget {
                         const SizedBox(
                           height: 26,
                         ),
-                        Image.file(File(disease.photoPath!)),
+                        Container(
+                            height: 186,
+                            child: Image.network(disease.photoPath!)),
                         // const SizedBox(
                         //   height: 12,
                         // ),
@@ -191,7 +194,7 @@ class DiseaseInfoViewBody extends StatelessWidget {
                 },
               ),
             ),
-            HomeFooterWidget(size: size)
+            // HomeFooterWidget(size: size)
           ],
         ),
       ),

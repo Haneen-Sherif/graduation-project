@@ -35,10 +35,11 @@ abstract class AppRoutes {
   static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
   static String kProfileView = '/profileView/:id';
-  static String kRealTimeChatView = '/realTimeChatView/:name/:id';
+  static String kRealTimeChatView = '/realTimeChatView/:name/:id/:ownerId';
   static String kRealTimeChatView2 = '/realTimeChatView2/:userName/:roomName';
-  static String kDetectView = '/detectView';
-  static String kShowResultView = '/showResultView/:name/:per/:img';
+  static String kDetectView = '/detectView/:id';
+  static String kShowResultView =
+      '/showResultView/:name/:per/:img/:type/:action';
   static String kExpertsView = '/expertsView';
   static String kForgotPasswordView = '/forgotPasswordView';
   static String kCheckEmailView = '/checkEmailView/:email';
@@ -243,12 +244,10 @@ abstract class AppRoutes {
           final String name = extras['name'].toString();
 
           final String id = extras['id'].toString();
+          final String ownerId = extras['ownerId'].toString();
           return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
-            child: RealTimeChatView(
-              name: name,
-              id: id,
-            ),
+            child: RealTimeChatView(name: name, id: id, ownerId: ownerId),
             transitionsBuilder: _buildCustomTransition1,
           );
           // return CustomTransitionPage(
@@ -304,9 +303,9 @@ abstract class AppRoutes {
       GoRoute(
         path: kDetectView,
         pageBuilder: (context, state) {
-          return const CustomTransitionPage(
+          return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
-            child: DetectView(),
+            child: DetectView(id: state.extra.toString()),
             transitionsBuilder: _buildCustomTransition1,
           );
         },
@@ -317,15 +316,14 @@ abstract class AppRoutes {
           final Map<String, dynamic> extras =
               state.extra as Map<String, dynamic>;
           final String name = extras['name'].toString();
-          final int per = int.parse(extras['per'].toString());
+          final String type = extras['type'].toString();
+          final List<dynamic> action = extras['action'];
+          final double per = double.parse(extras['per'].toString());
           final String img = extras['img'].toString();
           return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
             child: ShowResultView(
-              name: name,
-              per: per,
-              img: img,
-            ),
+                name: name, per: per, img: img, type: type, action: action),
             transitionsBuilder: _buildCustomTransition1,
           );
         },

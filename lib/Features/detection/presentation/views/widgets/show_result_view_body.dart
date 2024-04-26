@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/detection/data/models/disease_result_model.dart';
 import 'package:graduation_project/Features/detection/presentation/views/widgets/disease_result.dart';
-import 'package:graduation_project/Features/home/presentation/views/widgets/home_footer_widget.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/routes.dart';
-import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
 
 class ShowResultViewBody extends StatelessWidget {
   const ShowResultViewBody(
-      {super.key, required this.name, required this.per, required this.img});
+      {super.key,
+      required this.name,
+      required this.per,
+      required this.img,
+      required this.type,
+      required this.action});
 
   final String name;
   final String img;
-  final int per;
+  final String type;
+  final List<dynamic> action;
+  final double per;
 
   static const List<DiseaseResultModel> diseaseResultLest = [
     DiseaseResultModel(
@@ -33,10 +38,10 @@ class ShowResultViewBody extends StatelessWidget {
       slivers: [
         SliverToBoxAdapter(
           child: Column(children: [
-            const SizedBox(
-              height: 16,
-            ),
-            Text('Result', style: Styles.textStyle27(context)),
+            // const SizedBox(
+            //   height: 16,
+            // ),
+            // Text('Result', style: Styles.textStyle27(context)),
             const SizedBox(
               height: 16,
             ),
@@ -49,11 +54,10 @@ class ShowResultViewBody extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return DiseaseResult(
                     diseaseName: name,
-                    diseasePer: per ~/ 100,
-                    diseaseType: diseaseResultLest[index].diseaseType,
+                    diseasePer: per,
+                    diseaseType: type,
                     diseaseImage: img,
-                    recommendationAction:
-                        diseaseResultLest[index].recommendationAction,
+                    recommendationAction: action,
                   );
                 },
               ),
@@ -78,7 +82,7 @@ class ShowResultViewBody extends StatelessWidget {
                 height: 60,
               ),
             ),
-            HomeFooterWidget(size: size)
+            // HomeFooterWidget(size: size)
           ]),
         )
       ],

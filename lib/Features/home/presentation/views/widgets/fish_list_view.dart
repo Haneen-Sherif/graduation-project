@@ -1,9 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:graduation_project/Features/home/data/models/fish_model.dart';
 import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
+import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
@@ -17,10 +17,13 @@ class FishListView extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
       if (state is HomeLoading) {
         return Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            color: kPrimaryColor,
+          ),
         );
       } else if (state is HomeSuccess) {
-        final diseases = BlocProvider.of<HomeCubit>(context).diseases;
+        List<DiseasesModel> diseases =
+            BlocProvider.of<HomeCubit>(context).diseases;
 
         // print("=====================");
         // print(diseases);
@@ -32,7 +35,7 @@ class FishListView extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: diseases.length,
             itemBuilder: (context, index) {
-              final disease = diseases[index];
+              DiseasesModel disease = diseases[index];
               return GestureDetector(
                 onTap: () {
                   context.push(
@@ -51,8 +54,8 @@ class FishListView extends StatelessWidget {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.25),
-                          offset: const Offset(0, 4),
-                          blurRadius: 4,
+                          offset: const Offset(4, 4),
+                          blurRadius: 6,
                           spreadRadius: 0,
                         ),
                       ],
@@ -62,8 +65,14 @@ class FishListView extends StatelessWidget {
                       elevation: 0,
                       child: Column(
                         children: [
-                          Image.file(File(disease.photoPath!),
-                              height: 67, width: 74, fit: BoxFit.fill),
+                          Image.network(
+                            disease.photoPath ?? '',
+                            height: 67,
+                            width: 74,
+                            fit: BoxFit.cover,
+                          ),
+                          // Image.network((disease.photoPath!),
+                          //     height: 67, width: 74, fit: BoxFit.fill),
                           SizedBox(
                             width: 140,
                             child: Text(

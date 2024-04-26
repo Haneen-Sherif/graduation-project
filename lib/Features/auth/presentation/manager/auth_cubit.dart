@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -133,7 +134,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (response.statusCode == 200) {
         print("Success: Password reset email sent successfully.");
-        emit(AuthSuccess(message: "Email sent successfully"));
+        emit(ChangedSuccess());
       } else if (response.statusCode >= 500) {
         print("Server Error: Something went wrong on the server");
         emit(AuthFailure(message: "Server Error"));
@@ -166,10 +167,10 @@ class AuthCubit extends Cubit<AuthState> {
 
       if (response.statusCode == 200) {
         print("Success: Password reset email sent successfully.");
-        emit(AuthSuccess(message: "Email sent successfully"));
-      } else if (response.statusCode >= 500) {
+        emit(AuthSuccess(message: "Code sent successfully"));
+      } else if (response.statusCode == 400) {
         print("Server Error: Something went wrong on the server");
-        emit(AuthFailure(message: "Server Error"));
+        emit(AuthFailure(message: "Incorrect email address"));
       } else {
         print("Unexpected Error: ${response.statusCode}");
         emit(AuthFailure(message: "Unexpected Error"));
@@ -215,7 +216,7 @@ class AuthCubit extends Cubit<AuthState> {
     String email,
     String code,
   ) async {
-    emit(AuthLoading());
+    emit(VerificationLoading());
 
     try {
       final Map<String, String> requestBody = {
@@ -233,20 +234,20 @@ class AuthCubit extends Cubit<AuthState> {
       if (response.statusCode == 200) {
         print("Success");
         if (response.body == 'true') {
-          emit(AuthSuccess(message: "Success"));
+          emit(VerificationSuccess());
         } else {
-          emit(AuthFailure(message: "Please enter the correct code"));
+          emit(VerificationFailure(message: "Please enter the correct code"));
         }
       } else if (response.statusCode >= 500) {
         print("Server Error: Something went wrong on the server");
-        emit(AuthFailure(message: "Server Error"));
+        emit(VerificationFailure(message: "Server Error"));
       } else {
         print("Unexpected Error: ${response.statusCode}");
-        emit(AuthFailure(message: "Unexpected Error"));
+        emit(VerificationFailure(message: "Unexpected Error"));
       }
     } catch (e) {
       print("Network Error: $e");
-      emit(AuthFailure(message: "Network Error"));
+      emit(VerificationFailure(message: "Network Error"));
     }
   }
 
@@ -440,6 +441,12 @@ class AuthCubit extends Cubit<AuthState> {
       print('Error downloading image: $e');
       return null;
     }
+  }
+
+  @override
+  void onChange(Change<AuthState> change) {
+    log(change.toString());
+    super.onChange(change);
   }
 }
 

@@ -20,10 +20,10 @@ class SignUpViewBody extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 48),
             child: Column(
               children: [
-                Image.asset(Assets.imagesLogo_2),
-                const SizedBox(
-                  height: 8,
-                ),
+                // Image.asset(Assets.imagesLogo_2),
+                // const SizedBox(
+                //   height: 8,
+                // ),
                 Image.asset(Assets.imagesLogo_1),
                 const SizedBox(
                   height: 18,

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Features/our_team/data/models/our_team_model.dart';
 import 'package:graduation_project/Features/our_team/presentation/manager/our_team_cubit/our_team_cubit.dart';
 import 'package:graduation_project/Features/our_team/presentation/views/widgets/our_team_item.dart';
-import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 
 class OurTeamViewBody extends StatelessWidget {
   const OurTeamViewBody({super.key});
@@ -21,13 +20,13 @@ class OurTeamViewBody extends StatelessWidget {
               SizedBox(
                 height: 16,
               ),
-              Align(
-                alignment: Alignment.center,
-                child: CustomTitle(title: "Our Team"),
-              ),
-              SizedBox(
-                height: 45,
-              ),
+              // Align(
+              //   alignment: Alignment.center,
+              //   child: CustomTitle(title: "Our Team"),
+              // ),
+              // SizedBox(
+              //   height: 45,
+              // ),
             ],
           ),
         ),

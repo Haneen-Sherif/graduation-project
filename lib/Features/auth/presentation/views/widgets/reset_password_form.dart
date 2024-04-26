@@ -33,18 +33,25 @@ class ResetPasswordForm extends StatefulWidget {
 class _ResetPasswordFormState extends State<ResetPasswordForm> {
   bool newPasswordVisible = true;
   bool confirmNewPasswordVisible = true;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    final bool digitRegex = true;
+    final bool upperRegex = true;
+    final bool nonAlphanumericRegex = true;
     return BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is AuthSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: kPrimaryColor,
-              ),
-            );
+          if (state is AuthLoading) {
+            setState(() {
+              isLoading = true;
+            });
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+          }
+          if (state is ChangedSuccess) {
             context.push(AppRoutes.kPasswordChangedView);
           } else if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -61,6 +68,12 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (isLoading)
+                Center(
+                  child: CircularProgressIndicator(
+                    color: kPrimaryColor,
+                  ),
+                ),
               Text(
                 'New password',
                 style: Styles.textStyle14(context).copyWith(
@@ -96,7 +109,16 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   if (value!.isEmpty) {
                     return 'Please enter your new password';
                   } else if (value.length < 8) {
-                    return 'must be 8 characters';
+                    return 'Password must be at least 8 characters.';
+                  } else if (upperRegex !=
+                      RegExp(r'.*[A-Z].*').hasMatch(value)) {
+                    return "Password must have at least one uppercase ('A'-'Z').";
+                  } else if (digitRegex !=
+                      RegExp(r'.*[0-9].*').hasMatch(value)) {
+                    return "Password must have at least one digit ('0'-'9').";
+                  } else if (nonAlphanumericRegex !=
+                      RegExp(r'.*[^a-zA-Z0-9].*').hasMatch(value)) {
+                    return "Password must have at least one special character.";
                   }
                   return null;
                 },

@@ -7,6 +7,7 @@ import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit
 import 'package:graduation_project/Features/chat/presentation/manager/providers/chat_provider.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/providers/models_provider.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/rating_cubit/rating_cubit.dart';
+import 'package:graduation_project/Features/detection/presentation/manager/detect_cubit/detect_cubit.dart';
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
 import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => EquipmentsCubit()),
           BlocProvider(create: (context) => ExpertsCubit()),
           BlocProvider(create: (context) => RatingCubit()),
+          BlocProvider(create: (context) => DetectCubit()),
         ],
         child: MaterialApp.router(
           locale: DevicePreview.locale(context),

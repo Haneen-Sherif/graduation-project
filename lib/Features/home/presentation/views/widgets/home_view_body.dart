@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import 'package:go_router/go_router.dart';
+
 import 'package:graduation_project/Features/home/presentation/views/widgets/experts_list_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/feedback_container.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/fish_list_view.dart';
@@ -77,6 +79,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    setState(() {});
     return WillPopScope(
       onWillPop: () async {
         return await _showExitConfirmationDialog(context);
@@ -190,7 +193,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           ),
           SliverToBoxAdapter(
             child: Text(
-              "About Us",
+              "Feedback",
               textAlign: TextAlign.center,
               style: Styles.textStyle24(context)
                   .copyWith(color: Color(0xff1D2B4F)),

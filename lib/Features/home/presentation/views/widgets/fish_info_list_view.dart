@@ -56,7 +56,7 @@ class FishInfoListView extends StatelessWidget {
                 width: 13,
               ),
               Flexible(
-                child: Image.asset(fishList[index].image),
+                child: Image.network(fishList[index].image),
               )
             ],
           ),

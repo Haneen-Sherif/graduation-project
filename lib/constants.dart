@@ -7,7 +7,7 @@ const Color kSecondaryColor = Color(0xffF8F8F8);
 const String BASE_URL = "https://api.openai.com/v1";
 const String API_KEY = "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";
 // const String baseUrlApi = "https://localhost:7289";
-const String baseUrlApi = "https://33a2-41-235-235-170.ngrok-free.app";
+const String baseUrlApi = "https://b58a-41-235-254-102.ngrok-free.app";
 
 class ApiKeys {
   static String secretKey =

@@ -7,6 +7,20 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
+class VerificationLoading extends AuthState {}
+
+class VerificationSuccess extends AuthState {}
+
+class ChangedSuccess extends AuthState {}
+
+class VerificationFailure extends AuthState {
+  final String message;
+
+  VerificationFailure({required this.message});
+
+  List<Object> get props => [message];
+}
+
 class AuthSuccess extends AuthState {
   final String message;
 

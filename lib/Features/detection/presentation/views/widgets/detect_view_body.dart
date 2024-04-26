@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/detection/presentation/views/widgets/upload_file.dart';
-import 'package:graduation_project/core/utils/styles.dart';
 
 class DetectViewBody extends StatelessWidget {
-  const DetectViewBody({super.key});
+  const DetectViewBody({super.key, required this.id});
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +12,14 @@ class DetectViewBody extends StatelessWidget {
       slivers: [
         SliverToBoxAdapter(
           child: Column(children: [
-            const SizedBox(
-              height: 40,
-            ),
-            Text('Image Upload', style: Styles.textStyle27(context)),
+            // const SizedBox(
+            //   height: 40,
+            // ),
+            // Text('Image Upload', style: Styles.textStyle27(context)),
             const SizedBox(
               height: 55,
             ),
-            UploadFile(size: size),
+            UploadFile(size: size, id: id),
             // const SizedBox(
             //   height: 40,
             // ),

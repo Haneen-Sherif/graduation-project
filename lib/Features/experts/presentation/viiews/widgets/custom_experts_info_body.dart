@@ -71,6 +71,9 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<RatingCubit>(context).isSubscripted(widget.ownerId);
+
+    bool response = BlocProvider.of<RatingCubit>(context).isUserSubscriped;
     final expertsCubit = BlocProvider.of<ExpertsCubit>(context);
     final Size size = MediaQuery.sizeOf(context);
     return FutureBuilder<ExpertsModel>(
@@ -140,7 +143,7 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
                               BorderRadius.circular(size.width * 0.30),
                           child: Image.network(
                             expert.personalPhoto!,
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                             width: size.width * 0.30,
                             height: size.width * 0.30,
                           )),
@@ -157,17 +160,26 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
                         ),
                         GestureDetector(
                             onTap: () async {
-                              String roomId =
-                                  await ChatService.generateChatRoomId(
-                                      [username, expert.userName!]);
+                              if (response == true) {
+                                String roomId =
+                                    await ChatService.generateChatRoomId(
+                                        [username, expert.userName!]);
 
-                              context.push(
-                                AppRoutes.kRealTimeChatView,
-                                extra: {
-                                  'name': roomId,
-                                  'id': expert.id,
-                                },
-                              );
+                                context.push(
+                                  AppRoutes.kRealTimeChatView,
+                                  extra: {
+                                    'name': roomId,
+                                    'id': expert.id,
+                                    'ownerId': widget.ownerId
+                                  },
+                                );
+                              } else if (response == false) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("You have to be subscribed"),
+                                  ),
+                                );
+                              }
                             },
                             child: Image.asset(Assets.iconsChat))
                       ],

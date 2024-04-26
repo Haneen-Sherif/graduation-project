@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/widgets/equipment_list_View.dart';
-import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
-import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
-import 'package:graduation_project/core/utils/routes.dart';
 
 class FarmEquipmentsViewBody extends StatefulWidget {
   const FarmEquipmentsViewBody({super.key, required this.id});
@@ -27,14 +24,13 @@ class _FarmEquipmentsViewBodyState extends State<FarmEquipmentsViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    // final Size size = MediaQuery.of(context).size;
 
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomTitle(title: "Farm Equipments"),
             SizedBox(
               height: 26,
             ),
@@ -57,19 +53,19 @@ class _FarmEquipmentsViewBodyState extends State<FarmEquipmentsViewBody> {
             // )),
 
             Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-              const SizedBox(
-                height: 56,
-              ),
-              CustomButton(
-                width: size.width * 0.6,
-                text: "Add Equipment",
-                onPressed: () {
-                  context.push(
-                    AppRoutes.kAddEquipmentView,
-                    extra: widget.id,
-                  );
-                },
-              ),
+              // const SizedBox(
+              //   height: 56,
+              // ),
+              // CustomButton(
+              //   width: size.width * 0.6,
+              //   text: "Add Equipment",
+              //   onPressed: () {
+              //     context.push(
+              //       AppRoutes.kAddEquipmentView,
+              //       extra: widget.id,
+              //     );
+              //   },
+              // ),
               const SizedBox(
                 height: 11,
               ),

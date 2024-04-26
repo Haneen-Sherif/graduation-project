@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_forgot_password_back_icon.dart';
 import 'package:graduation_project/Features/detection/presentation/views/widgets/detect_view_body.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_drawer.dart';
+import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 
 class DetectView extends StatefulWidget {
-  const DetectView({super.key});
+  const DetectView({super.key, required this.id});
+
+  final String id;
 
   @override
   State<DetectView> createState() => _DetectViewState();
@@ -19,17 +22,22 @@ class _DetectViewState extends State<DetectView> {
       child: Scaffold(
         key: detectKey,
         drawer: const CustomDrawer(),
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(70),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 16, left: 21),
-            child: CustomForgotPasswordBackIcon(),
-          ),
-          // child: CustomAppBar(
-          //   anotherKey: detectKey,
-          // ),
+        appBar: AppBar(
+          leading: Center(child: CustomForgotPasswordBackIcon()),
+          title: CustomTitle(title: "Image Upload"),
+          centerTitle: true,
         ),
-        body: const DetectViewBody(),
+        // appBar: PreferredSize(
+        //   preferredSize: const Size.fromHeight(70),
+        //   child: Padding(
+        //     padding: const EdgeInsets.only(top: 16, left: 21),
+        //     child: CustomForgotPasswordBackIcon(),
+        //   ),
+        //   // child: CustomAppBar(
+        //   //   anotherKey: detectKey,
+        //   // ),
+        // ),
+        body: DetectViewBody(id: widget.id),
       ),
     );
   }

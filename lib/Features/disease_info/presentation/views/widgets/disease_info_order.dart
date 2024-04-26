@@ -22,13 +22,15 @@ class DiseaseInfoOrder extends StatelessWidget {
           color: kPrimaryColor,
         ),
       ),
-      child: Text(
-        textAlign: TextAlign.center,
-        number,
-        style: Styles.textStyle12(context).copyWith(
-          fontWeight: FontWeight.w700,
-          fontFamily: "Montserrat",
-          color: Colors.white,
+      child: Center(
+        child: Text(
+          textAlign: TextAlign.center,
+          number,
+          style: Styles.textStyle12(context).copyWith(
+            fontWeight: FontWeight.w700,
+            fontFamily: "Montserrat",
+            color: Colors.white,
+          ),
         ),
       ),
     );

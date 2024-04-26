@@ -55,7 +55,7 @@ class _CustomDrawerBody2State extends State<CustomDrawerBody2> {
   Widget build(BuildContext context) {
     // BlocProvider.of<RatingCubit>(context).isSubscripted(nameIdentifier);
 
-    final response = BlocProvider.of<RatingCubit>(context).isSubscriped;
+    final response = BlocProvider.of<RatingCubit>(context).isUserSubscriped;
     print(response);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

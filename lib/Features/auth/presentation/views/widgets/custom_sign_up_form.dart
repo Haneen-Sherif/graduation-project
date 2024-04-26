@@ -134,7 +134,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.text,
               obscureText: false,
-              text: "Name",
+              text: "Username",
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Name must not be empty';
@@ -516,7 +516,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  flex: 3,
+                  flex: 5,
                   child: RadioListTile<String>(
                     contentPadding: EdgeInsets.zero,
                     activeColor: Colors.black,
@@ -538,7 +538,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 4,
                   child: RadioListTile<String>(
                     contentPadding: EdgeInsets.zero,
                     activeColor: Colors.black,

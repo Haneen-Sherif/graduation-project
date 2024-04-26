@@ -4,7 +4,6 @@ import 'package:graduation_project/Features/home/presentation/manager/home_cubit
 import 'package:graduation_project/Features/home/presentation/views/widgets/feedback_text_form_field.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
-import 'package:graduation_project/core/utils/styles.dart';
 
 class FeedbackForm extends StatefulWidget {
   const FeedbackForm({super.key});
@@ -15,6 +14,7 @@ class FeedbackForm extends StatefulWidget {
 
 class _FeedbackFormState extends State<FeedbackForm> {
   bool chckVal = false;
+  bool privacyPolicyAccepted = false;
 
   late TextEditingController emailController;
   late TextEditingController nameController;
@@ -58,6 +58,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
             emailController.clear();
             phoneNumberController.clear();
             messageController.clear();
+            privacyPolicyAccepted = false;
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
@@ -145,31 +146,18 @@ class _FeedbackFormState extends State<FeedbackForm> {
                   SizedBox(
                     height: 14,
                   ),
-                  CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    contentPadding: EdgeInsets.zero,
-                    activeColor: Color(0xffafb0b8),
-                    title: Text(
-                      "I have read and accept the privacy policy.",
-                      style: Styles.textStyle12(context).copyWith(
-                        color: Color(0xff303030),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Color(0xffafb0b8),
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.circular(3.0),
-                    ),
-                    value: chckVal,
-                    onChanged: (value) {
+                  CheckboxFormField(
+                    initialValue: privacyPolicyAccepted,
+                    onChanged: (newValue) {
                       setState(() {
-                        chckVal = value!;
-                        print(value);
+                        privacyPolicyAccepted = newValue ?? false;
                       });
+                    },
+                    validator: (value) {
+                      if (value != true) {
+                        return 'Rquired';
+                      }
+                      return null;
                     },
                   ),
                   SizedBox(
@@ -197,4 +185,58 @@ class _FeedbackFormState extends State<FeedbackForm> {
               ),
             )));
   }
+}
+
+class CheckboxFormField extends FormField<bool> {
+  CheckboxFormField({
+    FormFieldSetter<bool>? onSaved,
+    FormFieldValidator<bool>? validator,
+    required void Function(bool?)? onChanged,
+    bool initialValue = false,
+    bool autovalidate = false,
+  }) : super(
+          onSaved: onSaved,
+          validator: validator,
+          initialValue: initialValue,
+          autovalidateMode: autovalidate
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
+          builder: (FormFieldState<bool> state) {
+            return CheckboxListTile(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  color: Color(0xffafb0b8),
+                  width: 2.0,
+                ),
+                borderRadius: BorderRadius.circular(3.0),
+              ),
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+              activeColor: Color(0xffafb0b8),
+              title: Text(
+                "I have read and accept the privacy policy.",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Color(0xff303030),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              value: state.value ?? initialValue,
+              onChanged: (newValue) {
+                onChanged?.call(newValue); // Call the onChanged callback
+              },
+              subtitle: state.hasError
+                  ? Builder(
+                      builder: (BuildContext context) => Text(
+                        state.errorText ?? "",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                    )
+                  : null,
+            );
+          },
+        );
 }

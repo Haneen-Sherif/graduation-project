@@ -16,8 +16,8 @@ class DiseaseResult extends StatelessWidget {
   final String diseaseName;
   final String diseaseType;
   final String diseaseImage;
-  final String recommendationAction;
-  final diseasePer;
+  final List<dynamic> recommendationAction;
+  final double diseasePer;
 
   @override
   Widget build(BuildContext context) {
@@ -158,12 +158,19 @@ class DiseaseResult extends StatelessWidget {
           height: 5,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(
-            recommendationAction,
-            style: Styles.textStyle13(context),
-          ),
-        )
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: recommendationAction.map((action) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    action,
+                    style: Styles.textStyle13(context),
+                  ),
+                );
+              }).toList(),
+            ))
       ],
     );
   }

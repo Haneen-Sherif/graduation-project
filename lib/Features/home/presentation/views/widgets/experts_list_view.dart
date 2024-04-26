@@ -87,7 +87,7 @@ class ExpertsListView extends StatelessWidget {
                             expert.personalPhoto ?? '',
                             height: 96,
                             width: 79,
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                           SizedBox(
                             height: 23,

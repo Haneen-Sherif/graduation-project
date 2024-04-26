@@ -11,8 +11,10 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
+    setState(() {});
     return Scaffold(
       key: scaffoldKey,
       drawer: const CustomDrawer(),

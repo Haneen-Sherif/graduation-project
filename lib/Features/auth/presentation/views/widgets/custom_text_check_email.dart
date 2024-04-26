@@ -4,7 +4,10 @@ import 'package:graduation_project/core/utils/styles.dart';
 class CustomTextCheckEmail extends StatelessWidget {
   const CustomTextCheckEmail({
     super.key,
+    required this.email,
   });
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class CustomTextCheckEmail extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: 'helloworld@gmail.com',
+            text: email,
             style: Styles.textStyle16(context).copyWith(
               fontFamily: 'Inter',
               fontWeight: FontWeight.w500,

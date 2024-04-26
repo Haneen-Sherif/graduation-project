@@ -4,11 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:graduation_project/Features/chat/presentation/manager/rating_cubit/rating_cubit.dart';
 import 'package:graduation_project/Features/chat/presentation/views/widgets/chat_widget.dart';
 import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
 import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
+import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,10 +21,14 @@ import 'package:uuid/uuid.dart';
 
 class RealTimeChatViewBody extends StatefulWidget {
   const RealTimeChatViewBody(
-      {super.key, required this.id, required this.chatRoomId});
+      {super.key,
+      required this.id,
+      required this.chatRoomId,
+      required this.ownerId});
   // final Map<String, dynamic> userMap;
   final String chatRoomId;
   final String id;
+  final String ownerId;
   @override
   State<RealTimeChatViewBody> createState() => _RealTimeChatViewBodyState();
 }
@@ -179,6 +187,7 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
 
   @override
   Widget build(BuildContext context) {
+    double _rating = 1;
     final expertsCubit = BlocProvider.of<ExpertsCubit>(context);
 
     return SafeArea(
@@ -191,131 +200,225 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
                 child: Padding(
                   padding: const EdgeInsets.only(left: 24, bottom: 13, top: 13),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                          onTap: () {
-                            context.pop();
-                          },
-                          child: Image.asset(Assets.iconsBack)),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      FutureBuilder<ExpertsModel>(
-                          future: expertsCubit.getExpert(widget.id),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Center(child: CircularProgressIndicator());
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                  child: Text('Error: ${snapshot.error}'));
-                            } else {
-                              final expert = snapshot.data!;
-                              return Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(50),
-                                        child: Image.network(
-                                          fit: BoxFit.fill,
-                                          expert.personalPhoto!,
-                                          height: 50,
-                                          width: 50,
-                                        ),
-                                      ),
-                                      StreamBuilder<DocumentSnapshot>(
-                                          stream: _firestore
-                                              .collection('users')
-                                              .doc(expert.userName!)
-                                              .snapshots(),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.data != null) {
-                                              return snapshot.data!['status'] ==
-                                                      "Online"
-                                                  ? Positioned(
-                                                      bottom: 0,
-                                                      right: 0,
-                                                      child: Container(
-                                                        height: 14,
-                                                        width: 14,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(
-                                                                0xff59CD30),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        14)),
-                                                      ),
-                                                    )
-                                                  : Positioned(
-                                                      bottom: 0,
-                                                      right: 0,
-                                                      child: Container(
-                                                        height: 14,
-                                                        width: 14,
-                                                        decoration: BoxDecoration(
-                                                            color: Colors
-                                                                .transparent,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        14)),
-                                                      ),
-                                                    );
-                                            } else {
-                                              return Container();
-                                            }
-                                          })
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 4,
-                                  ),
-                                  SizedBox(
-                                    width: 13,
-                                  ),
-                                  Column(
+                      Row(
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                context.pop();
+                              },
+                              child: Image.asset(Assets.iconsBack)),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          FutureBuilder<ExpertsModel>(
+                              future: expertsCubit.getExpert(widget.id),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else if (snapshot.hasError) {
+                                  return Center(
+                                      child: Text('Error: ${snapshot.error}'));
+                                } else {
+                                  final expert = snapshot.data!;
+                                  return Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        expert.userName!,
-                                        style: Styles.textStyle14(context)
-                                            .copyWith(
-                                                fontFamily: "Open Sans",
-                                                fontWeight: FontWeight.w700,
-                                                color: Color(0xff1E1E1E)),
+                                      Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            child: Image.network(
+                                              fit: BoxFit.cover,
+                                              expert.personalPhoto!,
+                                              height: 50,
+                                              width: 50,
+                                            ),
+                                          ),
+                                          StreamBuilder<DocumentSnapshot>(
+                                              stream: _firestore
+                                                  .collection('users')
+                                                  .doc(expert.userName!)
+                                                  .snapshots(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.data != null) {
+                                                  return snapshot.data![
+                                                              'status'] ==
+                                                          "Online"
+                                                      ? Positioned(
+                                                          bottom: 0,
+                                                          right: 0,
+                                                          child: Container(
+                                                            height: 14,
+                                                            width: 14,
+                                                            decoration: BoxDecoration(
+                                                                color: Color(
+                                                                    0xff59CD30),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            14)),
+                                                          ),
+                                                        )
+                                                      : Positioned(
+                                                          bottom: 0,
+                                                          right: 0,
+                                                          child: Container(
+                                                            height: 14,
+                                                            width: 14,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .transparent,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            14)),
+                                                          ),
+                                                        );
+                                                } else {
+                                                  return Container();
+                                                }
+                                              })
+                                        ],
                                       ),
-                                      StreamBuilder<DocumentSnapshot>(
-                                          stream: _firestore
-                                              .collection('users')
-                                              .doc(expert.userName!)
-                                              .snapshots(),
-                                          builder: (context, snapshot) {
-                                            if (snapshot.data != null) {
-                                              return Text(
-                                                snapshot.data!['status'],
-                                                style: Styles.textStyle10(
-                                                        context)
-                                                    .copyWith(
-                                                        fontFamily: "Open Sans",
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        color:
-                                                            Color(0xff1E1E1E)),
-                                              );
-                                            } else {
-                                              return Container();
-                                            }
-                                          })
+                                      const SizedBox(
+                                        width: 4,
+                                      ),
+                                      SizedBox(
+                                        width: 13,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            expert.userName!,
+                                            style: Styles.textStyle14(context)
+                                                .copyWith(
+                                                    fontFamily: "Open Sans",
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color(0xff1E1E1E)),
+                                          ),
+                                          StreamBuilder<DocumentSnapshot>(
+                                              stream: _firestore
+                                                  .collection('users')
+                                                  .doc(expert.userName!)
+                                                  .snapshots(),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.data != null) {
+                                                  return Text(
+                                                    snapshot.data!['status'],
+                                                    style: Styles.textStyle10(
+                                                            context)
+                                                        .copyWith(
+                                                            fontFamily:
+                                                                "Open Sans",
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: Color(
+                                                                0xff1E1E1E)),
+                                                  );
+                                                } else {
+                                                  return Container();
+                                                }
+                                              })
+                                        ],
+                                      ),
                                     ],
-                                  )
-                                ],
+                                  );
+                                }
+                              }),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 24),
+                        child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    elevation: 0,
+                                    backgroundColor: Colors.white,
+                                    title: Text(
+                                      'Rate this specialist',
+                                      style: Styles.textStyle20(context)
+                                          .copyWith(color: kPrimaryColor),
+                                    ),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        RatingBar.builder(
+                                          initialRating: _rating,
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemSize: 30,
+                                          itemPadding: EdgeInsets.symmetric(
+                                              horizontal: 4.0),
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                            setState(() {
+                                              _rating = rating;
+                                            });
+                                          },
+                                        ),
+                                        SizedBox(height: 32),
+                                        Center(
+                                          child: CustomButton(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width *
+                                                0.3,
+                                            onPressed: () async {
+                                              try {
+                                                print(_rating);
+                                                print(widget.ownerId);
+                                                print(widget.id);
+
+                                                await BlocProvider.of<
+                                                        RatingCubit>(context)
+                                                    .setRating(
+                                                        _rating,
+                                                        widget.ownerId,
+                                                        widget.id);
+
+                                                await BlocProvider.of<
+                                                        RatingCubit>(context)
+                                                    .calcRating(widget.id);
+
+                                                print('Rated $_rating');
+                                                context.pop();
+                                                context.pushReplacement(
+                                                    AppRoutes.kHomeView);
+                                              } catch (e) {
+                                                print(e);
+                                              }
+                                            },
+                                            text: "Submit",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ); // Return your custom RatingDialog widget
+                                },
                               );
-                            }
-                          })
+                            },
+                            icon: Icon(
+                              Icons.done_outline,
+                              color: kPrimaryColor,
+                            )),
+                      )
                     ],
                   ),
                 ),

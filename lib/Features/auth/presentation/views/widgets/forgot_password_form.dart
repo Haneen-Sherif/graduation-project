@@ -9,7 +9,7 @@ import 'package:graduation_project/core/utils/Widgets/custom_text_form_field.dar
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 
-class ForgotPasswordForm extends StatelessWidget {
+class ForgotPasswordForm extends StatefulWidget {
   const ForgotPasswordForm({
     super.key,
     required this.formKey,
@@ -22,9 +22,24 @@ class ForgotPasswordForm extends StatelessWidget {
   final Size size;
 
   @override
+  State<ForgotPasswordForm> createState() => _ForgotPasswordFormState();
+}
+
+class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
+  bool isLoading = false;
+  @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
+          if (state is AuthLoading) {
+            setState(() {
+              isLoading = true;
+            });
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+          }
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -33,22 +48,29 @@ class ForgotPasswordForm extends StatelessWidget {
               ),
             );
             context.push(AppRoutes.kCheckEmailView,
-                extra: emailController.text);
-          } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
-              ),
-            );
+                extra: widget.emailController.text);
           }
+          // else if (state is AuthFailure) {
+          //   ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //       content: Text(state.message),
+          //       backgroundColor: Colors.red,
+          //     ),
+          //   );
+          // }
         },
         child: Form(
           autovalidateMode: AutovalidateMode.always,
-          key: formKey,
+          key: widget.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (isLoading)
+                Center(
+                  child: CircularProgressIndicator(
+                    color: kPrimaryColor,
+                  ),
+                ),
               Text(
                 'Email address',
                 style: Styles.textStyle14(context).copyWith(
@@ -72,23 +94,22 @@ class ForgotPasswordForm extends StatelessWidget {
                   }
                   return null;
                 },
-                controller: emailController,
-                width: size.width * 0.8,
+                controller: widget.emailController,
+                width: widget.size.width * 0.8,
               ),
               const SizedBox(
                 height: 54,
               ),
               Center(
                 child: CustomButton(
-                  width: size.width * 0.8,
+                  width: widget.size.width * 0.8,
                   text: "Send code",
                   onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
+                    if (widget.formKey.currentState!.validate()) {
+                      widget.formKey.currentState!.save();
                       BlocProvider.of<AuthCubit>(context).forgot(
-                        emailController.text,
+                        widget.emailController.text,
                       );
-                      // context.push(AppRoutes.kCheckEmailView);
                     }
                   },
                 ),

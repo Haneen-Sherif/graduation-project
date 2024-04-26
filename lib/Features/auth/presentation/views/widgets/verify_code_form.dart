@@ -30,6 +30,7 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
   late TextEditingController c3;
 
   late TextEditingController c4;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -53,18 +54,21 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is AuthSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: kPrimaryColor,
-              ),
-            );
+          if (state is VerificationLoading) {
+            setState(() {
+              isLoading = true;
+            });
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+          }
+          if (state is VerificationSuccess) {
             context.push(AppRoutes.kResetPasswordView, extra: {
               'email': widget.email,
               'code': c1.text + c2.text + c3.text + c4.text
             });
-          } else if (state is AuthFailure) {
+          } else if (state is VerificationFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
@@ -78,6 +82,12 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
           key: widget.formKey,
           child: Column(
             children: [
+              if (isLoading)
+                Center(
+                  child: CircularProgressIndicator(
+                    color: kPrimaryColor,
+                  ),
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
