@@ -52,6 +52,7 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
   }
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool buttonClicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +72,13 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
             if (role == "FarmOwner") {
               await _firestore
                   .collection('users')
-                  .doc(nameController.text)
+                  .doc(nameController.text.trim())
                   .update({'role': 'FarmOwner'});
               context.push(AppRoutes.kHomeView);
             } else if (role == "Doctor") {
               await _firestore
                   .collection('users')
-                  .doc(nameController.text)
+                  .doc(nameController.text.trim())
                   .update({'role': 'Doctor'});
               context.push(AppRoutes.kHomeView2);
             }
@@ -93,7 +94,9 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
           }
         },
         child: Form(
-          // autovalidateMode: AutovalidateMode.disabled,
+          autovalidateMode: buttonClicked
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           key: _formKey,
           child: Column(
             children: [
@@ -161,10 +164,13 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
                 width: widget.width,
                 text: "Sign In",
                 onPressed: () async {
+                  setState(() {
+                    buttonClicked = true;
+                  });
                   if (_formKey.currentState!.validate()) {
                     BlocProvider.of<AuthCubit>(context).signIn(
-                      nameController.text,
-                      passwordController.text,
+                      nameController.text.trim(),
+                      passwordController.text.trim(),
                     );
                   }
                 },

@@ -11,24 +11,8 @@ class DetectViewBody extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: Column(children: [
-            const SizedBox(
-              height: 55,
-            ),
-            UploadFile(size: size, id: id),
-          ]),
+          child: UploadFile(size: size, id: id),
         ),
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Column(children: [
-            const Expanded(
-              child: SizedBox(
-                height: 56,
-              ),
-            ),
-            // HomeFooterWidget(size: size)
-          ]),
-        )
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:graduation_project/constants.dart';
@@ -14,7 +15,7 @@ class RatingCubit extends Cubit<RatingState> {
   bool isUserSubscriped = false;
 
   Future<void> subscribe(String id) async {
-    // emit(HomeLoading());
+    emit(SubscribeLoading());
 
     try {
       final response = await http.put(
@@ -27,27 +28,27 @@ class RatingCubit extends Cubit<RatingState> {
 
         print(jsonData);
         isUserSubscriped = true;
-        emit(RatingSuccess(message: jsonData));
+        emit(SubscribeSuccess(message: jsonData));
       } else if (response.statusCode >= 400 && response.statusCode < 500) {
         final errorData = jsonDecode(response.body);
         print("Client Error: ${errorData['message']}");
-        emit(RatingFailure(message: errorData['message']));
+        emit(SubscribeFailure(message: errorData['message']));
       } else if (response.statusCode >= 500) {
         print("Server Error: Something went wrong on the server");
-        emit(RatingFailure(message: "Server Error"));
+        emit(SubscribeFailure(message: "Server Error"));
       } else {
         print("Unexpected Error: ${response.statusCode}");
-        emit(RatingFailure(message: "Unexpected Error"));
+        emit(SubscribeFailure(message: "Unexpected Error"));
         throw Exception("Failed to load disease");
       }
     } catch (e) {
       print("Network Error: $e");
-      emit(RatingFailure(message: "Network Error"));
+      emit(SubscribeFailure(message: "Network Error"));
     }
   }
 
   Future<void> isSubscripted(String id) async {
-    emit(RatingLoading());
+    emit(IsSubscribedLoading());
 
     try {
       final response = await http.get(
@@ -55,30 +56,34 @@ class RatingCubit extends Cubit<RatingState> {
       );
 
       if (response.statusCode == 200) {
-        print("IsSubscripted Success");
+        // print("IsSubscripted Success");
         final jsonData = json.decode(response.body);
-        print(jsonData);
+        // print(jsonData);
         isUserSubscriped = jsonData;
-
-        emit(RatingSuccess(message: jsonData.toString()));
+        if (isUserSubscriped == true) {
+          emit(IsSubscibedSuccess());
+        } else {
+          emit(IsNotSubscibedSuccess());
+        }
       } else if (response.statusCode >= 400 && response.statusCode < 500) {
         final errorData = jsonDecode(response.body);
         print("Client Error: ${errorData['message']}");
-        emit(RatingFailure(message: errorData['message']));
+        emit(IsSubscribedFailure(message: errorData['message']));
       } else if (response.statusCode >= 500) {
         print("Server Error: Something went wrong on the server");
-        emit(RatingFailure(message: "Server Error"));
+        emit(IsSubscribedFailure(message: "Server Error"));
       } else {
         print("Unexpected Error: ${response.statusCode}");
-        emit(RatingFailure(message: "Unexpected Error"));
+        emit(IsSubscribedFailure(message: "Unexpected Error"));
       }
     } catch (e) {
       print("Network Error: $e");
-      emit(RatingFailure(message: "Network Error"));
+      emit(IsSubscribedFailure(message: "Network Error"));
     }
   }
 
   Future<int> calcRating(String id) async {
+    emit(RatingCalcLoading());
     try {
       print('Fetching expert for Id: $id');
       final response = await http.get(
@@ -90,31 +95,32 @@ class RatingCubit extends Cubit<RatingState> {
         final jsonData = json.decode(response.body);
         print(jsonData.runtimeType);
         rateCount = jsonData;
-        emit(RatingCalcSuccess(rateCount: rateCount));
+        emit(RatingCalcSuccess());
 
         return rateCount;
       } else if (response.statusCode >= 400 && response.statusCode < 500) {
         final errorData = jsonDecode(response.body);
         print("Client Error: ${errorData['message']}");
-        emit(RatingFailure(message: errorData['message']));
+        emit(RatingCalcFailure(message: errorData['message']));
         throw ("Eroor");
       } else if (response.statusCode >= 500) {
         print("Server Error: Something went wrong on the server");
-        emit(RatingFailure(message: "Server Error"));
+        emit(RatingCalcFailure(message: "Server Error"));
         throw ("Eroor");
       } else {
         print("Unexpected Error: ${response.statusCode}");
-        emit(RatingFailure(message: "Unexpected Error"));
+        emit(RatingCalcFailure(message: "Unexpected Error"));
         throw ("Eroor");
       }
     } catch (e) {
       print("Network Error: $e");
-      emit(RatingFailure(message: "Network Error"));
+      emit(RatingCalcFailure(message: "Network Error"));
       throw ("Eroor");
     }
   }
 
   Future<void> setRating(double rate, String ownerId, String doctorId) async {
+    emit(RatingSetLoading());
     try {
       final Map<String, dynamic> requestBody = {
         'rate': rate,
@@ -132,21 +138,27 @@ class RatingCubit extends Cubit<RatingState> {
       if (response.statusCode == 200) {
         print("rating is set to that doctor thanks..");
 
-        emit(RatingSuccess(message: response.body));
+        emit(RatingSetSuccess(message: response.body));
       } else if (response.statusCode == 404) {
         final errorData = jsonDecode(response.body);
         print("Client Error: ${errorData['message']}");
-        emit(RatingFailure(message: errorData['message']));
+        emit(RatingSetFailure(message: errorData['message']));
       } else if (response.statusCode >= 500) {
         print("Server Error: Something went wrong on the server");
-        emit(RatingFailure(message: "Server Error"));
+        emit(RatingSetFailure(message: "Server Error"));
       } else {
         print("Unexpected Error: ${response.statusCode}");
-        emit(RatingFailure(message: "Unexpected Error"));
+        emit(RatingSetFailure(message: "Unexpected Error"));
       }
     } catch (e) {
       print("Network Error: $e");
-      emit(RatingFailure(message: "Network Error"));
+      emit(RatingSetFailure(message: "Network Error"));
     }
+  }
+
+  @override
+  void onChange(Change<RatingState> change) {
+    log(change.toString());
+    super.onChange(change);
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,56 +7,21 @@ import 'package:graduation_project/Features/home/presentation/views/widgets/dete
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeStackWidget extends StatefulWidget {
+class HomeStackWidget extends StatelessWidget {
   const HomeStackWidget({
-    super.key,
+    Key? key,
     required this.size,
     required this.scaffoldKey,
-  });
+    required this.farmOwnerId,
+  }) : super(key: key);
 
   final Size size;
   final GlobalKey<ScaffoldState> scaffoldKey;
-
-  @override
-  State<HomeStackWidget> createState() => _HomeStackWidgetState();
-}
-
-class _HomeStackWidgetState extends State<HomeStackWidget> {
-  String nameIdentifier = '';
-  Future<void> getId() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final accessToken = prefs.getString('accessToken');
-
-    List<String> parts = accessToken!.split('.');
-    final payload = _decodeBase64(parts[1]);
-    final payloadMap = json.decode(payload);
-    if (payloadMap is! Map<String, dynamic>) {
-      throw Exception('invalid payload');
-    }
-    print(payload);
-    print(payloadMap[
-        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
-
-    nameIdentifier = payloadMap[
-        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    getId();
-    super.initState();
-  }
+  final String farmOwnerId;
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<RatingCubit>(context).isSubscripted(nameIdentifier);
-
-    bool response = BlocProvider.of<RatingCubit>(context).isUserSubscriped;
-    setState(() {});
     return AspectRatio(
       aspectRatio: 0.7,
       child: Container(
@@ -78,7 +41,7 @@ class _HomeStackWidgetState extends State<HomeStackWidget> {
               ListTile(
                 leading: IconButton(
                   onPressed: () {
-                    widget.scaffoldKey.currentState!.openDrawer();
+                    scaffoldKey.currentState!.openDrawer();
                   },
                   icon: const Icon(
                     Icons.menu,
@@ -147,11 +110,14 @@ class _HomeStackWidgetState extends State<HomeStackWidget> {
                   ),
                   color: Color(0xff087ca8),
                   text: "Detect",
-                  onPressed: () {
-                    setState(() {});
+                  onPressed: () async {
+                    await BlocProvider.of<RatingCubit>(context)
+                        .isSubscripted(farmOwnerId);
+
+                    bool response = await BlocProvider.of<RatingCubit>(context)
+                        .isUserSubscriped;
                     if (response == true) {
-                      context.push(AppRoutes.kDetectView,
-                          extra: nameIdentifier);
+                      context.push(AppRoutes.kDetectView, extra: farmOwnerId);
                     } else if (response == false) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -171,23 +137,4 @@ class _HomeStackWidgetState extends State<HomeStackWidget> {
       ),
     );
   }
-}
-
-String _decodeBase64(String str) {
-  String output = str.replaceAll('-', '+').replaceAll('_', '/');
-
-  switch (output.length % 4) {
-    case 0:
-      break;
-    case 2:
-      output += '==';
-      break;
-    case 3:
-      output += '=';
-      break;
-    default:
-      throw Exception('Illegal base64url string!"');
-  }
-
-  return utf8.decode(base64Url.decode(output));
 }

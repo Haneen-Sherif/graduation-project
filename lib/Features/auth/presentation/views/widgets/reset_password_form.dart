@@ -34,6 +34,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
   bool newPasswordVisible = true;
   bool confirmNewPasswordVisible = true;
   bool isLoading = false;
+  bool buttonClicked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
         }
       },
       child: Form(
-        autovalidateMode: AutovalidateMode.always,
+        autovalidateMode:
+            buttonClicked ? AutovalidateMode.always : AutovalidateMode.disabled,
         key: widget.formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,6 +180,9 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 width: widget.size.width * 0.8,
                 text: "Reset password",
                 onPressed: () {
+                  setState(() {
+                    buttonClicked = true;
+                  });
                   if (widget.formKey.currentState!.validate()) {
                     widget.formKey.currentState!.save();
                     BlocProvider.of<AuthCubit>(context).resetPassword(
@@ -192,31 +197,6 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             ),
             const SizedBox(
               height: 29,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Already have an account? ',
-                  style: Styles.textStyle14(context).copyWith(
-                    color: Colors.black.withOpacity(0.699999988079071),
-                    fontFamily: 'Inter',
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    context.pushReplacement(AppRoutes.kSignInView);
-                  },
-                  child: Text(
-                    'Log in',
-                    style: Styles.textStyle14(context).copyWith(
-                      color: kPrimaryColor,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                )
-              ],
             ),
           ],
         ),

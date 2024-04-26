@@ -65,12 +65,12 @@ class _UploadFileState extends State<UploadFile> {
         diseasePer = resJson["score"];
         diseaseType = resJson["disease"]["type"];
         recommendationAction = resJson["disease"]["recommandationActions"];
-        print("response here: $resJson");
-        print(diseaseName);
-        print(diseasePer);
-        print(diseaseType);
-        print(recommendationAction);
-        print(img!.path.split('/').last);
+        // print("response here: $resJson");
+        // print(diseaseName);
+        // print(diseasePer);
+        // print(diseaseType);
+        // print(recommendationAction);
+        // print(img!.path.split('/').last);
         context.push(
           AppRoutes.kShowResultView,
           extra: {

@@ -73,9 +73,6 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<RatingCubit>(context).isSubscripted(widget.ownerId);
-
-    bool response = BlocProvider.of<RatingCubit>(context).isUserSubscriped;
     final expertsCubit = BlocProvider.of<ExpertsCubit>(context);
     final Size size = MediaQuery.sizeOf(context);
     return FutureBuilder<ExpertsModel>(
@@ -161,6 +158,12 @@ class _CustomExpertsInfoBodyState extends State<CustomExpertsInfoBody>
                           ),
                           GestureDetector(
                             onTap: () async {
+                              await BlocProvider.of<RatingCubit>(context)
+                                  .isSubscripted(widget.ownerId);
+
+                              bool response =
+                                  await BlocProvider.of<RatingCubit>(context)
+                                      .isUserSubscriped;
                               if (response == true) {
                                 String roomId =
                                     await ChatService.generateChatRoomId(

@@ -1,61 +1,26 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/rating_cubit/rating_cubit.dart';
 
-import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
-
 import 'package:graduation_project/core/utils/Widgets/custom_drawer_item.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_subscription_widget.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
-class CustomDrawerBody extends StatefulWidget {
+class CustomDrawerBody extends StatelessWidget {
   const CustomDrawerBody({
-    super.key,
-  });
+    Key? key,
+    required this.nameIdentifier,
+  }) : super(key: key);
 
-  @override
-  State<CustomDrawerBody> createState() => _CustomDrawerBodyState();
-}
-
-class _CustomDrawerBodyState extends State<CustomDrawerBody> {
-  String nameIdentifier = '';
-  Future<void> getId() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final accessToken = prefs.getString('accessToken');
-
-    List<String> parts = accessToken!.split('.');
-    final payload = _decodeBase64(parts[1]);
-    final payloadMap = json.decode(payload);
-    if (payloadMap is! Map<String, dynamic>) {
-      throw Exception('invalid payload');
-    }
-    print(payload);
-    print(payloadMap[
-        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
-
-    nameIdentifier = payloadMap[
-        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    getId();
-    super.initState();
-  }
+  final String nameIdentifier;
 
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<RatingCubit>(context).isSubscripted(nameIdentifier);
 
     final response = BlocProvider.of<RatingCubit>(context).isUserSubscriped;
-    print("111111111111111 is Subscriped? $response");
+    // print("111111111111111 is Subscriped? $response");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,25 +40,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
           height: 30,
         ),
         CustomDrawerItem(
-          onTap: () async {
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-
-            final accessToken = prefs.getString('accessToken');
-
-            List<String> parts = accessToken!.split('.');
-            final payload = _decodeBase64(parts[1]);
-            final payloadMap = json.decode(payload);
-            if (payloadMap is! Map<String, dynamic>) {
-              throw Exception('invalid payload');
-            }
-            print(payload);
-            print(payloadMap[
-                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
-
-            String nameIdentifier = payloadMap[
-                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-
+          onTap: () {
             context.pop();
             context.push(AppRoutes.kProfileView, extra: nameIdentifier);
           },
@@ -119,29 +66,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
         //   height: 30,
         // ),
         CustomDrawerItem(
-          onTap: () async {
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-
-            final accessToken = prefs.getString('accessToken');
-
-            List<String> parts = accessToken!.split('.');
-            final payload = _decodeBase64(parts[1]);
-            final payloadMap = json.decode(payload);
-            if (payloadMap is! Map<String, dynamic>) {
-              throw Exception('invalid payload');
-            }
-            print(payload);
-            print(payloadMap[
-                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
-
-            String nameIdentifier = payloadMap[
-                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-
-            BlocProvider.of<EquipmentsCubit>(context)
-                .getAllEquipments(nameIdentifier, nameIdentifier);
-            setState(() {});
-
+          onTap: () {
             context.pop();
             context.push(AppRoutes.kFarmEquipmentsView, extra: nameIdentifier);
           },
@@ -213,23 +138,4 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
       ],
     );
   }
-}
-
-String _decodeBase64(String str) {
-  String output = str.replaceAll('-', '+').replaceAll('_', '/');
-
-  switch (output.length % 4) {
-    case 0:
-      break;
-    case 2:
-      output += '==';
-      break;
-    case 3:
-      output += '=';
-      break;
-    default:
-      throw Exception('Illegal base64url string!"');
-  }
-
-  return utf8.decode(base64Url.decode(output));
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/views/widgets/edit_eqipments_form.dart';
-import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 
 class EditEquipmentsViewBody extends StatefulWidget {
   const EditEquipmentsViewBody(
@@ -40,17 +39,6 @@ class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
     final Size size = MediaQuery.of(context).size;
     return CustomScrollView(
       slivers: [
-        const SliverToBoxAdapter(
-          child: SizedBox(
-            height: 57,
-          ),
-        ),
-        const SliverToBoxAdapter(
-          child: Align(
-            alignment: Alignment.center,
-            child: CustomTitle(title: "Edit Equipments"),
-          ),
-        ),
         const SliverToBoxAdapter(
           child: SizedBox(
             height: 71,

@@ -7,30 +7,26 @@ import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_title.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 
-class FarmEquipmentsView extends StatefulWidget {
-  const FarmEquipmentsView({super.key, required this.id});
+class FarmEquipmentsView extends StatelessWidget {
+  const FarmEquipmentsView({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   final String id;
 
   @override
-  State<FarmEquipmentsView> createState() => _FarmEquipmentsViewState();
-}
-
-class _FarmEquipmentsViewState extends State<FarmEquipmentsView> {
-  GlobalKey<ScaffoldState> farmKey = GlobalKey();
-
-  @override
   Widget build(BuildContext context) {
+    print(id);
     return SafeArea(
       child: Scaffold(
-        key: farmKey,
         floatingActionButton: FloatingActionButton(
           backgroundColor: kPrimaryColor,
           child: Icon(Icons.add),
           onPressed: () {
             context.push(
               AppRoutes.kAddEquipmentView,
-              extra: widget.id,
+              extra: id,
             );
           },
         ),
@@ -41,7 +37,7 @@ class _FarmEquipmentsViewState extends State<FarmEquipmentsView> {
           centerTitle: true,
         ),
 
-        body: FarmEquipmentsViewBody(id: widget.id),
+        body: FarmEquipmentsViewBody(id: id),
       ),
     );
   }

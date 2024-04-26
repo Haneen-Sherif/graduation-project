@@ -86,9 +86,11 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
     super.dispose();
   }
 
+  bool buttonClicked = false;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final bool emailValid = true;
     final bool digitRegex = true;
     final bool upperRegex = true;
@@ -122,7 +124,8 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
         }
       },
       child: Form(
-        // autovalidateMode: AutovalidateMode.always,
+        autovalidateMode:
+            buttonClicked ? AutovalidateMode.always : AutovalidateMode.disabled,
         key: formKey,
         child: Column(
           children: [
@@ -568,16 +571,19 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
               width: widget.width,
               text: "Sign Up",
               onPressed: () {
+                setState(() {
+                  buttonClicked = true;
+                });
                 if (formKey.currentState!.validate() &&
                     userType == "farm_owner") {
                   formKey.currentState!.save();
                   BlocProvider.of<AuthCubit>(context).signUp(
-                    nameController.text,
-                    emailController.text,
+                    nameController.text.trim(),
+                    emailController.text.trim(),
                     phoneNumberController.text,
-                    passwordController.text,
-                    confirmPasswordController.text,
-                    addressController.text,
+                    passwordController.text.trim(),
+                    confirmPasswordController.text.trim(),
+                    addressController.text.trim(),
                   );
                 } else if (formKey.currentState!.validate() &&
                     userType == "specialist") {
@@ -587,15 +593,15 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                     });
                   } else {
                     BlocProvider.of<AuthCubit>(context).expertSignUp(
-                      nameController.text,
-                      emailController.text,
+                      nameController.text.trim(),
+                      emailController.text.trim(),
                       phoneNumberController.text,
-                      passwordController.text,
-                      confirmPasswordController.text,
-                      addressController.text,
+                      passwordController.text.trim(),
+                      confirmPasswordController.text.trim(),
+                      addressController.text.trim(),
                       dateController.text,
                       img!,
-                      professionalInfoController.text,
+                      professionalInfoController.text.trim(),
                     );
                   }
                 }

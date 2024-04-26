@@ -47,7 +47,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     role = payloadMap[
         'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-    print('User role: $role');
+    // print('User role: $role');
     return role!;
   }
 
@@ -254,7 +254,7 @@ class AuthCubit extends Cubit<AuthState> {
           'password': password,
         },
       );
-      print(response.body);
+      // print(response.body);
 
       final result = jsonDecode(response.body);
 

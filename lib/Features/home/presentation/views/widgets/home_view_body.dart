@@ -50,13 +50,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     if (payloadMap is! Map<String, dynamic>) {
       throw Exception('invalid payload');
     }
-    print(payload);
-    print(payloadMap[
-        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
+    // print(payload);
+    // print(payloadMap[
+    //     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
 
     String nameIdentifier = payloadMap[
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-    print("nameIdentifier $nameIdentifier");
+    // print("nameIdentifier $nameIdentifier");
     setState(() {
       farmOwnerId = nameIdentifier;
     });
@@ -68,7 +68,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     final name = await prefs.getString('username');
 
     username = name!;
-    print("username: $username");
+    // print("username: $username");
     return username;
   }
 
@@ -83,7 +83,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: HomeStackWidget(size: size, scaffoldKey: widget.scaffoldKey),
+            child: HomeStackWidget(
+                size: size,
+                scaffoldKey: widget.scaffoldKey,
+                farmOwnerId: farmOwnerId),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(

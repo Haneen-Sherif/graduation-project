@@ -79,7 +79,11 @@ class _HomeViewBody2State extends State<HomeViewBody2> {
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: HomeStackWidget(size: size, scaffoldKey: widget.scaffoldKey),
+            child: HomeStackWidget(
+              size: size,
+              scaffoldKey: widget.scaffoldKey,
+              farmOwnerId: farmOwnerId,
+            ),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
