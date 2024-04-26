@@ -26,9 +26,6 @@ class _AddEquipmentsViewState extends State<AddEquipmentsView> {
           child: Padding(
               padding: EdgeInsets.only(left: 21, top: 16),
               child: CustomForgotPasswordBackIcon()),
-          // child: CustomAppBar(
-          //   anotherKey: addEquipmentKey,
-          // )
         ),
         body: AddEquipmentsViewBody(id: widget.id),
       ),

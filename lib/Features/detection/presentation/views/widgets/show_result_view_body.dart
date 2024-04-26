@@ -7,13 +7,14 @@ import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/generated/assets.dart';
 
 class ShowResultViewBody extends StatelessWidget {
-  const ShowResultViewBody(
-      {super.key,
-      required this.name,
-      required this.per,
-      required this.img,
-      required this.type,
-      required this.action});
+  const ShowResultViewBody({
+    super.key,
+    required this.name,
+    required this.per,
+    required this.img,
+    required this.type,
+    required this.action,
+  });
 
   final String name;
   final String img;
@@ -38,10 +39,6 @@ class ShowResultViewBody extends StatelessWidget {
       slivers: [
         SliverToBoxAdapter(
           child: Column(children: [
-            // const SizedBox(
-            //   height: 16,
-            // ),
-            // Text('Result', style: Styles.textStyle27(context)),
             const SizedBox(
               height: 16,
             ),
@@ -76,14 +73,15 @@ class ShowResultViewBody extends StatelessWidget {
         ),
         SliverFillRemaining(
           hasScrollBody: false,
-          child: Column(children: [
-            const Expanded(
-              child: SizedBox(
-                height: 60,
+          child: Column(
+            children: [
+              const Expanded(
+                child: SizedBox(
+                  height: 60,
+                ),
               ),
-            ),
-            // HomeFooterWidget(size: size)
-          ]),
+            ],
+          ),
         )
       ],
     );

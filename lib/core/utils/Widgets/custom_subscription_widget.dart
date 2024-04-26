@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/checkout/data/repos/checkout_repo_impl.dart';
@@ -24,9 +24,11 @@ class CustomSubscriptionWidget extends StatelessWidget {
     return Dialog(
       elevation: 0,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20))), //this right here
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ), //this right here
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -34,15 +36,22 @@ class CustomSubscriptionWidget extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
               color: kPrimaryColor,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 50,
+                vertical: 25,
+              ),
               child: Text(
                 "Subscription Plan",
-                style: Styles.textStyle15(context)
-                    .copyWith(fontWeight: FontWeight.w600, color: Colors.white),
+                style: Styles.textStyle15(context).copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -60,19 +69,24 @@ class CustomSubscriptionWidget extends StatelessWidget {
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                            blurRadius: 4,
-                            offset: Offset(0, 4),
-                            spreadRadius: 0,
-                            color: Color(0xff26323814).withOpacity(0.8))
+                          blurRadius: 4,
+                          offset: Offset(0, 4),
+                          spreadRadius: 0,
+                          color: Color(0xff26323814).withOpacity(0.8),
+                        )
                       ]),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "20 Detections",
-                        style: Styles.textStyle12(context)
-                            .copyWith(color: Color(0xff131925)),
+                        style: Styles.textStyle12(context).copyWith(
+                          color: Color(0xff131925),
+                        ),
                       ),
                       Row(
                         children: [

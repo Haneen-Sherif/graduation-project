@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/chat/services/chat_service.dart';
 import 'package:graduation_project/core/utils/routes.dart';
@@ -85,8 +85,7 @@ class _AllMessagesViewBodyState extends State<AllMessagesViewBody> {
                   itemBuilder: (context, index) {
                     final userData =
                         users[index].data() as Map<String, dynamic>;
-                    final DateTime? userTime =
-                        userData['time']?.toDate(); // Safely retrieve DateTime
+                    final DateTime? userTime = userData['time']?.toDate();
 
                     final formattedTime = userTime != null
                         ? DateFormat.jm().format(userTime)

@@ -19,11 +19,6 @@ class _ChatViewState extends State<ChatView> {
         key: chatKey,
         drawer: const CustomDrawer(),
         backgroundColor: const Color(0xffF4F4F4),
-        // appBar: PreferredSize(
-        //     preferredSize: const Size.fromHeight(70),
-        //     child: CustomAppBar(
-        //       anotherKey: chatKey,
-        //     )),
         body: const ChatViewBody(),
       ),
     );

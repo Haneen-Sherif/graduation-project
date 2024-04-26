@@ -39,18 +39,13 @@ class _ShowResultViewState extends State<ShowResultView> {
           title: CustomTitle(title: "Result"),
           centerTitle: true,
         ),
-        // appBar: PreferredSize(
-        //   preferredSize: const Size.fromHeight(70),
-        //   child: CustomAppBar(
-        //     anotherKey: showResultKey,
-        //   ),
-        // ),
         body: ShowResultViewBody(
-            name: widget.name,
-            per: widget.per,
-            img: widget.img,
-            type: widget.type,
-            action: widget.action),
+          name: widget.name,
+          per: widget.per,
+          img: widget.img,
+          type: widget.type,
+          action: widget.action,
+        ),
       ),
     );
   }

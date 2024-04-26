@@ -88,7 +88,7 @@ class RatingCubit extends Cubit<RatingState> {
       if (response.statusCode == 200) {
         print("Success Rate Count");
         final jsonData = json.decode(response.body);
-        print(jsonData);
+        print(jsonData.runtimeType);
         rateCount = jsonData;
         emit(RatingCalcSuccess(rateCount: rateCount));
 
@@ -131,7 +131,6 @@ class RatingCubit extends Cubit<RatingState> {
 
       if (response.statusCode == 200) {
         print("rating is set to that doctor thanks..");
-        // final jsonData = json.decode(response.body);
 
         emit(RatingSuccess(message: response.body));
       } else if (response.statusCode == 404) {

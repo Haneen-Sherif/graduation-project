@@ -84,207 +84,158 @@ class _EditEquipmentsFormState extends State<EditEquipmentsForm> {
 
   Widget _buildForm(EquipmentsModel equipment) {
     return BlocListener<EquipmentsCubit, EquipmentsState>(
-        listener: (context, state) {
-          if (state is EquipmentsLoading) {
-            setState(() {
-              isLoading = true;
-            });
-          } else {
-            setState(() {
-              isLoading = false;
-            });
-          }
-          if (state is EquipmentsSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Equipment updated successfully"),
-                backgroundColor: kPrimaryColor,
-              ),
-            );
-            // BlocProvider.of<EquipmentsCubit>(context)
-            //     .getAllEquipments(widget.id, widget.id);
-            context.pop();
-
-            // context.push(AppRoutes.kFarmEquipmentsView, extra: widget.id);
-          } else if (state is EquipmentsFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-              ),
-            );
-          }
-        },
-        child: Form(
-          key: widget.formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 46),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (isLoading)
-                  Center(
-                    child: CircularProgressIndicator(
-                      color: kPrimaryColor,
-                    ),
-                  ),
-                Text(
-                  "Equipment Name",
-                  style: Styles.textStyle15(context),
-                ),
-                SizedBox(
-                  height: 9,
-                ),
-                CustomTextFormField(
-                  controller: widget.editEquipmentController,
-                  width: widget.size.width,
-                  // validator: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return 'Equipment name must not be empty';
-                  //   }
-                  //   return null;
-                  // },
-                  hintText: equipment.name,
-                  obscureText: false,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.next,
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  "Count",
-                  style: Styles.textStyle15(context),
-                ),
-                SizedBox(
-                  height: 9,
-                ),
-                CustomTextFormField(
-                  controller: widget.countController,
-                  width: widget.size.width,
-                  // validator: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return 'Count must not be empty';
-                  //   }
-                  //   return null;
-                  // },
-                  hintText: equipment.count.toString(),
-                  obscureText: false,
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.next,
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  "Discription",
-                  style: Styles.textStyle15(context),
-                ),
-                SizedBox(
-                  height: 9,
-                ),
-                CustomTextFormField(
-                  controller: widget.descriptionController,
-                  width: widget.size.width,
-                  // validator: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return 'Description must not be empty';
-                  //   }
-                  //   return null;
-                  // },
-                  hintText: equipment.description,
-                  obscureText: false,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      pickImage();
-                    },
-                    child: Stack(
-                      children: [
-                        img == null
-                            ? Image.network(equipment.photoPath!)
-                            : Image.file(img!),
-                        // if (imgValidationError != null)
-                        //   Positioned(
-                        //     top: 0,
-                        //     right: 0,
-                        //     child: Container(
-                        //       padding: EdgeInsets.all(4),
-                        //       color: Colors.red,
-                        //       child: Text(
-                        //         imgValidationError!,
-                        //         style: TextStyle(color: Colors.white),
-                        //       ),
-                        //     ),
-                        //   ),
-                      ],
-                    ),
-                    // child: img == null
-                    //     ? Image.network(equipment.photoPath!)
-                    //     : Image.file(img!),
-                  ),
-                ),
-                const SizedBox(
-                  height: 38,
-                ),
-                Center(
-                  child: CustomButton(
-                    width: widget.size.width * 0.4,
-                    text: "Edit",
-                    onPressed: () {
-                      String? newEquipmentName =
-                          widget.editEquipmentController?.text == ''
-                              ? equipment.name
-                              : widget.editEquipmentController?.text;
-                      String? newDescription =
-                          widget.descriptionController?.text == ''
-                              ? equipment.description
-                              : widget.descriptionController?.text;
-                      int newCount = widget.countController!.text == ''
-                          ? int.parse(equipment.count.toString())
-                          : int.parse(widget.countController!.text);
-
-                      if (newEquipmentName != equipment.name ||
-                          newDescription != equipment.description ||
-                          newCount != equipment.count ||
-                          img != null) {
-                        BlocProvider.of<EquipmentsCubit>(context).editEquipment(
-                          widget.id,
-                          newEquipmentName,
-                          newDescription,
-                          newCount,
-                          img ?? File(equipment.photoPath!),
-                          widget.equipmentId,
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("There are no changes to update"),
-                        ));
-                      }
-                      // widget.formKey.currentState!.save();
-                      // print(widget.id);
-                      // print(widget.editEquipmentController?.text);
-                      // print(equipment.name!);
-                      // print(widget.descriptionController?.text);
-                      // print(equipment.description!);
-                      // print(widget.countController?.text);
-                      // print(equipment.count.toString());
-
-                      // print(img);
-                      // print(File(equipment.photoPath!.toString()));
-                      // print(myImage);
-                      // print(widget.equipmentId);
-                    },
-                  ),
-                ),
-              ],
+      listener: (context, state) {
+        if (state is EquipmentsLoading) {
+          setState(() {
+            isLoading = true;
+          });
+        } else {
+          setState(() {
+            isLoading = false;
+          });
+        }
+        if (state is EquipmentsSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Equipment updated successfully"),
+              backgroundColor: kPrimaryColor,
             ),
+          );
+
+          context.pop();
+        } else if (state is EquipmentsFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        }
+      },
+      child: Form(
+        key: widget.formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 46),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (isLoading)
+                Center(
+                  child: CircularProgressIndicator(
+                    color: kPrimaryColor,
+                  ),
+                ),
+              Text(
+                "Equipment Name",
+                style: Styles.textStyle15(context),
+              ),
+              SizedBox(
+                height: 9,
+              ),
+              CustomTextFormField(
+                controller: widget.editEquipmentController,
+                width: widget.size.width,
+                hintText: equipment.name,
+                obscureText: false,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.next,
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Text(
+                "Count",
+                style: Styles.textStyle15(context),
+              ),
+              SizedBox(
+                height: 9,
+              ),
+              CustomTextFormField(
+                controller: widget.countController,
+                width: widget.size.width,
+                hintText: equipment.count.toString(),
+                obscureText: false,
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Text(
+                "Discription",
+                style: Styles.textStyle15(context),
+              ),
+              SizedBox(
+                height: 9,
+              ),
+              CustomTextFormField(
+                controller: widget.descriptionController,
+                width: widget.size.width,
+                hintText: equipment.description,
+                obscureText: false,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    pickImage();
+                  },
+                  child: Stack(
+                    children: [
+                      img == null
+                          ? Image.network(equipment.photoPath!)
+                          : Image.file(img!),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 38,
+              ),
+              Center(
+                child: CustomButton(
+                  width: widget.size.width * 0.4,
+                  text: "Edit",
+                  onPressed: () {
+                    String? newEquipmentName =
+                        widget.editEquipmentController?.text == ''
+                            ? equipment.name
+                            : widget.editEquipmentController?.text;
+                    String? newDescription =
+                        widget.descriptionController?.text == ''
+                            ? equipment.description
+                            : widget.descriptionController?.text;
+                    int newCount = widget.countController!.text == ''
+                        ? int.parse(equipment.count.toString())
+                        : int.parse(widget.countController!.text);
+
+                    if (newEquipmentName != equipment.name ||
+                        newDescription != equipment.description ||
+                        newCount != equipment.count ||
+                        img != null) {
+                      BlocProvider.of<EquipmentsCubit>(context).editEquipment(
+                        widget.id,
+                        newEquipmentName,
+                        newDescription,
+                        newCount,
+                        img ?? File(equipment.photoPath!),
+                        widget.equipmentId,
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("There are no changes to update"),
+                      ));
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

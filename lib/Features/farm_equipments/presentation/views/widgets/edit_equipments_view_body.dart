@@ -69,14 +69,15 @@ class _EditEquipmentsViewBodyState extends State<EditEquipmentsViewBody> {
         ),
         SliverFillRemaining(
           hasScrollBody: false,
-          child: Column(children: [
-            const Expanded(
-              child: SizedBox(
-                height: 16,
+          child: Column(
+            children: [
+              const Expanded(
+                child: SizedBox(
+                  height: 16,
+                ),
               ),
-            ),
-            // HomeFooterWidget(size: size)
-          ]),
+            ],
+          ),
         ),
       ],
     );

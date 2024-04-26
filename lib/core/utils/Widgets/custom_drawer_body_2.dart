@@ -24,11 +24,7 @@ class _CustomDrawerBody2State extends State<CustomDrawerBody2> {
   Future<void> getId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Retrieve the tokens from shared preferences
     final accessToken = prefs.getString('accessToken');
-    // final refreshToken = prefs.getString('refreshToken');
-
-    // String decodedPayload = "";
 
     List<String> parts = accessToken!.split('.');
     final payload = _decodeBase64(parts[1]);
@@ -53,8 +49,6 @@ class _CustomDrawerBody2State extends State<CustomDrawerBody2> {
 
   @override
   Widget build(BuildContext context) {
-    // BlocProvider.of<RatingCubit>(context).isSubscripted(nameIdentifier);
-
     final response = BlocProvider.of<RatingCubit>(context).isUserSubscriped;
     print(response);
     return Column(
@@ -80,11 +74,7 @@ class _CustomDrawerBody2State extends State<CustomDrawerBody2> {
             final SharedPreferences prefs =
                 await SharedPreferences.getInstance();
 
-            // Retrieve the tokens from shared preferences
             final accessToken = prefs.getString('accessToken');
-            // final refreshToken = prefs.getString('refreshToken');
-
-            // String decodedPayload = "";
 
             List<String> parts = accessToken!.split('.');
             final payload = _decodeBase64(parts[1]);
@@ -98,12 +88,7 @@ class _CustomDrawerBody2State extends State<CustomDrawerBody2> {
 
             String nameIdentifier = payloadMap[
                 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-            // String encodedPayload = parts[1];
-            // // String decodedPayload = utf8.decode(base64Url.decode(encodedPayload));
-            // decodedPayload =
-            //     await utf8.decode(base64Url.decode(encodedPayload));
 
-            // print(decodedPayload);
             context.pop();
             context.push(AppRoutes.kProfileView, extra: nameIdentifier);
           },

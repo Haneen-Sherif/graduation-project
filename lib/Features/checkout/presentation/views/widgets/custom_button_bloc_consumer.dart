@@ -19,40 +19,41 @@ class CustomButtonBlocConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PaymentCubit, PaymentState>(
-        listener: (context, state) {
-          if (state is PaymentSuccess) {
-            BlocProvider.of<RatingCubit>(context).subscribe(id);
-            context.pop();
+      listener: (context, state) {
+        if (state is PaymentSuccess) {
+          BlocProvider.of<RatingCubit>(context).subscribe(id);
+          context.pop();
 
-            context.pushReplacement(AppRoutes.kHomeView);
-            SnackBar snackBar = SnackBar(
-                backgroundColor: kPrimaryColor,
-                content: Text("You now marked as Subscripted user"));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-          if (state is PaymentFailure) {
-            Navigator.of(context).pop();
-            SnackBar snackBar = SnackBar(content: Text(state.errMessage));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-        },
-        builder: (context, state) => CustomButton(
-            width: double.infinity,
-            onPressed: () {
-              try {
-                PaymentIntentInputModel paymentIntentInputModel =
-                    PaymentIntentInputModel(
-                        amount: "100",
-                        currency: "USD",
-                        cusomerId: 'cus_OtX3dJoauN8yEF');
+          context.pushReplacement(AppRoutes.kHomeView);
+          SnackBar snackBar = SnackBar(
+              backgroundColor: kPrimaryColor,
+              content: Text("You now marked as Subscripted user"));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+        if (state is PaymentFailure) {
+          Navigator.of(context).pop();
+          SnackBar snackBar = SnackBar(content: Text(state.errMessage));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      },
+      builder: (context, state) => CustomButton(
+          width: double.infinity,
+          onPressed: () {
+            try {
+              PaymentIntentInputModel paymentIntentInputModel =
+                  PaymentIntentInputModel(
+                amount: "100",
+                currency: "USD",
+                cusomerId: 'cus_OtX3dJoauN8yEF',
+              );
 
-                BlocProvider.of<PaymentCubit>(context).makePayment(
-                    paymentIntentInputModel: paymentIntentInputModel);
-              } catch (e) {
-                print(e);
-              }
-            },
-            // isLoading: state is PaymentLoading ? true : false,
-            text: "Continue"));
+              BlocProvider.of<PaymentCubit>(context).makePayment(
+                  paymentIntentInputModel: paymentIntentInputModel);
+            } catch (e) {
+              print(e);
+            }
+          },
+          text: "Continue"),
+    );
   }
 }

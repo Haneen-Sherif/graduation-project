@@ -28,14 +28,16 @@ class _EditEquipmentsViewState extends State<EditEquipmentsView> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(70),
           child: Padding(
-              padding: EdgeInsets.only(left: 21, top: 16),
+              padding: EdgeInsets.only(
+                left: 21,
+                top: 16,
+              ),
               child: CustomForgotPasswordBackIcon()),
-          // child: CustomAppBar(
-          //   anotherKey: editEquipmentKey,
-          // )
         ),
         body: EditEquipmentsViewBody(
-            id: widget.id, equipmentId: widget.equipmentId),
+          id: widget.id,
+          equipmentId: widget.equipmentId,
+        ),
       ),
     );
   }

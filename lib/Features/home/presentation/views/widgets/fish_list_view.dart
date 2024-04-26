@@ -25,9 +25,6 @@ class FishListView extends StatelessWidget {
         List<DiseasesModel> diseases =
             BlocProvider.of<HomeCubit>(context).diseases;
 
-        // print("=====================");
-        // print(diseases);
-        // print("=====================");
         return ListView.separated(
             separatorBuilder: (context, index) => const SizedBox(
                   width: 8,
@@ -71,8 +68,6 @@ class FishListView extends StatelessWidget {
                             width: 74,
                             fit: BoxFit.cover,
                           ),
-                          // Image.network((disease.photoPath!),
-                          //     height: 67, width: 74, fit: BoxFit.fill),
                           SizedBox(
                             width: 140,
                             child: Text(

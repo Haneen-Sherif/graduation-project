@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/chat/presentation/views/widgets/chat_widget.dart';
 import 'package:graduation_project/constants.dart';
@@ -16,7 +16,7 @@ import 'package:uuid/uuid.dart';
 class RealTimeChatViewBody2 extends StatefulWidget {
   const RealTimeChatViewBody2(
       {super.key, required this.farmOwner, required this.roomName});
-  // final Map<String, dynamic> userMap;
+
   final String farmOwner;
   final String roomName;
   @override
@@ -26,7 +26,6 @@ class RealTimeChatViewBody2 extends StatefulWidget {
 class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
     with WidgetsBindingObserver {
   late TextEditingController _message;
-  // late _controller = ScrollController();
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -180,8 +179,6 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
 
   @override
   Widget build(BuildContext context) {
-    // final expertsCubit = BlocProvider.of<ExpertsCubit>(context);
-
     return SafeArea(
       child: Column(
         children: [
@@ -315,10 +312,8 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
                   );
                 }
 
-                // Print the number of documents returned by the query
                 print('Number of documents: ${snapshot.data!.docs.length}');
 
-                // Print each document's data
                 snapshot.data!.docs.forEach((doc) {
                   print('Document ID: ${doc.id}');
                   print('Data: ${doc.data()}');
@@ -353,36 +348,38 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
             height: 15,
           ),
           Material(
-              color: const Color(0xffFEFEFE),
-              child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(children: [
-                    Expanded(
-                      child: TextField(
-                        cursorColor: kPrimaryColor,
-                        onSubmitted: (value) {
-                          return onSendMessage();
-                        },
-                        focusNode: focusNode,
-                        style: const TextStyle(color: Colors.black),
-                        controller: _message,
-                        decoration: InputDecoration.collapsed(
-                          hintText: "Type your message...",
-                          hintStyle: Styles.textStyle16(context).copyWith(
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                        ),
+            color: const Color(0xffFEFEFE),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(children: [
+                Expanded(
+                  child: TextField(
+                    cursorColor: kPrimaryColor,
+                    onSubmitted: (value) {
+                      return onSendMessage();
+                    },
+                    focusNode: focusNode,
+                    style: const TextStyle(color: Colors.black),
+                    controller: _message,
+                    decoration: InputDecoration.collapsed(
+                      hintText: "Type your message...",
+                      hintStyle: Styles.textStyle16(context).copyWith(
+                        color: Colors.black.withOpacity(0.5),
                       ),
                     ),
-                    IconButton(
-                      onPressed: () => getImage(),
-                      icon: Image.asset(Assets.iconsUpload),
-                    ),
-                    IconButton(
-                      onPressed: onSendMessage,
-                      icon: Image.asset(Assets.iconsSend),
-                    ),
-                  ])))
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => getImage(),
+                  icon: Image.asset(Assets.iconsUpload),
+                ),
+                IconButton(
+                  onPressed: onSendMessage,
+                  icon: Image.asset(Assets.iconsSend),
+                ),
+              ]),
+            ),
+          )
         ],
       ),
     );

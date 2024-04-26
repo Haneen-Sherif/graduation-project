@@ -42,11 +42,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   Future<void> getOwnerId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Retrieve the tokens from shared preferences
     final accessToken = await prefs.getString('accessToken');
-    // final refreshToken = prefs.getString('refreshToken');
-
-    // String decodedPayload = "";
 
     List<String> parts = accessToken!.split('.');
     final payload = _decodeBase64(parts[1]);
@@ -97,10 +93,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           SliverToBoxAdapter(
             child: Column(
               children: [
-                Text("Fish Diseases",
-                    textAlign: TextAlign.center,
-                    style: Styles.textStyle24(context)
-                        .copyWith(color: Color(0xff1D2B4F))),
+                Text(
+                  "Fish Diseases",
+                  textAlign: TextAlign.center,
+                  style: Styles.textStyle24(context).copyWith(
+                    color: Color(0xff1D2B4F),
+                  ),
+                ),
                 Text(
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                   style: Styles.textStyle12(context)
@@ -205,18 +204,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               child: FeedbackContainer(),
             ),
           ),
-          // SliverFillRemaining(
-          //   hasScrollBody: false,
-          //   child: ReportWidget(size: size),
-          // ),
-          // const SliverToBoxAdapter(
-          //   child: SizedBox(
-          //     height: 12,
-          //   ),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: HomeFooterWidget(size: size),
-          // )
         ],
       ),
     );
@@ -235,7 +222,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               content: const Text(
                 'Do you want to close the app?',
               ),
-              // backgroundColor: kPrimaryColor,
               actions: <Widget>[
                 _buildDialogButton(context, 'No', false),
                 _buildDialogButton(context, 'Yes', true),

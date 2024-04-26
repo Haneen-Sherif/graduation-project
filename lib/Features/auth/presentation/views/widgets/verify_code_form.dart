@@ -53,105 +53,106 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state is VerificationLoading) {
-            setState(() {
-              isLoading = true;
-            });
-          } else {
-            setState(() {
-              isLoading = false;
-            });
-          }
-          if (state is VerificationSuccess) {
-            context.push(AppRoutes.kResetPasswordView, extra: {
-              'email': widget.email,
-              'code': c1.text + c2.text + c3.text + c4.text
-            });
-          } else if (state is VerificationFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
+      listener: (context, state) {
+        if (state is VerificationLoading) {
+          setState(() {
+            isLoading = true;
+          });
+        } else {
+          setState(() {
+            isLoading = false;
+          });
+        }
+        if (state is VerificationSuccess) {
+          context.push(AppRoutes.kResetPasswordView, extra: {
+            'email': widget.email,
+            'code': c1.text + c2.text + c3.text + c4.text
+          });
+        } else if (state is VerificationFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      child: Form(
+        autovalidateMode: AutovalidateMode.always,
+        key: widget.formKey,
+        child: Column(
+          children: [
+            if (isLoading)
+              Center(
+                child: CircularProgressIndicator(
+                  color: kPrimaryColor,
+                ),
               ),
-            );
-          }
-        },
-        child: Form(
-          autovalidateMode: AutovalidateMode.always,
-          key: widget.formKey,
-          child: Column(
-            children: [
-              if (isLoading)
-                Center(
-                  child: CircularProgressIndicator(
-                    color: kPrimaryColor,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: VerifyCodeListViewItem(
+                    codeController: c1,
+                    first: true,
+                    last: false,
+                    size: widget.size,
                   ),
                 ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: VerifyCodeListViewItem(
-                      codeController: c1,
-                      first: true,
-                      last: false,
-                      size: widget.size,
-                    ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                  child: VerifyCodeListViewItem(
+                    codeController: c2,
+                    first: false,
+                    last: false,
+                    size: widget.size,
                   ),
-                  const SizedBox(
-                    width: 15,
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                  child: VerifyCodeListViewItem(
+                    codeController: c3,
+                    first: false,
+                    last: false,
+                    size: widget.size,
                   ),
-                  Expanded(
-                    child: VerifyCodeListViewItem(
-                      codeController: c2,
-                      first: false,
-                      last: false,
-                      size: widget.size,
-                    ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                  child: VerifyCodeListViewItem(
+                    codeController: c4,
+                    first: false,
+                    last: true,
+                    size: widget.size,
                   ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Expanded(
-                    child: VerifyCodeListViewItem(
-                      codeController: c3,
-                      first: false,
-                      last: false,
-                      size: widget.size,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Expanded(
-                    child: VerifyCodeListViewItem(
-                      codeController: c4,
-                      first: false,
-                      last: true,
-                      size: widget.size,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              CustomButton(
-                width: widget.size.width * 0.8,
-                text: "Verify",
-                onPressed: () {
-                  if (widget.formKey.currentState!.validate()) {
-                    widget.formKey.currentState!.save();
-                    BlocProvider.of<AuthCubit>(context).isCodeEnterTrue(
-                      widget.email,
-                      c1.text + c2.text + c3.text + c4.text,
-                    );
-                  }
-                },
-              ),
-            ],
-          ),
-        ));
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            CustomButton(
+              width: widget.size.width * 0.8,
+              text: "Verify",
+              onPressed: () {
+                if (widget.formKey.currentState!.validate()) {
+                  widget.formKey.currentState!.save();
+                  BlocProvider.of<AuthCubit>(context).isCodeEnterTrue(
+                    widget.email,
+                    c1.text + c2.text + c3.text + c4.text,
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

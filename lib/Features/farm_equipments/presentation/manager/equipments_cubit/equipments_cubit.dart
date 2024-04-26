@@ -34,13 +34,6 @@ class EquipmentsCubit extends Cubit<EquipmentsState> {
         print("Client Error: ${errorData['errors']}");
         emit(EquipmentsFailure(message: errorData['errors']));
       }
-      //  else if (response.statusCode >= 500) {
-      //   print("Server Error: Something went wrong on the server");
-      //   emit(EquipmentsFailure(message: "Server Error"));
-      // } else {
-      //   print("Unexpected Error: ${response.statusCode}");
-      //   emit(EquipmentsFailure(message: "Unexpected Error"));
-      // }
     } catch (e) {
       print("Network Error: $e");
       emit(EquipmentsFailure(message: "Network Error"));
@@ -247,7 +240,6 @@ class EquipmentsCubit extends Cubit<EquipmentsState> {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
       final accessToken = prefs.getString('accessToken');
-      // final refreshToken = prefs.getString('refreshToken');
 
       List<String> parts = accessToken!.split('.');
 
@@ -262,31 +254,4 @@ class EquipmentsCubit extends Cubit<EquipmentsState> {
       rethrow;
     }
   }
-
-// final List<EquipmentsModel> equipmentsList = [
-//   const EquipmentsModel(
-//     image: Assets.imagesEqui1,
-//     name: "Optical Dissolved Oxygen Meter",
-//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-//     count: 4,
-//   ),
-//   const EquipmentsModel(
-//     image: Assets.imagesEqui2,
-//     name: "Dissolved Oxygen Meter",
-//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-//     count: 5,
-//   ),
-//   const EquipmentsModel(
-//     image: Assets.imagesEqui1,
-//     name: "Optical Dissolved Oxygen Meter",
-//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-//     count: 8,
-//   ),
-//   const EquipmentsModel(
-//     image: Assets.imagesEqui2,
-//     name: "Dissolved Oxygen Meter",
-//     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-//     count: 0,
-//   ),
-// ];
 }

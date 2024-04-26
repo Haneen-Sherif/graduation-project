@@ -162,8 +162,10 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
                 text: "Sign In",
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    BlocProvider.of<AuthCubit>(context)
-                        .signIn(nameController.text, passwordController.text);
+                    BlocProvider.of<AuthCubit>(context).signIn(
+                      nameController.text,
+                      passwordController.text,
+                    );
                   }
                 },
               ),

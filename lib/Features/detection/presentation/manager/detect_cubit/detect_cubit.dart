@@ -22,13 +22,6 @@ class DetectCubit extends Cubit<DetectState> {
     try {
       var request = http.MultipartRequest(
           'POST', Uri.parse("$baseUrlApi/api/$id/Detects"));
-      // final response = await http.post(
-      //   Uri.parse("$baseUrlApi/api/$id/Detects"),
-      //      body: {
-      //     'ImageForDetection': ImageForDetection,
-
-      //   },
-      // );
 
       var photoStream =
           http.ByteStream(Stream.castFrom(ImageForDetection.openRead()));

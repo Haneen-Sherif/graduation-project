@@ -84,67 +84,6 @@ class _UploadFileState extends State<UploadFile> {
       } else {
         print("error: ${myRequest.statusCode}");
       }
-      // var request = http.MultipartRequest(
-      //     'POST', Uri.parse("$baseUrlApi/api/$id/Detects"));
-      // // final response = await http.post(
-      // //   Uri.parse("$baseUrlApi/api/$id/Detects"),
-      // //      body: {
-      // //     'ImageForDetection': ImageForDetection,
-
-      // //   },
-      // // );
-
-      // var photoStream =
-      //     http.ByteStream(Stream.castFrom(ImageForDetection.openRead()));
-      // var length = await ImageForDetection.length();
-      // var multipartFile = http.MultipartFile(
-      //     'ImageForDetection', photoStream, length,
-      //     filename: ImageForDetection.path);
-      // request.files.add(multipartFile);
-
-      // var response = await request.send();
-
-      // final responseData = await response.stream.bytesToString();
-
-      // if (response.statusCode == 200) {
-      //   diseaseName = resJson['Detection'];
-      //   diseasePer = resJson["Value"];
-      //   print("response here: $resJson");
-      //   print(diseaseName);
-      //   print(diseasePer);
-      //   print("Disease loaded successfully");
-      //   resJson = json.decode(responseData);
-      //   diseaseName = resJson['Detection'];
-      //   diseasePer = resJson["Value"];
-      //   print("response here: $resJson");
-      //   print(diseaseName);
-      //   print(diseasePer);
-      // final detect = DetectResultModel.detectFromSnapShot(jsonData);
-      // print(detect);
-
-      // return detect;
-      // context.push(
-      //   AppRoutes.kShowResultView,
-      //   extra: {
-      //     'name': diseaseName,
-      //     'per': diseasePer.toString(),
-      //     'img': img!.path
-      //   },
-      // );
-      // } else if (response.statusCode >= 400 && response.statusCode < 500) {
-      //   final errorData = jsonDecode(responseData);
-      //   print("Client Error: ${errorData['message']}");
-
-      //   throw Exception("Failed to load disease");
-      // } else if (response.statusCode >= 500) {
-      //   print("Server Error: Something went wrong on the server");
-
-      //   throw Exception("Failed to load disease");
-      // } else {
-      //   print("Unexpected Error: ${response.statusCode}");
-
-      //   throw Exception("Failed to load disease");
-      // }
     } catch (e) {
       print("Network Error: $e");
 
@@ -193,7 +132,6 @@ class _UploadFileState extends State<UploadFile> {
           margin: const EdgeInsets.symmetric(horizontal: 38),
           padding: const EdgeInsets.all(38),
           decoration: BoxDecoration(
-            // color: const Color(0xFFE5E5E5),
             border: const DashedBorder.fromBorderSide(
               dashLength: 8,
               side: BorderSide(color: Color(0xFF57ACB5), width: 3),
@@ -237,17 +175,6 @@ class _UploadFileState extends State<UploadFile> {
                           fit: BoxFit.scaleDown,
                           child: Text(img!.path.split('/').last)),
                     ),
-                    // Image.asset(Assets.imagesGallery),
-                    // Expanded(
-                    //   child: Container(
-                    //     margin: const EdgeInsets.symmetric(horizontal: 16),
-                    //     height: 1,
-                    //     decoration: BoxDecoration(
-                    //       color: const Color(0xff5A5D95),
-                    //       borderRadius: BorderRadius.circular(3),
-                    //     ),
-                    //   ),
-                    // ),
                     Image.asset(Assets.imagesCheckmark)
                   ],
                 ),
@@ -260,7 +187,6 @@ class _UploadFileState extends State<UploadFile> {
           width: size.width * 0.6,
           text: "Show Result",
           onPressed: () {
-            // img == null ? null : context.push(AppRoutes.kShowResultView);
             img == null ? null : upload(widget.id, img!);
             ;
           },

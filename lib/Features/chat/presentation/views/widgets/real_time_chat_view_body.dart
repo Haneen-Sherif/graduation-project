@@ -25,7 +25,7 @@ class RealTimeChatViewBody extends StatefulWidget {
       required this.id,
       required this.chatRoomId,
       required this.ownerId});
-  // final Map<String, dynamic> userMap;
+
   final String chatRoomId;
   final String id;
   final String ownerId;
@@ -36,7 +36,6 @@ class RealTimeChatViewBody extends StatefulWidget {
 class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
     with WidgetsBindingObserver {
   late TextEditingController _message;
-  // late _controller = ScrollController();
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -82,9 +81,7 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
     var uploadTask;
     try {
       uploadTask = await ref.putFile(imageFile!);
-      // Handle success if needed
     } catch (error) {
-      // Handle error
       await _firestore
           .collection('chatroon')
           .doc(widget.chatRoomId)
@@ -96,16 +93,6 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
 
       return null;
     }
-
-    // var uploadTask = await ref.putFile(imageFile!).catchError((error) async {
-    //   await _firestore
-    //       .collection('chatroon')
-    //       .doc(widget.chatRoomId)
-    //       .collection('chats')
-    //       .doc(fileName)
-    //       .delete();
-    //   status = 0;
-    // });
 
     if (status == 1) {
       String imageUrl = await uploadTask.ref.getDownloadURL();
@@ -338,86 +325,87 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
                       Padding(
                         padding: const EdgeInsets.only(right: 24),
                         child: IconButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    elevation: 0,
-                                    backgroundColor: Colors.white,
-                                    title: Text(
-                                      'Rate this specialist',
-                                      style: Styles.textStyle20(context)
-                                          .copyWith(color: kPrimaryColor),
-                                    ),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        RatingBar.builder(
-                                          initialRating: _rating,
-                                          minRating: 1,
-                                          direction: Axis.horizontal,
-                                          allowHalfRating: true,
-                                          itemCount: 5,
-                                          itemSize: 30,
-                                          itemPadding: EdgeInsets.symmetric(
-                                              horizontal: 4.0),
-                                          itemBuilder: (context, _) => Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
-                                          ),
-                                          onRatingUpdate: (rating) {
-                                            setState(() {
-                                              _rating = rating;
-                                            });
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  elevation: 0,
+                                  backgroundColor: Colors.white,
+                                  title: Text(
+                                    'Rate this specialist',
+                                    style: Styles.textStyle20(context)
+                                        .copyWith(color: kPrimaryColor),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      RatingBar.builder(
+                                        initialRating: _rating,
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemSize: 30,
+                                        itemPadding: EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        onRatingUpdate: (rating) {
+                                          setState(() {
+                                            _rating = rating;
+                                          });
+                                        },
+                                      ),
+                                      SizedBox(height: 32),
+                                      Center(
+                                        child: CustomButton(
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  0.3,
+                                          onPressed: () async {
+                                            try {
+                                              print(_rating);
+                                              print(widget.ownerId);
+                                              print(widget.id);
+
+                                              await BlocProvider.of<
+                                                      RatingCubit>(context)
+                                                  .setRating(
+                                                      _rating,
+                                                      widget.ownerId,
+                                                      widget.id);
+
+                                              await BlocProvider.of<
+                                                      RatingCubit>(context)
+                                                  .calcRating(widget.id);
+
+                                              print('Rated $_rating');
+                                              context.pop();
+                                              context.pushReplacement(
+                                                  AppRoutes.kHomeView);
+                                            } catch (e) {
+                                              print(e);
+                                            }
                                           },
+                                          text: "Submit",
                                         ),
-                                        SizedBox(height: 32),
-                                        Center(
-                                          child: CustomButton(
-                                            width: MediaQuery.sizeOf(context)
-                                                    .width *
-                                                0.3,
-                                            onPressed: () async {
-                                              try {
-                                                print(_rating);
-                                                print(widget.ownerId);
-                                                print(widget.id);
-
-                                                await BlocProvider.of<
-                                                        RatingCubit>(context)
-                                                    .setRating(
-                                                        _rating,
-                                                        widget.ownerId,
-                                                        widget.id);
-
-                                                await BlocProvider.of<
-                                                        RatingCubit>(context)
-                                                    .calcRating(widget.id);
-
-                                                print('Rated $_rating');
-                                                context.pop();
-                                                context.pushReplacement(
-                                                    AppRoutes.kHomeView);
-                                              } catch (e) {
-                                                print(e);
-                                              }
-                                            },
-                                            text: "Submit",
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ); // Return your custom RatingDialog widget
-                                },
-                              );
-                            },
-                            icon: Icon(
-                              Icons.done_outline,
-                              color: kPrimaryColor,
-                            )),
+                                      ),
+                                    ],
+                                  ),
+                                ); // Return your custom RatingDialog widget
+                              },
+                            );
+                          },
+                          icon: Icon(
+                            Icons.done_outline,
+                            color: kPrimaryColor,
+                          ),
+                        ),
                       )
                     ],
                   ),
@@ -446,10 +434,9 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
                     color: kPrimaryColor,
                   );
                 }
-                // Print the number of documents returned by the query
+
                 print('Number of documents: ${snapshot.data!.docs.length}');
 
-                // Print each document's data
                 snapshot.data!.docs.forEach((doc) {
                   print('Document ID: ${doc.id}');
                   print('Data: ${doc.data()}');
@@ -470,7 +457,6 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
                                 ? 0
                                 : 1,
                       );
-                      // return Text(snapshot.data!.docs[index]['message']);
                     },
                     itemCount: snapshot.data!.docs.length,
                   );
@@ -480,63 +466,42 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
                 }
               },
             ),
-            // child: ListView.builder(
-            //   controller: _listScrollController,
-            //   itemCount: messages.length,
-            //   itemBuilder: (context, index) {
-            //     return ChatWidget(
-            //       timestamp: DateTime.now(),
-            //       msg: messages[index]['msg'],
-            //       chatIndex: messages[index]['chatIndex'],
-            //     );
-            //   },
-            // ),
           ),
-          // if (_isTyping) ...[
-          //   const SpinKitThreeBounce(
-          //     color: kPrimaryColor,
-          //     size: 18,
-          //   ),
-          // ],
           const SizedBox(
             height: 15,
           ),
           Material(
-              color: const Color(0xffFEFEFE),
-              child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(children: [
-                    Expanded(
-                      child: TextField(
-                        onSubmitted: (value) {
-                          return onSendMessage();
-                        },
-                        focusNode: focusNode,
-                        style: const TextStyle(color: Colors.black),
-                        controller: _message,
-                        // onSubmitted: (value) async {
-                        //   await sendMessageFCT(
-                        //     modelsProvider: modelsProvider,
-                        //     chatProvider: chatProvider,
-                        //   );
-                        // },
-                        decoration: InputDecoration.collapsed(
-                          hintText: "Type your message...",
-                          hintStyle: Styles.textStyle16(context).copyWith(
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                        ),
+            color: const Color(0xffFEFEFE),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(children: [
+                Expanded(
+                  child: TextField(
+                    onSubmitted: (value) {
+                      return onSendMessage();
+                    },
+                    focusNode: focusNode,
+                    style: const TextStyle(color: Colors.black),
+                    controller: _message,
+                    decoration: InputDecoration.collapsed(
+                      hintText: "Type your message...",
+                      hintStyle: Styles.textStyle16(context).copyWith(
+                        color: Colors.black.withOpacity(0.5),
                       ),
                     ),
-                    IconButton(
-                      onPressed: () => getImage(),
-                      icon: Image.asset(Assets.iconsUpload),
-                    ),
-                    IconButton(
-                      onPressed: onSendMessage,
-                      icon: Image.asset(Assets.iconsSend),
-                    ),
-                  ])))
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => getImage(),
+                  icon: Image.asset(Assets.iconsUpload),
+                ),
+                IconButton(
+                  onPressed: onSendMessage,
+                  icon: Image.asset(Assets.iconsSend),
+                ),
+              ]),
+            ),
+          )
         ],
       ),
     );

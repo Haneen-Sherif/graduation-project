@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
@@ -51,7 +51,6 @@ class ProfileViewBody extends StatelessWidget {
           const SizedBox(
             height: 100,
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
@@ -113,78 +112,6 @@ class ProfileViewBody extends StatelessWidget {
               ],
             ),
           ),
-
-          // CustomExpertsInfo(
-          //   id: id,
-          //   title: 'mobile : ',
-          //   subTitle: expert.phoneNumber!,
-          // ),
-          // const SizedBox(
-          //   height: 14,
-          // ),
-
-          // Row(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-          //     Expanded(
-          //       flex: 5,
-          //       child: Column(
-          //         crossAxisAlignment: CrossAxisAlignment.start,
-          //         children: [
-          //           CustomExpertsInfo(
-          //             // expertsList: expertsList,
-          //             id: id,
-          //             title: 'Name : ',
-          //             subTitle: expert.userName!,
-          //           ),
-          //           const SizedBox(
-          //             height: 14,
-          //           ),
-          //           // CustomExpertsInfo(
-          //           //   // expertsList: expertsList,
-          //           //   id: widget.id,
-          //           //   title: 'Age : ',
-          //           //   subTitle: expert.age.toString(),
-          //           // ),
-          //           const SizedBox(
-          //             height: 14,
-          //           ),
-          //           CustomExpertsInfo(
-          //             id: id,
-          //             title: 'From : ',
-          //             subTitle: expert.address!,
-          //           ),
-          //           const SizedBox(
-          //             height: 14,
-          //           ),
-          //           CustomExpertsInfo(
-          //             id: id,
-          //             title: 'mobile : ',
-          //             subTitle: expert.phoneNumber!,
-          //           ),
-          //           const SizedBox(
-          //             height: 14,
-          //           ),
-          //           CustomExpertsInfo(
-          //             id: id,
-          //             title: 'Email : ',
-          //             subTitle: expert.email!,
-          //           ),
-          //           const SizedBox(
-          //             height: 22,
-          //           )
-          //         ],
-          //       ),
-          //     ),
-          //     const SizedBox(
-          //       width: 27,
-          //     ),
-          //     Expanded(
-          //       flex: 4,
-          //       child: Image.network(expert.personalPhoto!),
-          //     )
-          //   ],
-          // ),
         ],
       ),
     );

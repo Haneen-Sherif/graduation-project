@@ -40,9 +40,6 @@ class ExpertsListView extends StatelessWidget {
         List<ExpertsModel> experts =
             BlocProvider.of<ExpertsCubit>(context).experts;
 
-        // print("=====================");
-        // print(diseases);
-        // print("=====================");
         return ListView.separated(
             separatorBuilder: (context, index) => const SizedBox(
                   width: 8,
@@ -58,7 +55,11 @@ class ExpertsListView extends StatelessWidget {
                 onTap: () {
                   context.push(
                     AppRoutes.kExpertsProfileView,
-                    extra: {'id': expert.id, 'farmOwnerId': farmOwnerId},
+                    extra: {
+                      'id': expert.id,
+                      'farmOwnerId': farmOwnerId,
+                      'rateCount': rateCount
+                    },
                   );
                 },
                 child: SizedBox(
@@ -116,7 +117,7 @@ class ExpertsListView extends StatelessWidget {
                                   Row(
                                     children: [
                                       Image.asset(Assets.iconsStar2),
-                                      SizedBox(width: 4),
+                                      SizedBox(width: 1),
                                       // StreamBuilder<DocumentSnapshot>(
                                       //   stream: _firestore
                                       //       .collection('users')
@@ -149,7 +150,7 @@ class ExpertsListView extends StatelessWidget {
                                       //   },
                                       // ),
                                       Text(
-                                        " (${rateCount})",
+                                        "${rateCount}",
                                         style:
                                             Styles.textStyle7(context).copyWith(
                                           fontWeight: FontWeight.w600,

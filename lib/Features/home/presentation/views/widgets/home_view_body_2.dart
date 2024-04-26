@@ -39,11 +39,7 @@ class _HomeViewBody2State extends State<HomeViewBody2> {
   Future<void> getOwnerId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Retrieve the tokens from shared preferences
     final accessToken = await prefs.getString('accessToken');
-    // final refreshToken = prefs.getString('refreshToken');
-
-    // String decodedPayload = "";
 
     List<String> parts = accessToken!.split('.');
     final payload = _decodeBase64(parts[1]);
@@ -139,57 +135,9 @@ class _HomeViewBody2State extends State<HomeViewBody2> {
               height: 18,
             ),
           ),
-          // SliverToBoxAdapter(
-          //   child: Column(
-          //     children: [
-          //       Text(
-          //         "Specialists",
-          //         textAlign: TextAlign.center,
-          //         style: Styles.textStyle24(context)
-          //             .copyWith(color: Color(0xff1D2B4F)),
-          //       ),
-          //       Text(
-          //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          //         style: Styles.textStyle12(context)
-          //             .copyWith(color: Color(0xff636E88)),
-          //       )
-          //     ],
-          //   ),
-          // ),
-          // const SliverToBoxAdapter(
-          //   child: SizedBox(
-          //     height: 95,
-          //   ),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: SizedBox(
-          //     height: 120,
-          //     width: 79,
-          //     child: Stack(
-          //       clipBehavior: Clip.none,
-          //       children: [
-          //         Container(
-          //           height: 79,
-          //           color: kPrimaryColor,
-          //         ),
-          //         Positioned(
-          //           top: -70,
-          //           left: 0,
-          //           right: 0,
-          //           child: SizedBox(
-          //             height: 122,
-          //             child: ExpertsListView(
-          //               farmOwnerId: farmOwnerId,
-          //             ),
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
           SliverToBoxAdapter(
             child: Text(
-              "About Us",
+              "Feedback",
               textAlign: TextAlign.center,
               style: Styles.textStyle24(context)
                   .copyWith(color: Color(0xff1D2B4F)),
@@ -201,18 +149,6 @@ class _HomeViewBody2State extends State<HomeViewBody2> {
               child: FeedbackContainer(),
             ),
           ),
-          // SliverFillRemaining(
-          //   hasScrollBody: false,
-          //   child: ReportWidget(size: size),
-          // ),
-          // const SliverToBoxAdapter(
-          //   child: SizedBox(
-          //     height: 12,
-          //   ),
-          // ),
-          // SliverToBoxAdapter(
-          //   child: HomeFooterWidget(size: size),
-          // )
         ],
       ),
     );
@@ -231,7 +167,6 @@ class _HomeViewBody2State extends State<HomeViewBody2> {
               content: const Text(
                 'Do you want to close the app?',
               ),
-              // backgroundColor: kPrimaryColor,
               actions: <Widget>[
                 _buildDialogButton(context, 'No', false),
                 _buildDialogButton(context, 'Yes', true),

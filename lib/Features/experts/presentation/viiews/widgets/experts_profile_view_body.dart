@@ -9,10 +9,12 @@ class ExpertsProfileViewBody extends StatefulWidget {
     super.key,
     required this.id,
     required this.farmOwnerId,
+    required this.rateCount,
   });
 
   final String id;
   final String farmOwnerId;
+  final int rateCount;
 
   @override
   State<ExpertsProfileViewBody> createState() => _ExpertsProfileViewBodyState();
@@ -23,11 +25,7 @@ class _ExpertsProfileViewBodyState extends State<ExpertsProfileViewBody> {
   Future<void> getOwnerId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Retrieve the tokens from shared preferences
     final accessToken = await prefs.getString('accessToken');
-    // final refreshToken = prefs.getString('refreshToken');
-
-    // String decodedPayload = "";
 
     List<String> parts = accessToken!.split('.');
     final payload = _decodeBase64(parts[1]);
@@ -55,31 +53,13 @@ class _ExpertsProfileViewBodyState extends State<ExpertsProfileViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    // final Size size = MediaQuery.of(context).size;
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          // child: Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 26),
           child: CustomExpertsInfoBody(
-            id: widget.id,
-            ownerId: ownerId,
-          ),
+              id: widget.id, ownerId: ownerId, rateCount: widget.rateCount),
           // ),
         ),
-        // SliverFillRemaining(
-        //   hasScrollBody: false,
-        //   child: Column(
-        //     children: [
-        //       Expanded(
-        //         child: const SizedBox(
-        //           height: 12,
-        //         ),
-        //       ),
-        //       HomeFooterWidget(size: size)
-        //     ],
-        //   ),
-        // )
       ],
     );
   }

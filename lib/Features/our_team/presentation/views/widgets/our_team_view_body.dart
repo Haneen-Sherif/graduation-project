@@ -11,7 +11,7 @@ class OurTeamViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<OurTeamModel> ourTeamList =
         BlocProvider.of<OurTeamCubit>(context).ourTeamList;
-    // final Size size = MediaQuery.of(context).size;
+
     return CustomScrollView(
       slivers: [
         const SliverToBoxAdapter(
@@ -20,13 +20,6 @@ class OurTeamViewBody extends StatelessWidget {
               SizedBox(
                 height: 16,
               ),
-              // Align(
-              //   alignment: Alignment.center,
-              //   child: CustomTitle(title: "Our Team"),
-              // ),
-              // SizedBox(
-              //   height: 45,
-              // ),
             ],
           ),
         ),

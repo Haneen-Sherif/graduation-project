@@ -17,10 +17,11 @@ class ReportWidget extends StatelessWidget {
       children: [
         ReportTable(size: size),
         const Expanded(
-            child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: ReportChart(),
-        ))
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: ReportChart(),
+          ),
+        )
       ],
     );
   }

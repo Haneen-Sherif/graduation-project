@@ -40,21 +40,7 @@ class _FarmEquipmentsViewState extends State<FarmEquipmentsView> {
           title: CustomTitle(title: "Farm Equipments"),
           centerTitle: true,
         ),
-        // appBar: PreferredSize(
-        //   preferredSize: const Size.fromHeight(70),
-        //   child: Padding(
-        //       padding: EdgeInsets.only(top: 16, left: 21),
-        //       child: Row(
-        //         children: [
-        //           CustomForgotPasswordBackIcon(),
-        //           CustomTitle(title: "Farm Equipments"),
-        //         ],
-        //       )),
 
-        //   // child: CustomAppBar(
-        //   //   anotherKey: farmKey,
-        //   // )
-        // ),
         body: FarmEquipmentsViewBody(id: widget.id),
       ),
     );

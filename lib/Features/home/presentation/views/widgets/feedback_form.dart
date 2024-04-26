@@ -52,138 +52,143 @@ class _FeedbackFormState extends State<FeedbackForm> {
     final bool emailValid = true;
     final Size size = MediaQuery.sizeOf(context);
     return BlocListener<HomeCubit, HomeState>(
-        listener: (context, state) {
-          if (state is HomeMessageSuccess) {
-            nameController.clear();
-            emailController.clear();
-            phoneNumberController.clear();
-            messageController.clear();
-            privacyPolicyAccepted = false;
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: kPrimaryColor,
+      listener: (context, state) {
+        if (state is HomeMessageSuccess) {
+          nameController.clear();
+          emailController.clear();
+          phoneNumberController.clear();
+          messageController.clear();
+          privacyPolicyAccepted = false;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: kPrimaryColor,
+            ),
+          );
+        } else if (state is HomeFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      child: Form(
+        key: formKey,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 38,
+            vertical: 40,
+          ),
+          child: Column(
+            children: [
+              FeedbackTextFormField(
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.next,
+                controller: nameController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Name must not be empty';
+                  }
+                  return null;
+                },
+                lebelText: "Name",
               ),
-            );
-          } else if (state is HomeFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
+              SizedBox(
+                height: 26,
               ),
-            );
-          }
-        },
-        child: Form(
-            key: formKey,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 38, vertical: 40),
-              child: Column(
-                children: [
-                  FeedbackTextFormField(
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.next,
-                    controller: nameController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Name must not be empty';
-                      }
-                      return null;
-                    },
-                    lebelText: "Name",
-                  ),
-                  SizedBox(
-                    height: 26,
-                  ),
-                  FeedbackTextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    controller: emailController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Email must not be empty';
-                      } else if (emailValid !=
-                          RegExp(r"^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9]+\.)?[a-zA-Z0-9]+\.[a-zA-Z]+(?:\.com)?$")
-                              .hasMatch(value)) {
-                        return 'Email is invalid';
-                      }
-                      return null;
-                    },
-                    lebelText: "Email",
-                  ),
-                  SizedBox(
-                    height: 26,
-                  ),
-                  FeedbackTextFormField(
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.next,
-                    controller: phoneNumberController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Telephone Number must not be empty';
-                      }
-                      return null;
-                    },
-                    lebelText: "Telephone Number",
-                  ),
-                  SizedBox(
-                    height: 26,
-                  ),
-                  FeedbackTextFormField(
-                    keyboardType: TextInputType.multiline,
-                    minLines: 3,
-                    maxLines: 5,
-                    textInputAction: TextInputAction.next,
-                    controller: messageController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Message must not be empty';
-                      }
-                      return null;
-                    },
-                    hintText: "Message",
-                  ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  CheckboxFormField(
-                    initialValue: privacyPolicyAccepted,
-                    onChanged: (newValue) {
-                      setState(() {
-                        privacyPolicyAccepted = newValue ?? false;
-                      });
-                    },
-                    validator: (value) {
-                      if (value != true) {
-                        return 'Rquired';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: CustomButton(
-                        width: size.width * 0.5,
-                        text: "Send Message",
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            formKey.currentState!.save();
-                            BlocProvider.of<HomeCubit>(context).addFeedback(
-                              nameController.text,
-                              emailController.text,
-                              messageController.text,
-                            );
-                            print("success");
-                          }
-                          ;
-                        }),
-                  )
-                ],
+              FeedbackTextFormField(
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                controller: emailController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Email must not be empty';
+                  } else if (emailValid !=
+                      RegExp(r"^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9]+\.)?[a-zA-Z0-9]+\.[a-zA-Z]+(?:\.com)?$")
+                          .hasMatch(value)) {
+                    return 'Email is invalid';
+                  }
+                  return null;
+                },
+                lebelText: "Email",
               ),
-            )));
+              SizedBox(
+                height: 26,
+              ),
+              FeedbackTextFormField(
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
+                controller: phoneNumberController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Telephone Number must not be empty';
+                  }
+                  return null;
+                },
+                lebelText: "Telephone Number",
+              ),
+              SizedBox(
+                height: 26,
+              ),
+              FeedbackTextFormField(
+                keyboardType: TextInputType.multiline,
+                minLines: 3,
+                maxLines: 5,
+                textInputAction: TextInputAction.next,
+                controller: messageController,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Message must not be empty';
+                  }
+                  return null;
+                },
+                hintText: "Message",
+              ),
+              SizedBox(
+                height: 14,
+              ),
+              CheckboxFormField(
+                initialValue: privacyPolicyAccepted,
+                onChanged: (newValue) {
+                  setState(() {
+                    privacyPolicyAccepted = newValue ?? false;
+                  });
+                },
+                validator: (value) {
+                  if (value != true) {
+                    return 'Rquired';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: CustomButton(
+                    width: size.width * 0.5,
+                    text: "Send Message",
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        formKey.currentState!.save();
+                        BlocProvider.of<HomeCubit>(context).addFeedback(
+                          nameController.text,
+                          emailController.text,
+                          messageController.text,
+                        );
+                        print("success");
+                      }
+                      ;
+                    }),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

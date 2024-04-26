@@ -27,11 +27,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
   Future<void> getId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Retrieve the tokens from shared preferences
     final accessToken = prefs.getString('accessToken');
-    // final refreshToken = prefs.getString('refreshToken');
-
-    // String decodedPayload = "";
 
     List<String> parts = accessToken!.split('.');
     final payload = _decodeBase64(parts[1]);
@@ -83,11 +79,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
             final SharedPreferences prefs =
                 await SharedPreferences.getInstance();
 
-            // Retrieve the tokens from shared preferences
             final accessToken = prefs.getString('accessToken');
-            // final refreshToken = prefs.getString('refreshToken');
-
-            // String decodedPayload = "";
 
             List<String> parts = accessToken!.split('.');
             final payload = _decodeBase64(parts[1]);
@@ -101,12 +93,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
 
             String nameIdentifier = payloadMap[
                 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-            // String encodedPayload = parts[1];
-            // // String decodedPayload = utf8.decode(base64Url.decode(encodedPayload));
-            // decodedPayload =
-            //     await utf8.decode(base64Url.decode(encodedPayload));
 
-            // print(decodedPayload);
             context.pop();
             context.push(AppRoutes.kProfileView, extra: nameIdentifier);
           },
@@ -136,11 +123,7 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
             final SharedPreferences prefs =
                 await SharedPreferences.getInstance();
 
-            // Retrieve the tokens from shared preferences
             final accessToken = prefs.getString('accessToken');
-            // final refreshToken = prefs.getString('refreshToken');
-
-            // String decodedPayload = "";
 
             List<String> parts = accessToken!.split('.');
             final payload = _decodeBase64(parts[1]);
@@ -154,29 +137,17 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
 
             String nameIdentifier = payloadMap[
                 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
-            // String encodedPayload = parts[1];
-            // // String decodedPayload = utf8.decode(base64Url.decode(encodedPayload));
-            // decodedPayload =
-            //     await utf8.decode(base64Url.decode(encodedPayload));
+
             BlocProvider.of<EquipmentsCubit>(context)
                 .getAllEquipments(nameIdentifier, nameIdentifier);
             setState(() {});
-            // print(decodedPayload);
-            // print(nameIdentifier);
+
             context.pop();
             context.push(AppRoutes.kFarmEquipmentsView, extra: nameIdentifier);
           },
           title: 'Farm Equipments',
         ),
-        // const SizedBox(
-        //   height: 30,
-        // ),
-        // CustomDrawerItem(
-        //   onTap: () {
-        //     context.push(AppRoutes.kExpertsView);
-        //   },
-        //   title: 'Experts',
-        // ),
+
         Divider(
           color: Color(0xffD7D5D5),
         ),
@@ -229,7 +200,9 @@ class _CustomDrawerBodyState extends State<CustomDrawerBody> {
                 context: context,
                 builder: (BuildContext context) {
                   return CustomSubscriptionWidget(
-                      response: response, nameIdentifier: nameIdentifier);
+                    response: response,
+                    nameIdentifier: nameIdentifier,
+                  );
                 });
           },
           title: 'Subscription',

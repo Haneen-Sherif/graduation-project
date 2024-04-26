@@ -31,9 +31,6 @@ class _DiseaseInfoViewState extends State<DiseaseInfoView> {
               padding: const EdgeInsets.only(top: 16, left: 21),
               child: CustomForgotPasswordBackIcon(),
             ),
-            // child: CustomAppBar(
-            //   anotherKey: infoKey,
-            // ),
           ),
           body: DiseaseInfoViewBody(id: widget.index),
         ),

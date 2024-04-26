@@ -25,10 +25,11 @@ class DiseaseResult extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
-            child: Image.file(
-          File(diseaseImage),
-          width: 200,
-        )),
+          child: Image.file(
+            File(diseaseImage),
+            width: 200,
+          ),
+        ),
         SizedBox(
           height: 37,
         ),
@@ -90,60 +91,6 @@ class DiseaseResult extends StatelessWidget {
             ),
           ],
         ),
-        // Row(
-        //   crossAxisAlignment: CrossAxisAlignment.end,
-        //   children: [
-        //     Expanded(
-        //       flex: 2,
-        //       child: Column(
-        //         children: [
-        //           Text.rich(
-        //             TextSpan(
-        //               children: [
-        //                 TextSpan(
-        //                   text: 'Disease Name: ',
-        //                   style: Styles.textStyle16.copyWith(
-        //                     fontWeight: FontWeight.w500,
-        //                     letterSpacing: 0.96,
-        //                   ),
-        //                 ),
-        //                 TextSpan(
-        //                   text: diseaseName,
-        //                   style: Styles.textStyle16.copyWith(
-        //                     letterSpacing: 0.96,
-        //                   ),
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //           const SizedBox(
-        //             height: 31,
-        //           ),
-        //           Text.rich(
-        //             TextSpan(
-        //               children: [
-        //                 TextSpan(
-        //                   text: 'Disease Type : ',
-        //                   style: Styles.textStyle16.copyWith(
-        //                     fontWeight: FontWeight.w500,
-        //                     letterSpacing: 0.96,
-        //                   ),
-        //                 ),
-        //                 TextSpan(
-        //                   text: diseaseType,
-        //                   style: Styles.textStyle16.copyWith(
-        //                     letterSpacing: 0.96,
-        //                   ),
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //     Expanded(child: Image.asset(diseaseImage))
-        //   ],
-        // ),
         const SizedBox(
           height: 56,
         ),
@@ -158,19 +105,20 @@ class DiseaseResult extends StatelessWidget {
           height: 5,
         ),
         Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: recommendationAction.map((action) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    action,
-                    style: Styles.textStyle13(context),
-                  ),
-                );
-              }).toList(),
-            ))
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: recommendationAction.map((action) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  action,
+                  style: Styles.textStyle13(context),
+                ),
+              );
+            }).toList(),
+          ),
+        )
       ],
     );
   }

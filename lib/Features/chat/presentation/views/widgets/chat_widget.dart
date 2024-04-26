@@ -17,7 +17,7 @@ class ChatWidget extends StatelessWidget {
   final String msg;
   final int chatIndex;
   final DateTime? timestamp;
-  // final Timestamp? timestamp2;
+
   final String? type;
   final String? imageMessage;
   @override
@@ -35,7 +35,6 @@ class ChatWidget extends StatelessWidget {
                   : CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  // width: size.width * 0.6,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: chatIndex == 0
@@ -74,65 +73,7 @@ class ChatWidget extends StatelessWidget {
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
                             ),
-                            // child: AnimatedTextKit(
-                            //   isRepeatingAnimation: false,
-                            //   repeatForever: false,
-                            //   displayFullTextOnTap: true,
-                            //   totalRepeatCount: 1,
-                            //   animatedTexts: [
-                            //     TyperAnimatedText(
-                            //       msg.trim(),
-                            //       textStyle:
-                            //           Styles.textStyle12(context).copyWith(
-                            //         color: const Color(0xff1E1E1E),
-                            //         fontFamily: "Open Sans",
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                           ),
-                          // child: Column(
-                          //   // mainAxisSize: MainAxisSize.min,
-                          //   // mainAxisAlignment: MainAxisAlignment.start,
-                          //   // crossAxisAlignment: CrossAxisAlignment.end,
-                          //   children: [
-                          //     Row(
-                          //       // mainAxisSize: MainAxisSize.min,
-                          //       // mainAxisAlignment: MainAxisAlignment.start,
-                          //       // crossAxisAlignment: CrossAxisAlignment.start,
-                          //       children: [
-                          //         Expanded(
-                          //           child: SizedBox(
-                          //             child: DefaultTextStyle(
-                          //               style: const TextStyle(
-                          //                 color: Color(0xFF1E1E1E),
-                          //                 fontWeight: FontWeight.w400,
-                          //                 fontSize: 12,
-                          //               ),
-                          //               child: AnimatedTextKit(
-                          //                 isRepeatingAnimation: false,
-                          //                 repeatForever: false,
-                          //                 displayFullTextOnTap: true,
-                          //                 totalRepeatCount: 1,
-                          //                 animatedTexts: [
-                          //                   TyperAnimatedText(
-                          //                     msg.trim(),
-                          //                     textStyle:
-                          //                         Styles.textStyle12(context)
-                          //                             .copyWith(
-                          //                       color: const Color(0xff1E1E1E),
-                          //                       fontFamily: "Open Sans",
-                          //                     ),
-                          //                   ),
-                          //                 ],
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ],
-                          // ),
                         ),
                       ),
                       const SizedBox(height: 8),

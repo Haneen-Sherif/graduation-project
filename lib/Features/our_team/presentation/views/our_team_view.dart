@@ -27,15 +27,6 @@ class _OurTeamViewState extends State<OurTeamView> {
           title: CustomTitle(title: "Our Team"),
           centerTitle: true,
         ),
-        // appBar: PreferredSize(
-        //   preferredSize: const Size.fromHeight(70),
-        //   child: Padding(
-        //       padding: EdgeInsets.only(top: 16, left: 21),
-        //       child: CustomForgotPasswordBackIcon()),
-        //   // child: CustomAppBar(
-        //   //   anotherKey: farmKey,
-        //   // )
-        // ),
         body: BlocProvider(
           create: (context) => OurTeamCubit(),
           child: const OurTeamViewBody(),

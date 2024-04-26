@@ -12,52 +12,10 @@ class DetectViewBody extends StatelessWidget {
       slivers: [
         SliverToBoxAdapter(
           child: Column(children: [
-            // const SizedBox(
-            //   height: 40,
-            // ),
-            // Text('Image Upload', style: Styles.textStyle27(context)),
             const SizedBox(
               height: 55,
             ),
             UploadFile(size: size, id: id),
-            // const SizedBox(
-            //   height: 40,
-            // ),
-            // Container(
-            //   margin: const EdgeInsets.symmetric(horizontal: 38),
-            //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(7),
-            //     color: kPrimaryColor.withOpacity(0.16),
-            //   ),
-            //   child: Row(
-            //     children: [
-            //       Image.asset(Assets.imagesGallery),
-            //       Expanded(
-            //         child: Container(
-            //           margin: const EdgeInsets.symmetric(horizontal: 16),
-            //           height: 1,
-            //           decoration: BoxDecoration(
-            //             color: const Color(0xff5A5D95),
-            //             borderRadius: BorderRadius.circular(3),
-            //           ),
-            //         ),
-            //       ),
-            //       Image.asset(Assets.imagesCheckmark)
-            //     ],
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 56,
-            // ),
-            // CustomButton(
-            //   color: const Color(0xff59595E),
-            //   width: size.width * 0.6,
-            //   text: "Show Result",
-            //   onPressed: () {
-            //     context.push(AppRoutes.kShowResultView);
-            //   },
-            // ),
           ]),
         ),
         SliverFillRemaining(

@@ -19,12 +19,13 @@ class _HomeViewState extends State<HomeView> {
       key: scaffoldKey,
       drawer: const CustomDrawer(),
       body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
-          },
-          child: HomeViewBody(
-            scaffoldKey: scaffoldKey,
-          )),
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: HomeViewBody(
+          scaffoldKey: scaffoldKey,
+        ),
+      ),
     );
   }
 }

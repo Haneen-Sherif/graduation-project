@@ -95,13 +95,6 @@ class AuthCubit extends Cubit<AuthState> {
         print(errorMessage);
 
         emit(AuthFailure(message: errorMessage));
-        // } else if (response.statusCode >= 500) {
-        //   print("Server Error: Something went wrong on the server");
-        //   emit(AuthFailure(message: "Server Error"));
-        // } else {
-        //   print("Unexpected Error: ${response.statusCode}");
-        //   emit(AuthFailure(message: "Unexpected Error"));
-        //
       }
     } catch (e) {
       print("Network Error: $e");
@@ -326,27 +319,6 @@ class AuthCubit extends Cubit<AuthState> {
       request.fields['birthDate'] = birthDate;
       request.fields['moreInfo'] = moreInfo;
 
-      // if (personalPhoto.path.startsWith('http') ||
-      //     personalPhoto.path.startsWith('https')) {
-      //   File? downloadedImage = await downloadImage(personalPhoto.path);
-      //   if (downloadedImage != null) {
-      //     var photoStream = http.ByteStream(downloadedImage.openRead());
-      //     var length = await downloadedImage.length();
-      //     var multipartFile = http.MultipartFile(
-      //         'personalPhoto', photoStream, length,
-      //         filename: downloadedImage.path.split('/').last);
-      //     request.files.add(multipartFile);
-      //   } else {
-      //     print('Failed to download image from URL: ${personalPhoto.path}');
-      //   }
-      // } else {
-      //   var photoStream = http.ByteStream(personalPhoto.openRead());
-      //   var length = await personalPhoto.length();
-      //   var multipartFile = http.MultipartFile('photoPath', photoStream, length,
-      //       filename: personalPhoto.path.split('/').last);
-      //   request.files.add(multipartFile);
-      // }
-
       var photoStream =
           http.ByteStream(Stream.castFrom(personalPhoto.openRead()));
       var length = await personalPhoto.length();
@@ -358,20 +330,6 @@ class AuthCubit extends Cubit<AuthState> {
       var response = await request.send();
 
       final responseData = await response.stream.bytesToString();
-      // final response = await http.post(
-      //   Uri.parse("$baseUrlApi/api/Accounts/doctor"),
-      //   body: {
-      //     'email': email,
-      //     'userName': name,
-      //     'password': password,
-      //     'confirmPass': confirmPass,
-      //     'phoneNumber': phone,
-      //     'address': address,
-      //     'birthDate': birthDate,
-      //     'personalPhoto': personalPhoto,
-      //     'moreInfo': moreInfo
-      //   },
-      // );
 
       String errorMessage = '';
       print(response.statusCode);
@@ -394,25 +352,9 @@ class AuthCubit extends Cubit<AuthState> {
         print(errorMessage);
 
         emit(AuthFailure(message: errorMessage));
-        // } else if (response.statusCode >= 500) {
-        //   print("Server Error: Something went wrong on the server");
-        //   emit(AuthFailure(message: "Server Error"));
-        // } else {
-        //   print("Unexpected Error: ${response.statusCode}");
-        //   emit(AuthFailure(message: "Unexpected Error"));
-        //
       } else if (response.statusCode == 500) {
         final errorData = jsonDecode(responseData);
 
-        // if (errorData['message'] != null &&
-        //     errorData['DuplicateUserName'] != null) {
-        //   errorMessage =
-        //       "${errorData['DuplicateEmail'].join(', ')} or ${errorData['DuplicateUserName'].join(', ')}";
-        // } else if (errorData['DuplicateEmail'] != null) {
-        //   errorMessage = errorData['DuplicateEmail'].join(', ');
-        // } else if (errorData['DuplicateUserName'] != null) {
-        //   errorMessage = errorData['DuplicateUserName'].join(', ');
-        // }
         print(errorData['message']);
 
         emit(AuthFailure(message: errorData['message']));
@@ -448,23 +390,4 @@ class AuthCubit extends Cubit<AuthState> {
     log(change.toString());
     super.onChange(change);
   }
-}
-
-String _decodeBase64(String str) {
-  String output = str.replaceAll('-', '+').replaceAll('_', '/');
-
-  switch (output.length % 4) {
-    case 0:
-      break;
-    case 2:
-      output += '==';
-      break;
-    case 3:
-      output += '=';
-      break;
-    default:
-      throw Exception('Illegal base64url string!"');
-  }
-
-  return utf8.decode(base64Url.decode(output));
 }

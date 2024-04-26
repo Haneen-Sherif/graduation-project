@@ -2,10 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatService {
   static String generateChatRoomId(List<String> participantIds) {
-    // Sort the list of participant IDs to ensure consistent chat room ID
     participantIds.sort();
 
-    // Concatenate participant IDs to form the chat room ID
     String chatRoomId = participantIds.join('-');
 
     return chatRoomId;

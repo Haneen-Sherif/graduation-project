@@ -16,7 +16,7 @@ class DiseaseInfoViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeCubit = BlocProvider.of<HomeCubit>(context);
-    // print("diseaseInfo: ============= $diseaseInfo");
+
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: SingleChildScrollView(
@@ -48,9 +48,6 @@ class DiseaseInfoViewBody extends StatelessWidget {
                         Container(
                             height: 186,
                             child: Image.network(disease.photoPath!)),
-                        // const SizedBox(
-                        //   height: 12,
-                        // ),
                         CustomFishInfoRow(
                           title: '',
                           subTitle: disease.description!,
@@ -194,7 +191,6 @@ class DiseaseInfoViewBody extends StatelessWidget {
                 },
               ),
             ),
-            // HomeFooterWidget(size: size)
           ],
         ),
       ),

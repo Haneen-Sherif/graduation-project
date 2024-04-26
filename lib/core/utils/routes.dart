@@ -31,7 +31,8 @@ abstract class AppRoutes {
   static String kDiseaseInfoView = '/diseaseInfoView/:index';
   static String kAddEquipmentView = '/addEquipmentView/:id';
   static String kEditEquipmentView = '/editEquipmentView/:id/:equipmentId';
-  static String kExpertsProfileView = '/expertsProfileView/:id/:farmOwnerId';
+  static String kExpertsProfileView =
+      '/expertsProfileView/:id/:farmOwnerId/:rateCount';
   static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
   static String kProfileView = '/profileView/:id';
@@ -141,16 +142,6 @@ abstract class AppRoutes {
           );
         },
       ),
-      // GoRoute(
-      //   path: kMyCartView,
-      //   pageBuilder: (context, state) {
-      //     return const CustomTransitionPage(
-      //       transitionDuration: Duration(seconds: 1),
-      //       child: MyCartView(),
-      //       transitionsBuilder: _buildCustomTransition1,
-      //     );
-      //   },
-      // ),
       GoRoute(
         path: kDiseaseInfoView,
         pageBuilder: (context, state) {
@@ -194,14 +185,13 @@ abstract class AppRoutes {
           final Map<String, dynamic> extras =
               state.extra as Map<String, dynamic>;
           final String id = extras['id'].toString();
+          final int rateCount = int.parse(extras['rateCount'].toString());
 
           final String farmOwnerId = extras['farmOwnerId'].toString();
           return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
             child: ExpertsProfileView(
-              id: id,
-              farmOwnerId: farmOwnerId,
-            ),
+                id: id, farmOwnerId: farmOwnerId, rateCount: rateCount),
             transitionsBuilder: _buildCustomTransition2,
           );
         },
@@ -250,11 +240,6 @@ abstract class AppRoutes {
             child: RealTimeChatView(name: name, id: id, ownerId: ownerId),
             transitionsBuilder: _buildCustomTransition1,
           );
-          // return CustomTransitionPage(
-          //   transitionDuration: Duration(seconds: 1),
-          //   child: RealTimeChatView(id: state.extra.toString()),
-          //   transitionsBuilder: _buildCustomTransition1,
-          // );
         },
       ),
       GoRoute(
@@ -273,11 +258,6 @@ abstract class AppRoutes {
             ),
             transitionsBuilder: _buildCustomTransition1,
           );
-          // return CustomTransitionPage(
-          //   transitionDuration: Duration(seconds: 1),
-          //   child: RealTimeChatView(id: state.extra.toString()),
-          //   transitionsBuilder: _buildCustomTransition1,
-          // );
         },
       ),
       GoRoute(
@@ -328,16 +308,6 @@ abstract class AppRoutes {
           );
         },
       ),
-      // GoRoute(
-      //   path: kExpertsView,
-      //   pageBuilder: (context, state) {
-      //     return const CustomTransitionPage(
-      //       transitionDuration: Duration(seconds: 1),
-      //       child: ExpertsView(),
-      //       transitionsBuilder: _buildCustomTransition1,
-      //     );
-      //   },
-      // ),
     ],
   );
 }
