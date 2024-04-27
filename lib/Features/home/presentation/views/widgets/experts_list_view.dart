@@ -48,126 +48,148 @@ class ExpertsListView extends StatelessWidget {
             itemCount: experts.length,
             itemBuilder: (context, index) {
               ExpertsModel expert = experts[index];
-              BlocProvider.of<RatingCubit>(context).calcRating(expert.id!);
-              int rateCount = BlocProvider.of<RatingCubit>(context).rateCount;
+              // BlocProvider.of<RatingCubit>(context).calcRating(expert.id!);
+              final ratingCubit = BlocProvider.of<RatingCubit>(context);
 
-              return GestureDetector(
-                onTap: () {
-                  context.push(
-                    AppRoutes.kExpertsProfileView,
-                    extra: {
-                      'id': expert.id,
-                      'farmOwnerId': farmOwnerId,
-                      'rateCount': rateCount
-                    },
-                  );
-                },
-                child: SizedBox(
-                  width: 74,
-                  child: Container(
-                    margin: EdgeInsets.zero,
-                    padding:
-                        const EdgeInsets.only(bottom: 2, right: 1, left: 1),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(8)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
-                          offset: const Offset(4, 4),
-                          blurRadius: 6,
-                          spreadRadius: 0,
-                        ),
-                      ],
-                    ),
-                    child: Card(
-                      margin: EdgeInsets.zero,
-                      elevation: 0,
-                      child: Column(
-                        children: [
-                          Image.network(
-                            expert.personalPhoto ?? '',
-                            height: 96,
-                            width: 79,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(
-                            height: 23,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+              return FutureBuilder<int>(
+                  future: ratingCubit.calcRating(expert.id!),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final rateCount = snapshot.data!;
+                      return GestureDetector(
+                        onTap: () {
+                          context.push(
+                            AppRoutes.kExpertsProfileView,
+                            extra: {
+                              'id': expert.id,
+                              'farmOwnerId': farmOwnerId,
+                              'rateCount': rateCount
+                            },
+                          );
+                        },
+                        child: SizedBox(
+                          width: 74,
+                          child: Container(
+                            margin: EdgeInsets.zero,
+                            padding: const EdgeInsets.only(
+                                bottom: 2, right: 1, left: 1),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.25),
+                                  offset: const Offset(4, 4),
+                                  blurRadius: 6,
+                                  spreadRadius: 0,
+                                ),
+                              ],
+                            ),
+                            child: Card(
+                              margin: EdgeInsets.zero,
+                              elevation: 0,
+                              child: Column(
                                 children: [
-                                  Text(
-                                    "Dr. ",
-                                    style: Styles.textStyle7(context).copyWith(
-                                      letterSpacing: 0.96,
-                                    ),
+                                  Image.network(
+                                    expert.personalPhoto ?? '',
+                                    height: 96,
+                                    width: 79,
+                                    fit: BoxFit.cover,
                                   ),
-                                  Text(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    expert.userName ?? '',
-                                    style: Styles.textStyle7(context).copyWith(
-                                      letterSpacing: 0.96,
-                                    ),
-                                  ),
-                                  Expanded(child: SizedBox()),
-                                  Row(
-                                    children: [
-                                      Image.asset(Assets.iconsStar2),
-                                      SizedBox(width: 1),
-                                      // StreamBuilder<DocumentSnapshot>(
-                                      //   stream: _firestore
-                                      //       .collection('users')
-                                      //       .doc(expert.userName)
-                                      //       .snapshots(),
-                                      //   builder: (context, snapshot) {
-                                      //     if (snapshot.connectionState ==
-                                      //         ConnectionState.waiting) {
-                                      //       return Text('-');
-                                      //     } else if (snapshot.hasError) {
-                                      //       return Text('-');
-                                      //     } else {
-                                      //       final data = snapshot.data;
-                                      //       if (snapshot.data != null) {
-                                      //         final rating =
-                                      //             data?['raiting'] ?? '-';
-                                      //         return Text(
-                                      //           '$rating',
-                                      //           style:
-                                      //               Styles.textStyle7(context)
-                                      //                   .copyWith(
-                                      //                       fontWeight:
-                                      //                           FontWeight
-                                      //                               .w600),
-                                      //         );
-                                      //       } else {
-                                      //         return Text('-');
-                                      //       }
-                                      //     }
-                                      //   },
-                                      // ),
-                                      Text(
-                                        "${rateCount}",
-                                        style:
-                                            Styles.textStyle7(context).copyWith(
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                  SizedBox(
+                                    height: 23,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 4),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Dr. ",
+                                            style: Styles.textStyle7(context)
+                                                .copyWith(
+                                              letterSpacing: 0.96,
+                                            ),
+                                          ),
+                                          Text(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            expert.userName ?? '',
+                                            style: Styles.textStyle7(context)
+                                                .copyWith(
+                                              letterSpacing: 0.96,
+                                            ),
+                                          ),
+                                          Expanded(child: SizedBox()),
+                                          Row(
+                                            children: [
+                                              Image.asset(Assets.iconsStar2),
+                                              SizedBox(width: 1),
+                                              // StreamBuilder<DocumentSnapshot>(
+                                              //   stream: _firestore
+                                              //       .collection('users')
+                                              //       .doc(expert.userName)
+                                              //       .snapshots(),
+                                              //   builder: (context, snapshot) {
+                                              //     if (snapshot.connectionState ==
+                                              //         ConnectionState.waiting) {
+                                              //       return Text('-');
+                                              //     } else if (snapshot.hasError) {
+                                              //       return Text('-');
+                                              //     } else {
+                                              //       final data = snapshot.data;
+                                              //       if (snapshot.data != null) {
+                                              //         final rating =
+                                              //             data?['raiting'] ?? '-';
+                                              //         return Text(
+                                              //           '$rating',
+                                              //           style:
+                                              //               Styles.textStyle7(context)
+                                              //                   .copyWith(
+                                              //                       fontWeight:
+                                              //                           FontWeight
+                                              //                               .w600),
+                                              //         );
+                                              //       } else {
+                                              //         return Text('-');
+                                              //       }
+                                              //     }
+                                              //   },
+                                              // ),
+                                              Text(
+                                                "${rateCount}",
+                                                style:
+                                                    Styles.textStyle7(context)
+                                                        .copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
+                        ),
+                      );
+                    } else {
+                      return SizedBox(
+                        // Show a placeholder while fetching rating
+                        width: 74,
+                        child: Center(
+                            child: CircularProgressIndicator(
+                          backgroundColor: kPrimaryColor,
+                        )),
+                      );
+                    }
+                  });
             });
       } else if (state is ExpertsFailure) {
         return Center(

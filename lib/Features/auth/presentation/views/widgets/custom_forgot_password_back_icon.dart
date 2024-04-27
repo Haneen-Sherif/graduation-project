@@ -6,15 +6,17 @@ class CustomForgotPasswordBackIcon extends StatelessWidget {
   const CustomForgotPasswordBackIcon({
     super.key,
     this.color,
+    this.onTap,
   });
 
   final Color? color;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.pop();
+        onTap ?? context.pop();
       },
       child: SizedBox(
         width: 39,

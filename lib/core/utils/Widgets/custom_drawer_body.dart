@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/rating_cubit/rating_cubit.dart';
+import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
 
 import 'package:graduation_project/core/utils/Widgets/custom_drawer_item.dart';
 import 'package:graduation_project/core/utils/Widgets/custom_subscription_widget.dart';
@@ -66,7 +67,9 @@ class CustomDrawerBody extends StatelessWidget {
         //   height: 30,
         // ),
         CustomDrawerItem(
-          onTap: () {
+          onTap: () async {
+            await BlocProvider.of<EquipmentsCubit>(context)
+                .getAllEquipments(nameIdentifier, nameIdentifier);
             context.pop();
             context.push(AppRoutes.kFarmEquipmentsView, extra: nameIdentifier);
           },

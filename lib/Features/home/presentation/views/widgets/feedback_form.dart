@@ -171,14 +171,17 @@ class _FeedbackFormState extends State<FeedbackForm> {
                 child: CustomButton(
                     width: size.width * 0.5,
                     text: "Send Message",
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
-                        BlocProvider.of<HomeCubit>(context).addFeedback(
+                        await BlocProvider.of<HomeCubit>(context).addFeedback(
                           nameController.text,
                           emailController.text,
                           messageController.text,
                         );
+                        setState(() {
+                          privacyPolicyAccepted = false;
+                        });
                         print("success");
                       }
                       ;

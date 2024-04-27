@@ -27,7 +27,9 @@ class _EquipmentListViewState extends State<EquipmentListView> {
       // print("EquipmentListView: Builder function called with state: $state");
       if (state is EquipmentsLoading) {
         return Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            backgroundColor: kPrimaryColor,
+          ),
         );
       } else if (state is EquipmentsSuccess) {
         final equipments =

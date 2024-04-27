@@ -30,6 +30,7 @@ class UploadFile extends StatefulWidget {
 class _UploadFileState extends State<UploadFile> {
   final picker = ImagePicker();
   File? img;
+  bool isLoading = false;
 
   var resJson;
   String? diseaseName;
@@ -47,6 +48,8 @@ class _UploadFileState extends State<UploadFile> {
 
   upload(String id, File ImageForDetection) async {
     try {
+      isLoading = true;
+      setState(() {});
       final request = http.MultipartRequest(
           "POST", Uri.parse("$baseUrlApi/api/$id/Detects"));
       final header = {
@@ -81,6 +84,8 @@ class _UploadFileState extends State<UploadFile> {
             'action': recommendationAction
           },
         );
+        isLoading = false;
+        setState(() {});
       } else {
         print("error: ${myRequest.statusCode}");
       }
@@ -179,6 +184,11 @@ class _UploadFileState extends State<UploadFile> {
                   ],
                 ),
               ),
+        isLoading
+            ? CircularProgressIndicator(
+                backgroundColor: kPrimaryColor,
+              )
+            : SizedBox(),
         const SizedBox(
           height: 56,
         ),
@@ -190,6 +200,9 @@ class _UploadFileState extends State<UploadFile> {
             img == null ? null : upload(widget.id, img!);
             ;
           },
+        ),
+        const SizedBox(
+          height: 56,
         ),
       ],
     );
