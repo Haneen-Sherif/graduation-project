@@ -8,7 +8,7 @@ class FeedbackTextFormField extends StatelessWidget {
     required this.keyboardType,
     required this.textInputAction,
     required this.controller,
-    required this.validator,
+    this.validator,
     this.lebelText,
     this.minLines,
     this.maxLines,
@@ -18,6 +18,7 @@ class FeedbackTextFormField extends StatelessWidget {
     this.borderFocusColor,
     this.cursorColor,
     this.hintStyle,
+    this.radius,
   });
 
   final TextInputType? keyboardType;
@@ -33,6 +34,7 @@ class FeedbackTextFormField extends StatelessWidget {
   final Color? fillColor;
   final Color? cursorColor;
   final TextStyle? hintStyle;
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +64,15 @@ class FeedbackTextFormField extends StatelessWidget {
         ),
         fillColor: fillColor ?? Color(0xfff5f2f2),
         filled: true,
-        border: buildOutlineInputBorder(borderColor ?? Color(0xffafb0b8)),
-        errorBorder: buildOutlineInputBorder(Colors.red),
-        focusedErrorBorder: buildOutlineInputBorder(Colors.red),
-        focusedBorder:
-            buildOutlineInputBorder(borderFocusColor ?? Color(0xffafb0b8)),
-        enabledBorder:
-            buildOutlineInputBorder(borderColor ?? Color(0xffafb0b8)),
+        border: buildOutlineInputBorder(borderColor ?? Color(0xffafb0b8),
+            radius: radius),
+        errorBorder: buildOutlineInputBorder(Colors.red, radius: radius),
+        focusedErrorBorder: buildOutlineInputBorder(Colors.red, radius: radius),
+        focusedBorder: buildOutlineInputBorder(
+            borderFocusColor ?? Color(0xffafb0b8),
+            radius: radius),
+        enabledBorder: buildOutlineInputBorder(borderColor ?? Color(0xffafb0b8),
+            radius: radius),
       ),
     );
   }

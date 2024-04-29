@@ -39,7 +39,7 @@ class CustomDrawerBody2 extends StatelessWidget {
         CustomDrawerItem(
           onTap: () {
             context.pop();
-            context.push(AppRoutes.kProfileView, extra: nameIdentifier);
+            context.push(AppRoutes.kProfileView2, extra: nameIdentifier);
           },
           title: 'Profile',
         ),

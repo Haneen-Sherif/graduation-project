@@ -74,12 +74,18 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
                   .collection('users')
                   .doc(nameController.text.trim())
                   .update({'role': 'FarmOwner'});
+              setState(() {
+                buttonClicked = false;
+              });
               context.push(AppRoutes.kHomeView);
             } else if (role == "Doctor") {
               await _firestore
                   .collection('users')
                   .doc(nameController.text.trim())
                   .update({'role': 'Doctor'});
+              setState(() {
+                buttonClicked = false;
+              });
               context.push(AppRoutes.kHomeView2);
             }
             nameController.clear();
@@ -181,9 +187,9 @@ class _CustomSignInFormState extends State<CustomSignInForm> {
   }
 }
 
-OutlineInputBorder buildOutlineInputBorder(Color color) {
+OutlineInputBorder buildOutlineInputBorder(Color color, {radius}) {
   return OutlineInputBorder(
     borderSide: BorderSide(color: color),
-    borderRadius: BorderRadius.circular(12),
+    borderRadius: BorderRadius.circular(radius ?? 12),
   );
 }

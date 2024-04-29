@@ -133,6 +133,9 @@ class _UploadFileState extends State<UploadFile> {
     final Size size = MediaQuery.sizeOf(context);
     return Column(
       children: [
+        SizedBox(
+          height: 54,
+        ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 38),
           padding: const EdgeInsets.all(38),

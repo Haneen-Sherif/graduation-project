@@ -59,9 +59,10 @@ class _EquipmentListViewState extends State<EquipmentListView> {
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                                blurRadius: 4,
-                                color: Colors.black.withOpacity(0.25),
-                                offset: Offset(0, 4))
+                              blurRadius: 4,
+                              color: Colors.black.withOpacity(0.25),
+                              offset: Offset(0, 4),
+                            )
                           ],
                         ),
                         child: CustomFarmEquipmentItem(

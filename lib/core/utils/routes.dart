@@ -20,7 +20,9 @@ import 'package:graduation_project/Features/farm_equipments/presentation/views/f
 import 'package:graduation_project/Features/home/presentation/views/home_view.dart';
 import 'package:graduation_project/Features/home/presentation/views/home_view_2.dart';
 import 'package:graduation_project/Features/our_team/presentation/views/our_team_view.dart';
+import 'package:graduation_project/Features/profle/presentation/views/change_password_view.dart';
 import 'package:graduation_project/Features/profle/presentation/views/profile_view.dart';
+import 'package:graduation_project/Features/profle/presentation/views/provile_view_2.dart';
 import 'package:graduation_project/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRoutes {
@@ -36,6 +38,8 @@ abstract class AppRoutes {
   static String kFarmEquipmentsView = '/farmEquipmentView/:id';
   static String kChatView = '/chatView';
   static String kProfileView = '/profileView/:id';
+  static String kProfileView2 = '/profileView2/:id';
+  static String kChangePasswordView = '/changePasswordView/:id';
   static String kRealTimeChatView = '/realTimeChatView/:name/:id/:ownerId';
   static String kRealTimeChatView2 = '/realTimeChatView2/:userName/:roomName';
   static String kDetectView = '/detectView/:id';
@@ -222,6 +226,26 @@ abstract class AppRoutes {
           return CustomTransitionPage(
             transitionDuration: Duration(seconds: 1),
             child: ProfileView(id: state.extra.toString()),
+            transitionsBuilder: _buildCustomTransition1,
+          );
+        },
+      ),
+      GoRoute(
+        path: kProfileView2,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: ProfileView2(id: state.extra.toString()),
+            transitionsBuilder: _buildCustomTransition1,
+          );
+        },
+      ),
+      GoRoute(
+        path: kChangePasswordView,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            transitionDuration: Duration(seconds: 1),
+            child: ChangePasswordView(id: state.extra.toString()),
             transitionsBuilder: _buildCustomTransition1,
           );
         },

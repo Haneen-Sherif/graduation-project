@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -8,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
 import 'package:graduation_project/Features/auth/presentation/views/widgets/custom_forgot_password_back_icon.dart';
-import 'package:graduation_project/Features/profle/data/models/farm_owner_model.dart';
+import 'package:graduation_project/Features/experts/data/models/experts_model.dart';
+import 'package:graduation_project/Features/home/presentation/views/widgets/feedback_text_form_field.dart';
 import 'package:graduation_project/Features/profle/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:graduation_project/Features/profle/presentation/views/widgets/custom_profile_text_form_field.dart';
 import 'package:graduation_project/constants.dart';
@@ -16,20 +14,22 @@ import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
-class ProfileViewBody extends StatefulWidget {
-  const ProfileViewBody({super.key, required this.id});
+class ProfileView2Body extends StatefulWidget {
+  const ProfileView2Body({super.key, required this.id});
   final String id;
 
   @override
-  State<ProfileViewBody> createState() => _ProfileViewBodyState();
+  State<ProfileView2Body> createState() => _ProfileView2BodyState();
 }
 
-class _ProfileViewBodyState extends State<ProfileViewBody> {
+class _ProfileView2BodyState extends State<ProfileView2Body> {
   late TextEditingController passwordController;
   late TextEditingController emailController;
   late TextEditingController nameController;
+  late TextEditingController dateController;
+  late TextEditingController professionalController;
 
   late TextEditingController phoneNumberController;
   bool isLoading = false;
@@ -39,8 +39,10 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
     passwordController = TextEditingController();
     emailController = TextEditingController();
     nameController = TextEditingController();
+    professionalController = TextEditingController();
 
     phoneNumberController = TextEditingController();
+    dateController = TextEditingController();
 
     super.initState();
   }
@@ -50,36 +52,24 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
     passwordController.dispose();
     emailController.dispose();
     nameController.dispose();
+    professionalController.dispose();
 
     phoneNumberController.dispose();
+    dateController.dispose();
 
     super.dispose();
-  }
-
-  final picker = ImagePicker();
-  File? img;
-
-  Future<void> pickImage() async {
-    print('Attempting to pick an image...');
-    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        img = File(pickedFile.path);
-        print('Image picked: ${img!.path}');
-      });
-    } else {
-      print('No image picked');
-    }
   }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final bool emailValid = true;
+    DateFormat formatter = DateFormat('MM/dd/yyyy');
     final profileCubit = BlocProvider.of<ProfileCubit>(context);
+    String _dateOfBirth;
     Size size = MediaQuery.sizeOf(context);
-    return FutureBuilder<FarmOwnerModel>(
-        future: profileCubit.getFarmOwner(widget.id),
+    return FutureBuilder<ExpertsModel>(
+        future: profileCubit.getExpert(widget.id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -89,8 +79,11 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            final farmOwner = snapshot.data!;
-
+            final expert = snapshot.data!;
+            String dateString = expert.birthDate!;
+            DateTime dateTime = DateTime.parse(dateString);
+            DateFormat formatter = DateFormat('MM/dd/yyyy');
+            String formattedDate = formatter.format(dateTime);
             return SafeArea(
               child: SingleChildScrollView(
                 child: Column(
@@ -101,6 +94,18 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                       width: double.infinity,
                       color: Color(0xff57ACB5),
                       child: Stack(clipBehavior: Clip.none, children: [
+                        // Positioned(
+                        //   bottom: -75,
+                        //   left: 0,
+                        //   right: 0,
+                        //   child: CircleAvatar(
+                        //     backgroundColor: Color(0xff57ACB5),
+                        //     radius: 90,
+                        //     child: ClipRRect(
+                        //         borderRadius: BorderRadius.circular(153),
+                        //         child: Image.network(expert.personalPhoto!)),
+                        //   ),
+                        // ),
                         Positioned(
                           bottom: -40,
                           left: 0,
@@ -111,44 +116,11 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                             child: ClipRRect(
                               borderRadius:
                                   BorderRadius.circular(size.width * 0.30),
-                              child: img == null
-                                  ? Image.asset(
-                                      Assets.imagesTeamMember1,
-                                      fit: BoxFit.cover,
-                                      width: size.width * 0.30,
-                                      height: size.width * 0.30,
-                                    )
-                                  : Image.file(
-                                      img!,
-                                      fit: BoxFit.cover,
-                                      width: size.width * 0.30,
-                                      height: size.width * 0.30,
-                                    ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: -30,
-                          left: 0,
-                          right: -60,
-                          child: CircleAvatar(
-                            radius: 16,
-                            backgroundColor: Colors.black.withOpacity(0.5),
-                            child: IconButton(
-                              onPressed: () {
-                                pickImage();
-                                // if (img != null) {
-                                //   BlocProvider.of<ProfileCubit>(context)
-                                //       .updatePersonalPhoto(
-                                //     widget.id,
-                                //     img ?? File(Assets.imagesTeamMember1),
-                                //   );
-                                // }
-                              },
-                              icon: Icon(
-                                Icons.edit,
-                                size: 16,
-                                color: Colors.white,
+                              child: Image.asset(
+                                Assets.imagesTeamMember1,
+                                fit: BoxFit.cover,
+                                width: size.width * 0.30,
+                                height: size.width * 0.30,
                               ),
                             ),
                           ),
@@ -237,6 +209,13 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                 },
                                 child: Image.asset(Assets.iconsDeleteAccount),
                               ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.edit,
+                                  size: 24,
+                                ),
+                              )
                             ],
                           ),
                           SizedBox(
@@ -285,7 +264,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                     CustomProfileTextFormField(
                                       size: size,
                                       controller: nameController,
-                                      hintText: farmOwner.userName!,
+                                      hintText: expert.userName!,
                                       keyboardType: TextInputType.text,
                                       textInputAction: TextInputAction.next,
                                     ),
@@ -304,7 +283,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                     CustomProfileTextFormField(
                                       size: size,
                                       controller: emailController,
-                                      hintText: farmOwner.email!,
+                                      hintText: expert.email!,
                                       keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
                                       validator: (value) {
@@ -334,9 +313,72 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                     CustomProfileTextFormField(
                                       size: size,
                                       controller: phoneNumberController,
-                                      hintText: farmOwner.phoneNumber!,
+                                      hintText: expert.phoneNumber!,
                                       keyboardType: TextInputType.phone,
                                       textInputAction: TextInputAction.next,
+                                    ),
+                                    SizedBox(
+                                      height: 12,
+                                    ),
+                                    Text(
+                                      "Birthday",
+                                      style: Styles.textStyle16(context)
+                                          .copyWith(
+                                              fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => _selectDate(context),
+                                      child: AbsorbPointer(
+                                        child: CustomProfileTextFormField(
+                                          textInputAction: TextInputAction.next,
+                                          keyboardType: TextInputType.datetime,
+                                          obscureText: false,
+                                          hintText: formattedDate,
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'date must not be empty';
+                                            }
+                                            return null;
+                                          },
+                                          controller: dateController,
+                                          size: size,
+                                          onSaved: (value) =>
+                                              _dateOfBirth = value.toString(),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 12,
+                                    ),
+                                    Text(
+                                      "Professional information",
+                                      style: Styles.textStyle16(context)
+                                          .copyWith(
+                                              fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    FeedbackTextFormField(
+                                      radius: 5,
+                                      keyboardType: TextInputType.multiline,
+                                      minLines: 3,
+                                      maxLines: 5,
+                                      borderFocusColor: kPrimaryColor,
+                                      cursorColor: kPrimaryColor,
+                                      hintStyle: Styles.textStyle12(context)
+                                          .copyWith(
+                                              color: Color(0xff858585),
+                                              letterSpacing: 0.90,
+                                              fontWeight: FontWeight.w500),
+                                      borderColor: Color(0xffE9E6E6),
+                                      fillColor: Colors.white,
+                                      textInputAction: TextInputAction.next,
+                                      controller: professionalController,
+                                      hintText: expert.moreInfo!,
                                     ),
                                     SizedBox(
                                       height: 12,
@@ -381,31 +423,53 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                         onPressed: () {
                                           String? newName =
                                               nameController.text == ''
-                                                  ? farmOwner.userName
+                                                  ? expert.userName
                                                   : nameController.text;
                                           String? newEmail =
                                               emailController.text == ''
-                                                  ? farmOwner.email
+                                                  ? expert.email
                                                   : emailController.text;
                                           String? newPhone =
                                               phoneNumberController.text == ''
-                                                  ? farmOwner.phoneNumber
+                                                  ? expert.phoneNumber
                                                   : phoneNumberController.text;
 
-                                          if (newName != farmOwner.userName ||
-                                              newEmail != farmOwner.email ||
-                                              newPhone !=
-                                                  farmOwner.phoneNumber) {
+                                          String? newMoreInfo =
+                                              professionalController.text == ''
+                                                  ? expert.moreInfo
+                                                  : professionalController.text;
+
+                                          String? newDate =
+                                              dateController.text == ''
+                                                  ? expert.birthDate
+                                                  : dateController.text;
+
+                                          if (newName != expert.userName ||
+                                              newEmail != expert.email ||
+                                              newPhone != expert.phoneNumber ||
+                                              newMoreInfo != expert.moreInfo ||
+                                              newDate != expert.birthDate) {
                                             BlocProvider.of<ProfileCubit>(
                                                     context)
-                                                .updateFarmOwner(
+                                                .updateExpert(
                                                     widget.id,
-                                                    "2024-04-28T06:05:11.217Z",
+                                                    newDate,
                                                     newEmail,
                                                     newName,
                                                     newPhone,
-                                                    "cairo",
+                                                    newMoreInfo,
                                                     "cairo");
+
+                                            print(widget.id);
+                                            print(dateTime);
+                                            print(formattedDate);
+                                            print(newDate);
+
+                                            print(dateController.text);
+                                            print(newMoreInfo);
+                                            print(newPhone);
+                                            print(newEmail);
+                                            print(newName);
                                           } else {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(SnackBar(
@@ -431,5 +495,37 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
             );
           }
         });
+  }
+
+  Future _selectDate(BuildContext context) async {
+    DateTime selectedDate = DateTime.now();
+    DateFormat formatter = DateFormat('MM/dd/yyyy');
+    final DateTime? picked = await showDatePicker(
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: kPrimaryColor, // header background color
+                onPrimary: Colors.black, // header text color
+                // onSurface: Colors.green, // body text color
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: kPrimaryColor, // button text color
+                ),
+              ),
+            ),
+            child: child!,
+          );
+        },
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1920),
+        lastDate: DateTime.now());
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        dateController.value = TextEditingValue(text: formatter.format(picked));
+      });
   }
 }

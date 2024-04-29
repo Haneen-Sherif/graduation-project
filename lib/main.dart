@@ -11,6 +11,7 @@ import 'package:graduation_project/Features/detection/presentation/manager/detec
 import 'package:graduation_project/Features/experts/presentation/manager/experts_cubit/experts_cubit.dart';
 import 'package:graduation_project/Features/farm_equipments/presentation/manager/equipments_cubit/equipments_cubit.dart';
 import 'package:graduation_project/Features/home/presentation/manager/home_cubit/home_cubit.dart';
+import 'package:graduation_project/Features/profle/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/firebase_options.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => ExpertsCubit()),
           BlocProvider(create: (context) => RatingCubit()),
           BlocProvider(create: (context) => DetectCubit()),
+          BlocProvider(create: (context) => ProfileCubit()),
         ],
         child: MaterialApp.router(
           locale: DevicePreview.locale(context),
