@@ -181,16 +181,16 @@ class CustomSubscriptionWidget extends StatelessWidget {
           SizedBox(
             height: 17,
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Text(
-              "Or start Free Trial",
-              style: Styles.textStyle11(context),
-            ),
-          ),
-          SizedBox(
-            height: 19,
-          ),
+          // GestureDetector(
+          //   onTap: () {},
+          //   child: Text(
+          //     "Or start Free Trial",
+          //     style: Styles.textStyle11(context),
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: 19,
+          // ),
         ],
       ),
     );

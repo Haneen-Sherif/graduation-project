@@ -112,28 +112,28 @@ class HomeStackWidget extends StatelessWidget {
                   color: Color(0xff087ca8),
                   text: "Detect",
                   onPressed: () async {
-                    await BlocProvider.of<RatingCubit>(context)
-                        .isSubscripted(farmOwnerId);
+                    // await BlocProvider.of<RatingCubit>(context)
+                    //     .isSubscripted(farmOwnerId);
 
-                    bool response = await BlocProvider.of<RatingCubit>(context)
-                        .isUserSubscriped;
-                    if (response == true) {
-                      context.push(AppRoutes.kDetectView, extra: farmOwnerId);
-                    } else if (response == false) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("You have to be subscribed"),
-                        ),
-                      );
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CustomSubscriptionWidget(
-                              response: response,
-                              nameIdentifier: farmOwnerId,
-                            );
-                          });
-                    }
+                    // bool response = await BlocProvider.of<RatingCubit>(context)
+                    //     .isUserSubscriped;
+                    // if (response == true) {
+                    context.push(AppRoutes.kDetectView, extra: farmOwnerId);
+                    // } else if (response == false) {
+                    //   ScaffoldMessenger.of(context).showSnackBar(
+                    //     SnackBar(
+                    //       content: Text("You have to be subscribed"),
+                    //     ),
+                    //   );
+                    //   showDialog(
+                    //       context: context,
+                    //       builder: (BuildContext context) {
+                    //         return CustomSubscriptionWidget(
+                    //           response: response,
+                    //           nameIdentifier: farmOwnerId,
+                    //         );
+                    //       });
+                    // }
                   },
                 ),
               ),

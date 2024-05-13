@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:go_router/go_router.dart';
 
 import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/core/utils/Widgets/custom_subscription_widget.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -52,14 +53,23 @@ class _UploadFileState extends State<UploadFile> {
       setState(() {});
       final request = http.MultipartRequest(
           "POST", Uri.parse("$baseUrlApi/api/$id/Detects"));
-      final header = {
-        "Content_type":
-            "multipart/form-data; boundary=<calculated when request is sent>"
-      };
-      request.files.add(http.MultipartFile(
-          "ImageForDetection", img!.readAsBytes().asStream(), img!.lengthSync(),
-          filename: img!.path.split('/').last));
-      request.headers.addAll(header);
+      request.headers['accept'] = '*/*';
+      request.headers['Content-Type'] = 'multipart/form-data';
+      // final header = {
+      //   "Content_type":
+      //       "multipart/form-data; boundary=<calculated when request is sent>"
+      // };
+      if (img != null && img!.existsSync()) {
+        request.files.add(http.MultipartFile(
+            "ImageForDetection", img!.openRead(), img!.lengthSync(),
+            filename: img!.path.split('/').last));
+      } else {
+        print('Error: Image file is null or does not exist');
+
+        return;
+      }
+
+      // request.headers.addAll(header);
       final myRequest = await request.send();
       http.Response res = await http.Response.fromStream(myRequest);
       if (myRequest.statusCode == 200) {
@@ -86,8 +96,29 @@ class _UploadFileState extends State<UploadFile> {
         );
         isLoading = false;
         setState(() {});
+      } else if (myRequest.statusCode == 400) {
+        print("error: ${myRequest.statusCode}");
+        print("Server Error: ${res.body}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                "Subscription Ended Try To Recharge your Subscription Plan to Able to do more Detection"),
+          ),
+        );
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomSubscriptionWidget(
+                response: false,
+                nameIdentifier: id,
+              );
+            });
+
+        isLoading = false;
+        setState(() {});
       } else {
         print("error: ${myRequest.statusCode}");
+        print("Server Error: ${res.body}");
       }
     } catch (e) {
       print("Network Error: $e");
@@ -199,8 +230,8 @@ class _UploadFileState extends State<UploadFile> {
           color: img == null ? Color(0xff59595E) : kPrimaryColor,
           width: size.width * 0.6,
           text: "Show Result",
-          onPressed: () {
-            img == null ? null : upload(widget.id, img!);
+          onPressed: () async {
+            img == null ? null : await upload(widget.id, img!);
             ;
           },
         ),
