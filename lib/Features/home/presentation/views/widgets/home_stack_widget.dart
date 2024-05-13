@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/chat/presentation/manager/rating_cubit/rating_cubit.dart';
 import 'package:graduation_project/Features/home/presentation/views/widgets/detect_button.dart';
+import 'package:graduation_project/core/utils/Widgets/custom_subscription_widget.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
@@ -124,6 +125,14 @@ class HomeStackWidget extends StatelessWidget {
                           content: Text("You have to be subscribed"),
                         ),
                       );
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomSubscriptionWidget(
+                              response: response,
+                              nameIdentifier: farmOwnerId,
+                            );
+                          });
                     }
                   },
                 ),

@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:graduation_project/Features/auth/presentation/manager/auth_cubit.dart';
@@ -357,6 +359,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Expanded(
+                                flex: 2,
                                 child: Row(
                                   children: [
                                     Padding(
@@ -365,7 +368,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                         fit: BoxFit.scaleDown,
                                         child: Text(
                                           "Personal Photo",
-                                          style: Styles.textStyle14(context)
+                                          style: Styles.textStyle12(context)
                                               .copyWith(
                                                   color:
                                                       const Color(0xff383838)),
@@ -378,11 +381,10 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(
-                                width: 4,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8),
+                              // const SizedBox(
+                              //   width: 4,
+                              // ),
+                              Expanded(
                                 child: MaterialButton(
                                   padding: EdgeInsets.zero,
                                   onPressed: () {
@@ -396,27 +398,21 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 4),
-                                            child: Text(
-                                              "Upload",
-                                              textAlign: TextAlign.center,
-                                              style: Styles.textStyle10(context)
-                                                  .copyWith(
-                                                color: const Color(0xFFFFF9F9),
-                                                letterSpacing: 1.08,
-                                              ),
-                                            ),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        child: Text(
+                                          "Upload",
+                                          textAlign: TextAlign.center,
+                                          style: Styles.textStyle10(context)
+                                              .copyWith(
+                                            color: const Color(0xFFFFF9F9),
+                                            letterSpacing: 1.08,
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -433,81 +429,84 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                                 style: TextStyle(color: Colors.red),
                               )
                             : Container(),
-                        // Container(
-                        //   height: 45,
-                        //   decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(12),
-                        //       color: Colors.white),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       Expanded(
-                        //         child: Row(
-                        //           children: [
-                        //             FittedBox(
-                        //               fit: BoxFit.scaleDown,
-                        //               child: Padding(
-                        //                 padding:
-                        //                     const EdgeInsets.only(left: 16),
-                        //                 child: Text(
-                        //                   "Graduation Certificate",
-                        //                   style: Styles.textStyle14(context)
-                        //                       .copyWith(
-                        //                           color:
-                        //                               const Color(0xff383838)),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             Expanded(child: SizedBox())
-                        //           ],
-                        //         ),
-                        //       ),
-                        //       const SizedBox(
-                        //         width: 4,
-                        //       ),
-                        //       Padding(
-                        //         padding: const EdgeInsets.only(right: 8),
-                        //         child: MaterialButton(
-                        //           padding: EdgeInsets.zero,
-                        //           onPressed: () {
-                        //             pickImage2();
-                        //           },
-                        //           child: Container(
-                        //             height: 25,
-                        //             decoration: ShapeDecoration(
-                        //               color: kPrimaryColor,
-                        //               shape: RoundedRectangleBorder(
-                        //                 borderRadius: BorderRadius.circular(10),
-                        //               ),
-                        //             ),
-                        //             child: Row(
-                        //               mainAxisAlignment:
-                        //                   MainAxisAlignment.center,
-                        //               children: [
-                        //                 FittedBox(
-                        //                   fit: BoxFit.scaleDown,
-                        //                   child: Padding(
-                        //                     padding: const EdgeInsets.symmetric(
-                        //                         horizontal: 8, vertical: 4),
-                        //                     child: Text(
-                        //                       "Upload",
-                        //                       textAlign: TextAlign.center,
-                        //                       style: Styles.textStyle10(context)
-                        //                           .copyWith(
-                        //                         color: const Color(0xFFFFF9F9),
-                        //                         letterSpacing: 1.08,
-                        //                       ),
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
+                        Container(
+                          height: 45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Row(
+                                  children: [
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16),
+                                        child: Text(
+                                          "Graduation Certificate",
+                                          style: Styles.textStyle12(context)
+                                              .copyWith(
+                                                  color:
+                                                      const Color(0xff383838)),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(child: SizedBox())
+                                  ],
+                                ),
+                              ),
+                              // const SizedBox(
+                              //   width: 4,
+                              // ),
+                              Expanded(
+                                child: MaterialButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    pickImage2();
+                                  },
+                                  child: Container(
+                                    height: 25,
+                                    decoration: ShapeDecoration(
+                                      color: kPrimaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        child: Text(
+                                          "Upload",
+                                          textAlign: TextAlign.center,
+                                          style: Styles.textStyle10(context)
+                                              .copyWith(
+                                            color: const Color(0xFFFFF9F9),
+                                            letterSpacing: 1.08,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        imgValidationError2 != null
+                            ? Text(
+                                imgValidationError2!,
+                                style: TextStyle(color: Colors.red),
+                              )
+                            : Container(),
                       ],
                     )
                   : SizedBox(),
@@ -591,6 +590,11 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                     setState(() {
                       imgValidationError = 'Please upload your personal photo';
                     });
+                  } else if (img2 == null) {
+                    setState(() {
+                      imgValidationError2 =
+                          'Please upload your certificate photo';
+                    });
                   } else {
                     BlocProvider.of<AuthCubit>(context).expertSignUp(
                       nameController.text.trim(),
@@ -601,6 +605,7 @@ class _CustomSignUpFormState extends State<CustomSignUpForm> {
                       addressController.text.trim(),
                       dateController.text,
                       img!,
+                      img2!,
                       professionalInfoController.text.trim(),
                     );
                   }

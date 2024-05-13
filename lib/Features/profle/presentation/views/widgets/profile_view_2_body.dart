@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -14,6 +15,7 @@ import 'package:graduation_project/core/utils/Widgets/custom_button.dart';
 import 'package:graduation_project/core/utils/routes.dart';
 import 'package:graduation_project/core/utils/styles.dart';
 import 'package:graduation_project/generated/assets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class ProfileView2Body extends StatefulWidget {
@@ -58,6 +60,22 @@ class _ProfileView2BodyState extends State<ProfileView2Body> {
     dateController.dispose();
 
     super.dispose();
+  }
+
+  final picker = ImagePicker();
+  File? img;
+
+  Future<void> pickImage() async {
+    print('Attempting to pick an image...');
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        img = File(pickedFile.path);
+        print('Image picked: ${img!.path}');
+      });
+    } else {
+      print('No image picked');
+    }
   }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -116,15 +134,49 @@ class _ProfileView2BodyState extends State<ProfileView2Body> {
                             child: ClipRRect(
                               borderRadius:
                                   BorderRadius.circular(size.width * 0.30),
-                              child: Image.asset(
-                                Assets.imagesTeamMember1,
-                                fit: BoxFit.cover,
-                                width: size.width * 0.30,
-                                height: size.width * 0.30,
-                              ),
+                              child: img == null
+                                  ? Image.network(
+                                      expert.personalPhoto!,
+                                      fit: BoxFit.cover,
+                                      width: size.width * 0.30,
+                                      height: size.width * 0.30,
+                                    )
+                                  : Image.file(
+                                      img!,
+                                      fit: BoxFit.cover,
+                                      width: size.width * 0.30,
+                                      height: size.width * 0.30,
+                                    ),
                             ),
                           ),
                         ),
+                        // Positioned(
+                        //   bottom: -30,
+                        //   left: 0,
+                        //   right: -60,
+                        //   child: CircleAvatar(
+                        //     radius: 16,
+                        //     backgroundColor: Colors.black.withOpacity(0.5),
+                        //     child: IconButton(
+                        //       onPressed: () async {
+                        //         pickImage();
+                        //         if (img != null) {
+                        //           await profileCubit.updatePersonalPhoto(
+                        //             widget.id,
+                        //             img ?? File(expert.personalPhoto!),
+                        //           );
+
+                        //           print("img: $img");
+                        //         }
+                        //       },
+                        //       icon: Icon(
+                        //         Icons.edit,
+                        //         size: 16,
+                        //         color: Colors.white,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 16, left: 21, right: 21),
@@ -210,7 +262,33 @@ class _ProfileView2BodyState extends State<ProfileView2Body> {
                                 child: Image.asset(Assets.iconsDeleteAccount),
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  pickImage();
+                                  if (img != null) {
+                                    await profileCubit.updatePersonalPhoto(
+                                      widget.id,
+                                      img ?? File(expert.personalPhoto!),
+                                    );
+
+                                    print("img: $img");
+                                  }
+                                  //else {
+                                  //   ScaffoldMessenger.of(context).showSnackBar(
+                                  //     SnackBar(
+                                  //       content:
+                                  //           Text('Please pick an image first'),
+                                  //     ),
+                                  //   );
+                                  // }
+                                  // if (img != null) {
+                                  //   BlocProvider.of<ProfileCubit>(context)
+                                  //       .updatePersonalPhoto(
+                                  //     widget.id,
+                                  //     img,
+                                  //   );
+                                  //   print(img);
+                                  // }
+                                },
                                 icon: Icon(
                                   Icons.edit,
                                   size: 24,
@@ -444,7 +522,16 @@ class _ProfileView2BodyState extends State<ProfileView2Body> {
                                                   ? expert.birthDate
                                                   : dateController.text;
 
-                                          if (newName != expert.userName ||
+                                          if (img != null) {
+                                            profileCubit.updatePersonalPhoto(
+                                              widget.id,
+                                              img ??
+                                                  File(expert.personalPhoto!),
+                                            );
+
+                                            print("img: $img");
+                                          } else if (newName !=
+                                                  expert.userName ||
                                               newEmail != expert.email ||
                                               newPhone != expert.phoneNumber ||
                                               newMoreInfo != expert.moreInfo ||

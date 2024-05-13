@@ -13,20 +13,43 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileInitial());
 
-  Future<void> updatePersonalPhoto(String id, File? photoPath) async {
+  Future<void> updatePersonalPhoto(String id, File? photo) async {
     emit(ProfileLoading());
 
     try {
       var request = http.MultipartRequest(
           'PUT', Uri.parse('$baseUrlApi/api/Accounts/updatePersonalPhoto/$id'));
 
-      if (photoPath != null) {
-        var photoStream = http.ByteStream(photoPath.openRead());
-        var length = await photoPath.length();
-        var multipartFile = http.MultipartFile('photoPath', photoStream, length,
-            filename: photoPath.path.split('/').last);
-        request.files.add(multipartFile);
+      request.fields['id'] = id;
+
+      if (photo != null) {
+        if (photo.path.startsWith('http') || photo.path.startsWith('https')) {
+          File? downloadedImage = await downloadImage(photo.path);
+          if (downloadedImage != null) {
+            var photoStream = http.ByteStream(downloadedImage.openRead());
+            var length = await downloadedImage.length();
+            var multipartFile = http.MultipartFile('photo', photoStream, length,
+                filename: downloadedImage.path.split('/').last);
+            request.files.add(multipartFile);
+          } else {
+            print('Failed to download image from URL: ${photo.path}');
+          }
+        } else {
+          var photoStream = http.ByteStream(photo.openRead());
+          var length = await photo.length();
+          var multipartFile = http.MultipartFile('photo', photoStream, length,
+              filename: photo.path.split('/').last);
+          request.files.add(multipartFile);
+        }
       }
+
+      // if (photoPath != null) {
+      //   var photoStream = http.ByteStream(photoPath.openRead());
+      //   var length = await photoPath.length();
+      //   var multipartFile = http.MultipartFile('photoPath', photoStream, length,
+      //       filename: photoPath.path.split('/').last);
+      //   request.files.add(multipartFile);
+      // }
 
       var response = await request.send();
       final responseData = await response.stream.bytesToString();

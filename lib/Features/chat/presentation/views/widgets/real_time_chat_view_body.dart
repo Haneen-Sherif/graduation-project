@@ -74,7 +74,7 @@ class _RealTimeChatViewBodyState extends State<RealTimeChatViewBody>
       'sendby': username,
       'message': '',
       'type': 'img',
-      'time': FieldValue.serverTimestamp()
+      'time': DateTime.now()
     });
     var ref =
         FirebaseStorage.instance.ref().child('images').child("$fileName.jpg");

@@ -189,7 +189,7 @@ class _UploadFileState extends State<UploadFile> {
               ),
         isLoading
             ? CircularProgressIndicator(
-                backgroundColor: kPrimaryColor,
+                color: kPrimaryColor,
               )
             : SizedBox(),
         const SizedBox(

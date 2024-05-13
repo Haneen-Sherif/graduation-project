@@ -302,6 +302,7 @@ class AuthCubit extends Cubit<AuthState> {
     String address,
     String birthDate,
     File personalPhoto,
+    File certificatePhoto,
     String moreInfo,
   ) async {
     emit(AuthLoading());
@@ -326,6 +327,14 @@ class AuthCubit extends Cubit<AuthState> {
           'personalPhoto', photoStream, length,
           filename: personalPhoto.path);
       request.files.add(multipartFile);
+
+      var photoStream2 =
+          http.ByteStream(Stream.castFrom(certificatePhoto.openRead()));
+      var length2 = await certificatePhoto.length();
+      var multipartFile2 = http.MultipartFile(
+          'certificate', photoStream2, length2,
+          filename: certificatePhoto.path);
+      request.files.add(multipartFile2);
 
       var response = await request.send();
 

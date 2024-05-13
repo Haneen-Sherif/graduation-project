@@ -65,7 +65,7 @@ class _RealTimeChatViewBody2State extends State<RealTimeChatViewBody2>
         'sendby': username,
         'message': '',
         'type': 'img',
-        'time': FieldValue.serverTimestamp()
+        'time': DateTime.now()
       });
     } catch (e) {
       print(e);

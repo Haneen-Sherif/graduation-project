@@ -25,21 +25,21 @@ class CustomDrawerBody extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomDrawerItem(
-          onTap: () {
-            while (context.canPop()) {
-              context.pop();
-            }
-            context.pushReplacement(AppRoutes.kHomeView);
-          },
-          title: 'Home',
-        ),
-        Divider(
-          color: Color(0xffD7D5D5),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
+        // CustomDrawerItem(
+        //   onTap: () {
+        //     while (context.canPop()) {
+        //       context.pop();
+        //     }
+        //     context.pushReplacement(AppRoutes.kHomeView);
+        //   },
+        //   title: 'Home',
+        // ),
+        // Divider(
+        //   color: Color(0xffD7D5D5),
+        // ),
+        // const SizedBox(
+        //   height: 30,
+        // ),
         CustomDrawerItem(
           onTap: () {
             context.pop();

@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -112,8 +110,8 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                               borderRadius:
                                   BorderRadius.circular(size.width * 0.30),
                               child: img == null
-                                  ? Image.asset(
-                                      Assets.imagesTeamMember1,
+                                  ? Image.network(
+                                      farmOwner.personalPhoto!,
                                       fit: BoxFit.cover,
                                       width: size.width * 0.30,
                                       height: size.width * 0.30,
@@ -127,32 +125,33 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                             ),
                           ),
                         ),
-                        Positioned(
-                          bottom: -30,
-                          left: 0,
-                          right: -60,
-                          child: CircleAvatar(
-                            radius: 16,
-                            backgroundColor: Colors.black.withOpacity(0.5),
-                            child: IconButton(
-                              onPressed: () {
-                                pickImage();
-                                // if (img != null) {
-                                //   BlocProvider.of<ProfileCubit>(context)
-                                //       .updatePersonalPhoto(
-                                //     widget.id,
-                                //     img ?? File(Assets.imagesTeamMember1),
-                                //   );
-                                // }
-                              },
-                              icon: Icon(
-                                Icons.edit,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Positioned(
+                        //   bottom: -30,
+                        //   left: 0,
+                        //   right: -60,
+                        //   child: CircleAvatar(
+                        //     radius: 16,
+                        //     backgroundColor: Colors.black.withOpacity(0.5),
+                        //     child: IconButton(
+                        //       onPressed: () async {
+                        //         pickImage();
+                        //         if (img != null) {
+                        //           await profileCubit.updatePersonalPhoto(
+                        //             widget.id,
+                        //             img ?? File(farmOwner.personalPhoto!),
+                        //           );
+
+                        //           print("img: $img");
+                        //         }
+                        //       },
+                        //       icon: Icon(
+                        //         Icons.edit,
+                        //         size: 16,
+                        //         color: Colors.white,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 16, left: 21, right: 21),
@@ -237,6 +236,39 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                 },
                                 child: Image.asset(Assets.iconsDeleteAccount),
                               ),
+                              IconButton(
+                                onPressed: () async {
+                                  pickImage();
+                                  if (img != null) {
+                                    await profileCubit.updatePersonalPhoto(
+                                      widget.id,
+                                      img ?? File(farmOwner.personalPhoto!),
+                                    );
+
+                                    print("img: $img");
+                                  }
+                                  //else {
+                                  //   ScaffoldMessenger.of(context).showSnackBar(
+                                  //     SnackBar(
+                                  //       content:
+                                  //           Text('Please pick an image first'),
+                                  //     ),
+                                  //   );
+                                  // }
+                                  // if (img != null) {
+                                  //   BlocProvider.of<ProfileCubit>(context)
+                                  //       .updatePersonalPhoto(
+                                  //     widget.id,
+                                  //     img,
+                                  //   );
+                                  //   print(img);
+                                  // }
+                                },
+                                icon: Icon(
+                                  Icons.edit,
+                                  size: 24,
+                                ),
+                              )
                             ],
                           ),
                           SizedBox(
@@ -392,7 +424,17 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                                                   ? farmOwner.phoneNumber
                                                   : phoneNumberController.text;
 
-                                          if (newName != farmOwner.userName ||
+                                          if (img != null) {
+                                            profileCubit.updatePersonalPhoto(
+                                              widget.id,
+                                              img ??
+                                                  File(
+                                                      farmOwner.personalPhoto!),
+                                            );
+
+                                            print("img: $img");
+                                          } else if (newName !=
+                                                  farmOwner.userName ||
                                               newEmail != farmOwner.email ||
                                               newPhone !=
                                                   farmOwner.phoneNumber) {

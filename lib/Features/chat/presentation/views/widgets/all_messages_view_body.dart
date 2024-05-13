@@ -18,6 +18,28 @@ class AllMessagesViewBody extends StatefulWidget {
 
 class _AllMessagesViewBodyState extends State<AllMessagesViewBody> {
   String username = '';
+  Map<String, dynamic>? userMap;
+  bool isLoading = false;
+
+  final TextEditingController _search = TextEditingController();
+
+  void onSearch() async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    setState(() {
+      isLoading = true;
+    });
+    await _firestore
+        .collection("users")
+        .where("name", isEqualTo: _search.text)
+        .get()
+        .then((value) {
+      setState(() {
+        userMap = value.docs[0].data();
+        isLoading = false;
+      });
+      print(userMap);
+    });
+  }
 
   Future<String> getName() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -79,6 +101,31 @@ class _AllMessagesViewBodyState extends State<AllMessagesViewBody> {
                   ],
                 ),
               ),
+              isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(
+                      children: [
+                        TextField(
+                          controller: _search,
+                          decoration: InputDecoration(
+                              hintText: "Search",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                        ),
+                        ElevatedButton(
+                            onPressed: onSearch, child: Text("Search")),
+                        userMap != null
+                            ? ListTile(
+                                onTap: () {},
+                                title: Text(userMap!["name"]),
+                                subtitle: Text(userMap!["message"]),
+                                trailing: Icon(Icons.chat),
+                              )
+                            : Container()
+                      ],
+                    ),
               Expanded(
                 child: ListView.builder(
                   itemCount: users.length,

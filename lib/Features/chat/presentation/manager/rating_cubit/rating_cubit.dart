@@ -19,7 +19,7 @@ class RatingCubit extends Cubit<RatingState> {
 
     try {
       final response = await http.put(
-        Uri.parse("$baseUrlApi/api/Accounts/farmOwner/subscribe?id=$id"),
+        Uri.parse("$baseUrlApi/api/Accounts/subscribe?id=$id"),
       );
 
       if (response.statusCode == 200) {
@@ -52,7 +52,7 @@ class RatingCubit extends Cubit<RatingState> {
 
     try {
       final response = await http.get(
-        Uri.parse("$baseUrlApi/api/Accounts/farmOwner/IsSubscripted?id=$id"),
+        Uri.parse("$baseUrlApi/api/Accounts/IsSubscripted?id=$id"),
       );
 
       if (response.statusCode == 200) {
